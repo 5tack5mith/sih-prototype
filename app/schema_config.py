@@ -91,6 +91,7 @@ BROKER_DEGREE_PERCENTILE_MAX = 50
 # Fragmentation simulation
 CRITICALITY_CANDIDATE_POOL_SIZE = 20
 CRITICALITY_DEFAULT_TOP_K = 10
+PATH_MAX_HOPS = 15
 
 # Financial-pattern rules (placeholders pending dataset calibration)
 STRUCTURING_THRESHOLD_AMOUNT = 200_000

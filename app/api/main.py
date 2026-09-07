@@ -4,8 +4,8 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 
 from .. import schema_config as schema
 from .dependencies import get_repository
-from .models import CaseFilter, CaseGraph, CaseOverview, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, TopNodesResponse
-from .narratives import community_narrative
+from .models import CaseFilter, CaseGraph, CaseOverview, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, TopNodesResponse
+from .narratives import community_narrative, path_narrative
 from .repository import Neo4jRepository
 
 app = FastAPI(title="Criminal Network Analysis API", version="1.0.0")
@@ -84,3 +84,16 @@ def community_detail(case_id: str, community_id: str, repository: Repository) ->
     return {**result, "narrative": community_narrative(
         result["internal_density"], result["external_density"]
     )}
+
+
+@app.get("/cases/{case_id}/path", response_model=PathResponse)
+def path(
+    case_id: str, repository: Repository,
+    from_node_id: Annotated[str, Query(min_length=1)],
+    to_node_id: Annotated[str, Query(min_length=1)],
+) -> dict:
+    """Find one scoped shortest path; strength is mean weight/(weight+1), not confidence."""
+    result = repository.find_path(case_id, from_node_id, to_node_id)
+    if not result["path_found"]:
+        return {**result, "narrative": None}
+    return {**result, "narrative": path_narrative(result["nodes"], result["steps"])}

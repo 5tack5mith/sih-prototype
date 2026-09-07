@@ -304,3 +304,46 @@ class Neo4jRepository:
         with self.driver.session() as session:
             return _as_dict(session.run(query, case_id=requested_case_id,
                                         community_id=requested_community_id).single())
+
+
+    def find_path(self, requested_case_id: str, from_node_id: str, to_node_id: str) -> dict[str, Any]:
+        source_labels = schema.entity_label_predicate("source")
+        target_labels = schema.entity_label_predicate("target")
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+        weight = schema.cypher_identifier(schema.REL_WEIGHT_PROPERTY) if schema.REL_WEIGHT_PROPERTY else None
+        weight_expression = f"coalesce(relationship.{weight}, 1.0)" if weight else "1.0"
+        query = f"""
+        MATCH (source), (target)
+        WHERE {source_labels} AND {target_labels}
+          AND source.{node_id} = $from_node_id AND target.{node_id} = $to_node_id
+          AND source.{case_prop} = $case_id AND target.{case_prop} = $case_id
+        MATCH path = shortestPath((source)-[:{structural}*..{schema.PATH_MAX_HOPS}]-(target))
+        WHERE all(node IN nodes(path) WHERE node.{case_prop} = $case_id)
+          AND all(relationship IN relationships(path) WHERE
+              coalesce(relationship.{case_prop}, $case_id) = $case_id)
+        RETURN [node IN nodes(path) | node.{node_id}] AS node_ids,
+               [node IN nodes(path) | node.{node_name}] AS node_names,
+               [relationship IN relationships(path) | type(relationship)] AS relationship_types,
+               [relationship IN relationships(path) | {weight_expression}] AS weights
+        """
+        with self.driver.session() as session:
+            row = _as_dict(session.run(query, case_id=requested_case_id,
+                from_node_id=from_node_id, to_node_id=to_node_id).single())
+        if row is None:
+            return {"path_found": False, "hops": None, "connection_strength": None,
+                    "total_relationship_count": 0, "nodes": [], "steps": []}
+        weights = [float(value) for value in row["weights"]]
+        steps = [{
+            "step": index + 1, "from": row["node_names"][index],
+            "to": row["node_names"][index + 1],
+            "relationship_type": row["relationship_types"][index],
+            "detail": f"{row['relationship_types'][index]} (weight {weights[index]:g})",
+        } for index in range(len(weights))]
+        strength = sum(value / (value + 1.0) for value in weights) / len(weights) if weights else 0.0
+        return {"path_found": True, "hops": len(weights),
+                "connection_strength": round(strength, 4),
+                "total_relationship_count": int(round(sum(weights))),
+                "nodes": row["node_ids"], "steps": steps}

@@ -9,3 +9,4 @@
 | `GET /cases/{case_id}/graph` | Returns the scoped structural graph and precomputed graph metrics. | Query: `filter=bridging_only`, `cutoff>=0` | `CaseGraph` |
 | `GET /cases/{case_id}/communities` | Lists Louvain communities with persisted densities and generic labels. | Path: `case_id` | `CommunitySummary[]` |
 | `GET /cases/{case_id}/communities/{community_id}` | Returns members, persisted densities, and a deterministic narrative. | Path: `case_id`, `community_id` | `CommunityDetail` |
+| `GET /cases/{case_id}/path` | Finds a scoped shortest path; strength is the mean `weight/(weight+1)`, never confidence. | Query: `from_node_id`, `to_node_id` | `PathResponse` |

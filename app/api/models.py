@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class CaseSummary(BaseModel):
@@ -122,7 +122,7 @@ class CommunityDetail(BaseModel):
 
 class PathStep(BaseModel):
     step: int
-    from_: str | None = None
+    from_: str | None = Field(default=None, alias="from")
     to: str | None = None
     relationship_type: str
     detail: str
@@ -140,7 +140,7 @@ class PathResponse(BaseModel):
     connection_strength: float | None = None
     total_relationship_count: int
     nodes: list[str]
-    steps: list[dict]
+    steps: list[PathStep]
     narrative: str | None = None
 
 
