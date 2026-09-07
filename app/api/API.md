@@ -1,0 +1,5 @@
+# Zone 1 + Zone 2 API contracts
+
+| Endpoint | Description | Request | Response model |
+|---|---|---|---|
+| `GET /cases` | Lists case metadata and scoped graph counts. | Query: `filter=active|archived|flagged`, `sort=last_activity|name` | `CaseSummary[]` |
