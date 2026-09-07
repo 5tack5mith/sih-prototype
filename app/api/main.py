@@ -4,7 +4,8 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 
 from .. import schema_config as schema
 from .dependencies import get_repository
-from .models import CaseFilter, CaseGraph, CaseOverview, CaseSort, CaseSummary, GraphFilter, MetricName, NodeDetail, TopNodesResponse
+from .models import CaseFilter, CaseGraph, CaseOverview, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, TopNodesResponse
+from .narratives import community_narrative
 from .repository import Neo4jRepository
 
 app = FastAPI(title="Criminal Network Analysis API", version="1.0.0")
@@ -66,3 +67,20 @@ def case_graph(
 ) -> dict:
     """Read persisted node metrics and Case graph metrics; filters are Cypher-side."""
     return repository.get_case_graph(case_id, filter == "bridging_only", cutoff)
+
+
+@app.get("/cases/{case_id}/communities", response_model=list[CommunitySummary])
+def communities(case_id: str, repository: Repository) -> list[dict]:
+    """Read Louvain membership and persisted community densities; labels are generic."""
+    return repository.get_communities(case_id)
+
+
+@app.get("/cases/{case_id}/communities/{community_id}", response_model=CommunityDetail)
+def community_detail(case_id: str, community_id: str, repository: Repository) -> dict:
+    """Read persisted community metrics/members and add a traceable template narrative."""
+    result = repository.get_community_detail(case_id, community_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Community not found in case")
+    return {**result, "narrative": community_narrative(
+        result["internal_density"], result["external_density"]
+    )}

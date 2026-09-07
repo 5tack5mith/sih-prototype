@@ -44,6 +44,44 @@ def _write_community_sizes(driver: Any, case_id: str) -> int:
     return _metric(row, "nodes_updated")
 
 
+def _write_community_densities(driver: Any, case_id: str) -> int:
+    labels = schema.entity_label_predicate("node")
+    other_labels = schema.entity_label_predicate("other")
+    case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+    community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+    internal = schema.cypher_identifier(schema.PROP_COMMUNITY_INTERNAL_DENSITY)
+    external = schema.cypher_identifier(schema.PROP_COMMUNITY_EXTERNAL_DENSITY)
+    structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+    query = f"""
+    MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+      AND node.{community} IS NOT NULL
+    WITH node.{community} AS community_id, collect(node) AS members
+    CALL (members) {{
+      MATCH (all_node) WHERE {labels} AND all_node.{case_prop} = $case_id
+      RETURN count(all_node) AS total_nodes
+    }}
+    CALL (members, community_id) {{
+      UNWIND members AS member
+      OPTIONAL MATCH (member)-[relationship:{structural}]-(other)
+      WHERE {other_labels} AND other.{case_prop} = $case_id
+      RETURN count(DISTINCT CASE WHEN other.{community} = community_id THEN relationship END) AS internal_edges,
+             count(DISTINCT CASE WHEN other.{community} <> community_id THEN relationship END) AS external_edges
+    }}
+    WITH members, size(members) AS member_count, total_nodes, internal_edges, external_edges
+    WITH members,
+      CASE WHEN member_count < 2 THEN 0.0
+           ELSE toFloat(internal_edges) / (member_count * (member_count - 1) / 2.0) END AS internal_density,
+      CASE WHEN member_count = 0 OR total_nodes = member_count THEN 0.0
+           ELSE toFloat(external_edges) / (member_count * (total_nodes - member_count)) END AS external_density
+    FOREACH (member IN members | SET member.{internal} = internal_density,
+                                      member.{external} = external_density)
+    RETURN sum(size(members)) AS nodes_updated
+    """
+    with driver.session() as session:
+        row = session.run(query, case_id=case_id).single()
+    return _metric(row, "nodes_updated")
+
+
 def _write_case_modularity(driver: Any, case_id: str, modularity: float | None) -> None:
     case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
     node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
@@ -165,6 +203,7 @@ def run_core_algorithms(driver: Any, case_id: str) -> CoreAlgorithmSummary:
     _write_case_modularity(driver, case_id, (row or {}).get("modularity"))
     _write_case_graph_metrics(driver, case_id, graph_name)
     metrics["community_sizes"] = _write_community_sizes(driver, case_id)
+    metrics["community_densities"] = _write_community_densities(driver, case_id)
     # Similarity is a suggestion layer and never participates in structural projections.
     _delete_case_similarities(driver, case_id)
     similarity_config: dict[str, Any] = {

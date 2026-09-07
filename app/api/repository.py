@@ -256,3 +256,51 @@ class Neo4jRepository:
             edges = [_as_dict(row) for row in session.run(edge_query, **parameters)]
             metrics = _as_dict(session.run(metric_query, case_id=requested_case_id).single()) or {}
         return {"nodes": nodes, "edges": edges, "metrics": metrics}
+
+
+    def get_communities(self, requested_case_id: str) -> list[dict[str, Any]]:
+        labels = schema.entity_label_predicate("node")
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+        size_prop = schema.cypher_identifier(schema.PROP_COMMUNITY_SIZE)
+        internal = schema.cypher_identifier(schema.PROP_COMMUNITY_INTERNAL_DENSITY)
+        external = schema.cypher_identifier(schema.PROP_COMMUNITY_EXTERNAL_DENSITY)
+        query = f"""
+        MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+          AND node.{community} IS NOT NULL
+        WITH node.{community} AS raw_id, collect(node) AS members
+        RETURN toString(raw_id) AS community_id, size(members) AS size,
+               coalesce(head(members).{internal}, 0.0) AS internal_density,
+               coalesce(head(members).{external}, 0.0) AS external_density,
+               [member IN members | member.{node_id}] AS member_node_ids
+        ORDER BY size DESC, community_id
+        """
+        with self.driver.session() as session:
+            rows = [_as_dict(row) for row in session.run(query, case_id=requested_case_id)]
+        return [{**row, "label": f"Cluster {row['community_id']}"} for row in rows]
+
+    def get_community_detail(self, requested_case_id: str, requested_community_id: str) -> dict[str, Any] | None:
+        labels = schema.entity_label_predicate("node")
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        entity_type = schema.cypher_identifier(schema.PROP_ENTITY_TYPE)
+        community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+        internal = schema.cypher_identifier(schema.PROP_COMMUNITY_INTERNAL_DENSITY)
+        external = schema.cypher_identifier(schema.PROP_COMMUNITY_EXTERNAL_DENSITY)
+        centrality = schema.cypher_identifier(schema.PROP_BETWEENNESS)
+        query = f"""
+        MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+          AND toString(node.{community}) = $community_id
+        WITH collect(node) AS members
+        WHERE size(members) > 0
+        RETURN $community_id AS community_id, size(members) AS size,
+               coalesce(head(members).{internal}, 0.0) AS internal_density,
+               coalesce(head(members).{external}, 0.0) AS external_density,
+               [member IN members | {{node_id: member.{node_id}, name: member.{node_name},
+                 entity_type: member.{entity_type}, centrality: member.{centrality}}}] AS members
+        """
+        with self.driver.session() as session:
+            return _as_dict(session.run(query, case_id=requested_case_id,
+                                        community_id=requested_community_id).single())
