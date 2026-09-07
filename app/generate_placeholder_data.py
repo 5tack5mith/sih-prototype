@@ -95,6 +95,17 @@ def generate_placeholder_data(
     node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
     node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
     case_id_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+    entity_type = schema.cypher_identifier(schema.PROP_ENTITY_TYPE)
+    first_contact = schema.cypher_identifier(schema.PROP_FIRST_CONTACT_DATE)
+    case_metadata = {
+        case_id: {
+            "name": f"Placeholder investigation {index + 1}", "status": "ACTIVE",
+            "priority": None, "description": "Disposable synthetic case for local API testing.",
+            "updated_at": datetime.now(timezone.utc).isoformat(), "lead_analyst": None,
+            "jurisdiction_tag": None,
+        } for index, case_id in enumerate(case_sizes)
+    }
+
     rel_id = schema.cypher_identifier(schema.PROP_RELATIONSHIP_ID)
     weight_assignment = (
         f", relationship.{schema.cypher_identifier(schema.REL_WEIGHT_PROPERTY)} = row.weight"
@@ -104,7 +115,9 @@ def generate_placeholder_data(
     amount = schema.cypher_identifier(schema.TXN_PROP_AMOUNT)
     timestamp = schema.cypher_identifier(schema.TXN_PROP_TIMESTAMP)
     nodes = [
-        {"id": f"{case_id}:P{index:03d}", "name": f"Placeholder Person {index + 1}", "case_id": case_id}
+        {"id": f"{case_id}:P{index:03d}", "name": f"Placeholder Person {index + 1}",
+         "case_id": case_id, "entity_type": "PERSON",
+         "first_contact_date": "2026-01-01T00:00:00Z"}
         for case_id, size in case_sizes.items() for index in range(size)
     ]
     rng = random.Random(seed)
@@ -135,12 +148,22 @@ def generate_placeholder_data(
             f"""
             UNWIND $rows AS row
             MERGE (case:{case_label} {{{node_id}: row.case_id}})
-            SET case.{case_id_prop} = row.case_id
+            SET case.{case_id_prop} = row.case_id,
+                case.{node_name} = $metadata[row.case_id].name,
+                case.{schema.cypher_identifier(schema.PROP_CASE_STATUS)} = $metadata[row.case_id].status,
+                case.{schema.cypher_identifier(schema.PROP_CASE_PRIORITY)} = $metadata[row.case_id].priority,
+                case.{schema.cypher_identifier(schema.PROP_CASE_DESCRIPTION)} = $metadata[row.case_id].description,
+                case.{schema.cypher_identifier(schema.PROP_CASE_UPDATED_AT)} = $metadata[row.case_id].updated_at,
+                case.{schema.cypher_identifier(schema.PROP_CASE_LEAD_ANALYST)} = $metadata[row.case_id].lead_analyst,
+                case.{schema.cypher_identifier(schema.PROP_CASE_JURISDICTION_TAG)} = $metadata[row.case_id].jurisdiction_tag
             MERGE (entity:{entity_label} {{{node_id}: row.id}})
-            SET entity.{node_name} = row.name, entity.{case_id_prop} = row.case_id
+            SET entity.{node_name} = row.name, entity.{case_id_prop} = row.case_id,
+                entity.{entity_type} = row.entity_type,
+                entity.{first_contact} = row.first_contact_date
             MERGE (entity)-[:{case_link}]->(case)
             """,
             rows=nodes,
+            metadata=case_metadata,
         ).consume()
         for relationship_type in schema.STRUCTURAL_REL_TYPES:
             rows = [row for row in relationships if row["relationship_type"] == relationship_type]

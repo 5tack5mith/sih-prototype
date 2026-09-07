@@ -25,6 +25,18 @@ PROP_NODE_ID = "id"
 PROP_NODE_NAME = "name"
 PROP_CASE_ID = "case_id"
 PROP_RELATIONSHIP_ID = "id"
+PROP_ENTITY_TYPE = "entity_type"
+PROP_FIRST_CONTACT_DATE = "first_contact_date"
+PROP_CASE_STATUS = "status"
+PROP_CASE_PRIORITY = "priority"
+PROP_CASE_DESCRIPTION = "description"
+PROP_CASE_UPDATED_AT = "updated_at"
+PROP_CASE_LEAD_ANALYST = "lead_analyst"
+PROP_CASE_JURISDICTION_TAG = "jurisdiction_tag"
+PROP_CASE_MODULARITY = "modularity"
+PROP_CASE_DENSITY = "density"
+PROP_CASE_DIAMETER = "diameter"
+PROP_CASE_RECIPROCITY = "reciprocity"
 
 # Relationship types
 REL_CALL = "CALLED"
@@ -40,6 +52,7 @@ TXN_PROP_TIMESTAMP = "timestamp"
 
 # Algorithm output contract
 PROP_BETWEENNESS = "betweenness_score"
+PROP_EIGENVECTOR = "eigenvector_score"
 PROP_DEGREE = "degree_score"
 PROP_COMMUNITY_ID = "community_id"
 PROP_COMMUNITY_SIZE = "community_size"
@@ -75,7 +88,7 @@ BROKER_DEGREE_PERCENTILE_MAX = 50
 
 # Fragmentation simulation
 CRITICALITY_CANDIDATE_POOL_SIZE = 20
-CRITICALITY_DEFAULT_TOP_K = 5
+CRITICALITY_DEFAULT_TOP_K = 10
 
 # Financial-pattern rules (placeholders pending dataset calibration)
 STRUCTURING_THRESHOLD_AMOUNT = 200_000

@@ -44,6 +44,18 @@ def _write_community_sizes(driver: Any, case_id: str) -> int:
     return _metric(row, "nodes_updated")
 
 
+def _write_case_modularity(driver: Any, case_id: str, modularity: float | None) -> None:
+    case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+    node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+    property_name = schema.cypher_identifier(schema.PROP_CASE_MODULARITY)
+    query = f"""
+    MATCH (case:{case_label} {{{node_id}: $case_id}})
+    SET case.{property_name} = $modularity
+    """
+    with driver.session() as session:
+        session.run(query, case_id=case_id, modularity=modularity).consume()
+
+
 def _delete_case_similarities(driver: Any, case_id: str) -> None:
     similar_type = schema.cypher_identifier(schema.REL_SIMILAR_TO)
     case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
@@ -88,14 +100,25 @@ def run_core_algorithms(driver: Any, case_id: str) -> CoreAlgorithmSummary:
         ).single()
         metrics["degree_nodes"] = _metric(row, "nodePropertiesWritten")
 
+        row = session.run(
+            """
+            CALL gds.eigenvector.write($graph_name, {writeProperty: $write_property})
+            YIELD nodePropertiesWritten
+            RETURN nodePropertiesWritten
+            """,
+            graph_name=graph_name,
+            write_property=schema.PROP_EIGENVECTOR,
+        ).single()
+        metrics["eigenvector_nodes"] = _metric(row, "nodePropertiesWritten")
+
         louvain_config: dict[str, Any] = {"writeProperty": schema.PROP_COMMUNITY_ID}
         if schema.REL_WEIGHT_PROPERTY:
             louvain_config["relationshipWeightProperty"] = "weight"
         row = session.run(
             """
             CALL gds.louvain.write($graph_name, $config)
-            YIELD nodePropertiesWritten
-            RETURN nodePropertiesWritten
+            YIELD nodePropertiesWritten, modularity
+            RETURN nodePropertiesWritten, modularity
             """,
             graph_name=graph_name,
             config=louvain_config,
@@ -103,6 +126,7 @@ def run_core_algorithms(driver: Any, case_id: str) -> CoreAlgorithmSummary:
         ).single()
         metrics["community_nodes"] = _metric(row, "nodePropertiesWritten")
 
+    _write_case_modularity(driver, case_id, (row or {}).get("modularity"))
     metrics["community_sizes"] = _write_community_sizes(driver, case_id)
     # Similarity is a suggestion layer and never participates in structural projections.
     _delete_case_similarities(driver, case_id)
