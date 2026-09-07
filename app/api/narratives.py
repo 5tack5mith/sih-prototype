@@ -22,3 +22,10 @@ def path_narrative(nodes: list[str], steps: list[dict]) -> str | None:
     )
     return (f"{steps[0].get('from') or nodes[0]} and {steps[-1].get('to') or nodes[-1]} "
             f"are connected by a {len(steps)}-hop path: {route}.")
+
+
+def criticality_narrative(node_name: str, final_state: dict) -> str:
+    return (f"The precomputed sequence beginning with {node_name} fragments the network into "
+            f"{final_state['components_created']} disconnected components, with the largest "
+            f"remaining component at {final_state['largest_remaining_component']} nodes and "
+            f"global efficiency reduced by {final_state['overall_efficiency_drop_pct']:.1f}%.")

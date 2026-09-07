@@ -18,12 +18,15 @@ class CriticalityRank:
     largest_component_before: int
     largest_component_after: int
     num_components_after: int
+    global_efficiency_before: float
+    global_efficiency_after: float
 
 
 @dataclass(frozen=True)
 class CriticalityResult:
     baseline_largest_component: int
     baseline_component_count: int
+    baseline_node_count: int
     ranks: tuple[CriticalityRank, ...]
 
 
@@ -51,6 +54,7 @@ def compute_criticality_from_graph(
     # Each trial uses a copy; only the selected removal mutates the working graph.
     for rank in range(1, min(top_k, len(candidates)) + 1):
         before, _ = _component_metrics(working)
+        efficiency_before = nx.global_efficiency(working) if len(working) > 1 else 0.0
         trials: list[tuple[int, int, float, str, Any]] = []
         for candidate in candidates:
             if candidate not in working:
@@ -71,6 +75,7 @@ def compute_criticality_from_graph(
             break
         largest_after, neg_components, _neg_score, node_id_text, selected = min(trials)
         working.remove_node(selected)
+        efficiency_after = nx.global_efficiency(working) if len(working) > 1 else 0.0
         candidates.remove(selected)
         ranks.append(
             CriticalityRank(
@@ -79,9 +84,11 @@ def compute_criticality_from_graph(
                 largest_component_before=before,
                 largest_component_after=largest_after,
                 num_components_after=-neg_components,
+                global_efficiency_before=efficiency_before,
+                global_efficiency_after=efficiency_after,
             )
         )
-    return CriticalityResult(baseline_largest, baseline_components, tuple(ranks))
+    return CriticalityResult(baseline_largest, baseline_components, len(graph), tuple(ranks))
 
 
 def load_case_graph(driver: Any, case_id: str) -> tuple[nx.Graph, dict[str, float]]:
@@ -136,6 +143,9 @@ def persist_criticality_results(
     before = schema.cypher_identifier(schema.PROP_LARGEST_COMPONENT_BEFORE)
     after = schema.cypher_identifier(schema.PROP_LARGEST_COMPONENT_AFTER)
     components = schema.cypher_identifier(schema.PROP_NUM_COMPONENTS_AFTER)
+    efficiency_before = schema.cypher_identifier(schema.PROP_GLOBAL_EFFICIENCY_BEFORE)
+    efficiency_after = schema.cypher_identifier(schema.PROP_GLOBAL_EFFICIENCY_AFTER)
+    baseline_nodes = schema.cypher_identifier(schema.PROP_BASELINE_NODE_COUNT)
     baseline_largest = schema.cypher_identifier(schema.PROP_BASELINE_LARGEST_COMPONENT)
     baseline_count = schema.cypher_identifier(schema.PROP_BASELINE_COMPONENT_COUNT)
     delete_query = f"""
@@ -154,6 +164,9 @@ def persist_criticality_results(
         result.{before} = row.largest_component_before,
         result.{after} = row.largest_component_after,
         result.{components} = row.num_components_after,
+        result.{efficiency_before} = row.global_efficiency_before,
+        result.{efficiency_after} = row.global_efficiency_after,
+        result.{baseline_nodes} = $baseline_nodes,
         result.{baseline_largest} = $baseline_largest,
         result.{baseline_count} = $baseline_count
     CREATE (case)-[:{result_link}]->(result)
@@ -165,6 +178,7 @@ def persist_criticality_results(
             case_id=case_id,
             rows=[asdict(row) for row in result.ranks],
             baseline_largest=result.baseline_largest_component,
+            baseline_nodes=result.baseline_node_count,
             baseline_count=result.baseline_component_count,
         ).consume()
 

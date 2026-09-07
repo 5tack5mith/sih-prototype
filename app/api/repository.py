@@ -347,3 +347,60 @@ class Neo4jRepository:
                 "connection_strength": round(strength, 4),
                 "total_relationship_count": int(round(sum(weights))),
                 "nodes": row["node_ids"], "steps": steps}
+
+
+    def get_criticality(self, requested_case_id: str, top_k: int) -> dict[str, Any]:
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        result_label = schema.cypher_identifier(schema.NODE_LABEL_CRITICALITY_RESULT)
+        result_link = schema.cypher_identifier(schema.REL_HAS_CRITICALITY_RESULT)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        entity_type = schema.cypher_identifier(schema.PROP_ENTITY_TYPE)
+        role = schema.cypher_identifier(schema.PROP_STRUCTURAL_ROLE)
+        rank = schema.cypher_identifier(schema.PROP_RESULT_RANK)
+        result_node = schema.cypher_identifier(schema.PROP_RESULT_NODE_ID)
+        before = schema.cypher_identifier(schema.PROP_LARGEST_COMPONENT_BEFORE)
+        after = schema.cypher_identifier(schema.PROP_LARGEST_COMPONENT_AFTER)
+        components = schema.cypher_identifier(schema.PROP_NUM_COMPONENTS_AFTER)
+        baseline_nodes = schema.cypher_identifier(schema.PROP_BASELINE_NODE_COUNT)
+        efficiency_before = schema.cypher_identifier(schema.PROP_GLOBAL_EFFICIENCY_BEFORE)
+        efficiency_after = schema.cypher_identifier(schema.PROP_GLOBAL_EFFICIENCY_AFTER)
+        labels = schema.entity_label_predicate("node")
+        query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})-[:{result_link}]->(result:{result_label})
+        OPTIONAL MATCH (node) WHERE {labels} AND node.{node_id} = result.{result_node}
+        WITH result, node ORDER BY result.{rank}
+        RETURN result.{rank} AS rank, result.{result_node} AS node_id,
+               node.{node_name} AS node_name, node.{entity_type} AS entity_type,
+               node.{role} AS structural_role, result.{before} AS component_size_before,
+               result.{after} AS component_size_after, result.{components} AS num_components_after,
+               result.{baseline_nodes} AS baseline_node_count,
+               result.{efficiency_before} AS efficiency_before,
+               result.{efficiency_after} AS efficiency_after
+        """
+        with self.driver.session() as session:
+            all_rows = [_as_dict(row) for row in session.run(query, case_id=requested_case_id)]
+        selected = all_rows[:top_k]
+        removals = []
+        for row in selected:
+            before_size = int(row["component_size_before"])
+            reduction = 100.0 * (before_size - int(row["component_size_after"])) / before_size if before_size else 0.0
+            label = "CRITICAL CUT" if row["rank"] == 1 and reduction >= 25.0 else (row.get("structural_role") or row.get("entity_type") or "STRUCTURAL MEMBER")
+            removals.append({"rank": row["rank"], "node_id": row["node_id"],
+                "node_name": row.get("node_name"), "entity_type_label": label,
+                "component_size_before": before_size,
+                "component_size_after": row["component_size_after"],
+                "fragmentation_pct": round(reduction, 1)})
+        final = selected[-1] if selected else None
+        baseline_efficiency = selected[0].get("efficiency_before") if selected else None
+        final_efficiency = final.get("efficiency_after") if final else None
+        efficiency_drop = (100.0 * (baseline_efficiency - final_efficiency) / baseline_efficiency
+                           if baseline_efficiency not in (None, 0) and final_efficiency is not None else 0.0)
+        note = (f"Only {len(all_rows)} results were precomputed; {top_k} were requested."
+                if len(all_rows) < top_k else None)
+        return {"case_id": requested_case_id,
+                "initial_node_count": int(all_rows[0].get("baseline_node_count") or 0) if all_rows else 0,
+                "criterion": "largest_component_fragmentation", "ranked_removals": removals,
+                "final_state": {"components_created": int(final["num_components_after"]) if final else 0,
+                    "largest_remaining_component": int(final["component_size_after"]) if final else 0,
+                    "overall_efficiency_drop_pct": round(efficiency_drop, 1)}, "note": note}

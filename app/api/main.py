@@ -1,11 +1,11 @@
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import Depends, FastAPI, HTTPException, Query
 
 from .. import schema_config as schema
 from .dependencies import get_repository
-from .models import CaseFilter, CaseGraph, CaseOverview, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, TopNodesResponse
-from .narratives import community_narrative, path_narrative
+from .models import CaseFilter, CaseGraph, CaseOverview, CriticalityResponse, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, TopNodesResponse
+from .narratives import community_narrative, criticality_narrative, path_narrative
 from .repository import Neo4jRepository
 
 app = FastAPI(title="Criminal Network Analysis API", version="1.0.0")
@@ -97,3 +97,16 @@ def path(
     if not result["path_found"]:
         return {**result, "narrative": None}
     return {**result, "narrative": path_narrative(result["nodes"], result["steps"])}
+
+
+@app.get("/cases/{case_id}/criticality", response_model=CriticalityResponse)
+def criticality(
+    case_id: str, repository: Repository,
+    top_k: Annotated[Literal[3, 6, 10], Query()] = 6,
+) -> dict:
+    """Slice precomputed CriticalityRank nodes; this endpoint never runs simulation."""
+    result = repository.get_criticality(case_id, top_k)
+    if result["ranked_removals"]:
+        first_name = result["ranked_removals"][0].get("node_name") or result["ranked_removals"][0]["node_id"]
+        result["impact_narrative"] = criticality_narrative(first_name, result["final_state"])
+    return result
