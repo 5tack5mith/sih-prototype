@@ -236,6 +236,13 @@ class Neo4jRepository:
         node_query = f"""
         MATCH (node) WHERE {labels} AND {_case_scope("node")}
           AND ($cutoff IS NULL OR coalesce(node.{betweenness}, 0.0) >= $cutoff)
+          AND (NOT $bridging_only OR EXISTS {
+            MATCH (node)-[:{structural}]-(bridge_neighbor)
+            WHERE {_case_scope("bridge_neighbor")} AND node.{community} IS NOT NULL
+              AND bridge_neighbor.{community} IS NOT NULL
+              AND node.{community} <> bridge_neighbor.{community}
+              AND ($cutoff IS NULL OR coalesce(bridge_neighbor.{betweenness}, 0.0) >= $cutoff)
+          })
         RETURN node.{node_id} AS node_id, node.{node_name} AS name,
               node.{entity_type} AS entity_type, node.{betweenness} AS betweenness,
               node.{degree} AS degree, node.{eigenvector} AS eigenvector,
