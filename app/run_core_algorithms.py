@@ -5,6 +5,8 @@ import argparse
 from dataclasses import dataclass, field
 from typing import Any
 
+import networkx as nx
+
 from . import schema_config as schema
 from .database import distinct_case_ids, managed_driver
 from .project_graphs import project_case_graph
@@ -47,6 +49,7 @@ def _write_community_sizes(driver: Any, case_id: str) -> int:
 def _write_community_densities(driver: Any, case_id: str) -> int:
     labels = schema.entity_label_predicate("node")
     other_labels = schema.entity_label_predicate("other")
+    all_labels = schema.entity_label_predicate("all_node")
     case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
     community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
     internal = schema.cypher_identifier(schema.PROP_COMMUNITY_INTERNAL_DENSITY)
@@ -57,7 +60,7 @@ def _write_community_densities(driver: Any, case_id: str) -> int:
       AND node.{community} IS NOT NULL
     WITH node.{community} AS community_id, collect(node) AS members
     CALL (members) {{
-      MATCH (all_node) WHERE {labels} AND all_node.{case_prop} = $case_id
+      MATCH (all_node) WHERE {all_labels} AND all_node.{case_prop} = $case_id
       RETURN count(all_node) AS total_nodes
     }}
     CALL (members, community_id) {{
@@ -108,11 +111,6 @@ def _write_case_graph_metrics(driver: Any, case_id: str, graph_name: str) -> Non
             "CALL gds.graph.list($graph_name) YIELD density RETURN density",
             graph_name=graph_name,
         ).single() or {}
-        diameter_stats = session.run(
-            "CALL gds.allShortestPaths.delta.stream($graph_name, {}) "
-            "YIELD distance RETURN toInteger(max(distance)) AS diameter",
-            graph_name=graph_name,
-        ).single() or {}
         reciprocity_stats = session.run(f"""
             MATCH (source)-[relationship:{structural}]->(target)
             WHERE source.{case_prop} = $case_id AND target.{case_prop} = $case_id
@@ -121,12 +119,21 @@ def _write_case_graph_metrics(driver: Any, case_id: str, graph_name: str) -> Non
               toFloat(size([pair IN pairs WHERE [pair[1], pair[0]] IN pairs])) / size(pairs)
             END AS reciprocity
         """.replace('\n+', '\n'), case_id=case_id).single() or {}
+        # GDS has no direct unweighted diameter procedure in the installed edition.
+        from .compute_criticality import load_case_graph
+        topology, _ = load_case_graph(driver, case_id)
+        component_diameters = [
+            nx.diameter(topology.subgraph(component))
+            for component in nx.connected_components(topology)
+            if component
+        ]
+        diameter = max(component_diameters, default=0)
         session.run(f"""
             MATCH (case:{case_label} {{{node_id}: $case_id}})
             SET case.{density_prop} = $density, case.{diameter_prop} = $diameter,
                 case.{reciprocity_prop} = $reciprocity
         """.replace('\n+', '\n'), case_id=case_id, density=graph_stats.get("density"),
-            diameter=diameter_stats.get("diameter"),
+            diameter=diameter,
             reciprocity=reciprocity_stats.get("reciprocity")).consume()
 
 
