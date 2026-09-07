@@ -15,6 +15,18 @@ def _serialized(value: Any) -> Any:
     return value.isoformat() if hasattr(value, "isoformat") else value
 
 
+def _case_scope(variable: str, parameter: str = "$case_id") -> str:
+    """Match either entity.case_id or the configured entity-to-Case relationship."""
+    if not variable.isidentifier():
+        raise ValueError("unsafe Cypher variable")
+    case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+    case_link = schema.cypher_identifier(schema.REL_CASE_LINK)
+    case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+    node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+    return (f"({variable}.{case_prop} = {parameter} OR EXISTS {{ "
+            f"MATCH ({variable})-[:{case_link}]->(:{case_label} {{{node_id}: {parameter}}}) }})")
+
+
 class Neo4jRepository:
     """Parameterized, read-oriented access to persisted analysis results."""
 
@@ -52,7 +64,7 @@ class Neo4jRepository:
         }}
         CALL (case) {{
           OPTIONAL MATCH (source)-[relationship:{structural}]->(target)
-          WHERE source.{case_prop} = case.{case_id} AND target.{case_prop} = case.{case_id}
+          WHERE {_case_scope("source", "case." + case_id)} AND {_case_scope("target", "case." + case_id)}
           RETURN count(DISTINCT relationship) AS edge_count
         }}
         RETURN case.{case_id} AS case_id, case.{node_name} AS name,
@@ -96,9 +108,10 @@ class Neo4jRepository:
         CALL (case) {{
           OPTIONAL MATCH (source)-[relationship:{structural}]->(target)
           WHERE {source_labels} AND {target_labels}
-            AND source.{case_prop} = case.{node_id} AND target.{case_prop} = case.{node_id}
+            AND {_case_scope("source", "case." + node_id)} AND {_case_scope("target", "case." + node_id)}
           RETURN count(DISTINCT relationship) AS total_relationships,
-                 size(collect(DISTINCT source) + collect(DISTINCT target)) AS direct_1hop_count
+                 size(reduce(unique = [], item IN collect(DISTINCT source) + collect(DISTINCT target) |
+                   CASE WHEN item IN unique THEN unique ELSE unique + item END)) AS direct_1hop_count
         }}
         CALL (case) {{
           OPTIONAL MATCH (flag) WHERE (flag:{circular} OR flag:{structuring})
@@ -125,7 +138,7 @@ class Neo4jRepository:
         entity_type = schema.cypher_identifier(schema.PROP_ENTITY_TYPE)
         metric = schema.cypher_identifier(metric_property)
         query = f"""
-        MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+        MATCH (node) WHERE {labels} AND {_case_scope("node")}
         WITH node ORDER BY node.{metric} DESC, node.{node_id}
         LIMIT $limit
         RETURN node.{node_id} AS node_id, node.{node_name} AS name,
@@ -160,7 +173,7 @@ class Neo4jRepository:
         flag_to = schema.cypher_identifier(schema.PROP_FLAG_TO_NODE)
         base_query = f"""
         MATCH (node) WHERE {labels} AND node.{node_id} = $node_id
-          AND node.{case_prop} = $case_id
+          AND {_case_scope("node")}
         RETURN node.{node_id} AS node_id, node.{node_name} AS name,
                node.{entity_type} AS entity_type, node.{first_contact} AS first_contact_date,
                node.{betweenness} AS betweenness, node.{eigenvector} AS eigenvector,
@@ -170,7 +183,7 @@ class Neo4jRepository:
         edge_query = f"""
         MATCH (node)-[relationship:{structural}]-(neighbor)
         WHERE {labels} AND {neighbor_labels} AND node.{node_id} = $node_id
-          AND node.{case_prop} = $case_id AND neighbor.{case_prop} = $case_id
+          AND {_case_scope("node")} AND {_case_scope("neighbor")}
         RETURN node.{node_id} AS node_id, neighbor.{node_id} AS neighbor_id,
               type(relationship) AS relationship_type{f', relationship.{weight} AS weight' if weight else ', null AS weight'}
         """.replace('\n+', '\n')
@@ -221,7 +234,7 @@ class Neo4jRepository:
         structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
         weight = schema.cypher_identifier(schema.REL_WEIGHT_PROPERTY) if schema.REL_WEIGHT_PROPERTY else None
         node_query = f"""
-        MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+        MATCH (node) WHERE {labels} AND {_case_scope("node")}
           AND ($cutoff IS NULL OR coalesce(node.{betweenness}, 0.0) >= $cutoff)
         RETURN node.{node_id} AS node_id, node.{node_name} AS name,
               node.{entity_type} AS entity_type, node.{betweenness} AS betweenness,
@@ -232,7 +245,7 @@ class Neo4jRepository:
         edge_query = f"""
         MATCH (source)-[relationship:{structural}]->(target)
         WHERE {source_labels} AND {target_labels}
-          AND source.{case_prop} = $case_id AND target.{case_prop} = $case_id
+          AND {_case_scope("source")} AND {_case_scope("target")}
           AND ($cutoff IS NULL OR (coalesce(source.{betweenness}, 0.0) >= $cutoff
                AND coalesce(target.{betweenness}, 0.0) >= $cutoff))
         WITH source, target, relationship, source.{community} AS source_community,
@@ -267,7 +280,7 @@ class Neo4jRepository:
         internal = schema.cypher_identifier(schema.PROP_COMMUNITY_INTERNAL_DENSITY)
         external = schema.cypher_identifier(schema.PROP_COMMUNITY_EXTERNAL_DENSITY)
         query = f"""
-        MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+        MATCH (node) WHERE {labels} AND {_case_scope("node")}
           AND node.{community} IS NOT NULL
         WITH node.{community} AS raw_id, collect(node) AS members
         RETURN toString(raw_id) AS community_id, size(members) AS size,
@@ -291,7 +304,7 @@ class Neo4jRepository:
         external = schema.cypher_identifier(schema.PROP_COMMUNITY_EXTERNAL_DENSITY)
         centrality = schema.cypher_identifier(schema.PROP_BETWEENNESS)
         query = f"""
-        MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+        MATCH (node) WHERE {labels} AND {_case_scope("node")}
           AND toString(node.{community}) = $community_id
         WITH collect(node) AS members
         WHERE size(members) > 0
@@ -319,9 +332,9 @@ class Neo4jRepository:
         MATCH (source), (target)
         WHERE {source_labels} AND {target_labels}
           AND source.{node_id} = $from_node_id AND target.{node_id} = $to_node_id
-          AND source.{case_prop} = $case_id AND target.{case_prop} = $case_id
+          AND {_case_scope("source")} AND {_case_scope("target")}
         MATCH path = shortestPath((source)-[:{structural}*..{schema.PATH_MAX_HOPS}]-(target))
-        WHERE all(node IN nodes(path) WHERE node.{case_prop} = $case_id)
+        WHERE all(node IN nodes(path) WHERE {_case_scope("node")})
           AND all(relationship IN relationships(path) WHERE
               coalesce(relationship.{case_prop}, $case_id) = $case_id)
         RETURN [node IN nodes(path) | node.{node_id}] AS node_ids,
@@ -418,7 +431,7 @@ class Neo4jRepository:
         query = f"""
         MATCH (node)-[similarity:{similar}]-(suggested)
         WHERE {labels} AND {suggested_labels} AND node.{node_id} = $node_id
-          AND node.{case_prop} = $case_id AND suggested.{case_prop} = $case_id
+          AND {_case_scope("node")} AND {_case_scope("suggested")}
           AND NOT (node)-[:{structural}]-(suggested)
         RETURN DISTINCT suggested.{node_id} AS suggested_node_id,
                suggested.{node_name} AS suggested_name,
