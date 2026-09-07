@@ -72,4 +72,42 @@ class Neo4jRepository:
             row["updated_at"] = _serialized(row.get("updated_at"))
         return rows
 
-    # Remaining methods are added endpoint-by-endpoint below.
+    def get_case_overview(self, requested_case_id: str) -> dict[str, Any] | None:
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        modularity = schema.cypher_identifier(schema.PROP_CASE_MODULARITY)
+        community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+        case_link = schema.cypher_identifier(schema.REL_CASE_LINK)
+        structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+        circular = schema.cypher_identifier(schema.NODE_LABEL_CIRCULAR_FLOW_FLAG)
+        structuring = schema.cypher_identifier(schema.NODE_LABEL_STRUCTURING_FLAG)
+        labels = schema.entity_label_predicate("entity")
+        source_labels = schema.entity_label_predicate("source")
+        target_labels = schema.entity_label_predicate("target")
+        query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})
+        CALL (case) {{
+          OPTIONAL MATCH (entity) WHERE {labels} AND
+            (entity.{case_prop} = case.{node_id} OR (entity)-[:{case_link}]->(case))
+          RETURN count(DISTINCT entity) AS total_entities,
+                 count(DISTINCT entity.{community}) AS community_count
+        }}
+        CALL (case) {{
+          OPTIONAL MATCH (source)-[relationship:{structural}]->(target)
+          WHERE {source_labels} AND {target_labels}
+            AND source.{case_prop} = case.{node_id} AND target.{case_prop} = case.{node_id}
+          RETURN count(DISTINCT relationship) AS total_relationships,
+                 size(collect(DISTINCT source) + collect(DISTINCT target)) AS direct_1hop_count
+        }}
+        CALL (case) {{
+          OPTIONAL MATCH (flag) WHERE (flag:{circular} OR flag:{structuring})
+            AND flag.{case_prop} = case.{node_id}
+          RETURN count(flag) AS structural_alert_count
+        }}
+        RETURN case.{node_id} AS case_id, total_entities, total_relationships,
+               community_count, case.{modularity} AS modularity,
+               structural_alert_count, direct_1hop_count
+        """
+        with self.driver.session() as session:
+            return _as_dict(session.run(query, case_id=requested_case_id).single())

@@ -1,9 +1,9 @@
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, Query
+from fastapi import Depends, FastAPI, HTTPException, Query
 
 from .dependencies import get_repository
-from .models import CaseFilter, CaseSort, CaseSummary
+from .models import CaseFilter, CaseOverview, CaseSort, CaseSummary
 from .repository import Neo4jRepository
 
 app = FastAPI(title="Criminal Network Analysis API", version="1.0.0")
@@ -18,3 +18,12 @@ def list_cases(
 ) -> list[dict]:
     """Read Case metadata and scoped structural node/edge counts; metadata is null-safe."""
     return repository.list_cases(filter, sort)
+
+
+@app.get("/cases/{case_id}/overview", response_model=CaseOverview)
+def case_overview(case_id: str, repository: Repository) -> dict:
+    """Read persisted Louvain modularity plus scoped counts and Section 6 flags."""
+    result = repository.get_case_overview(case_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Case not found")
+    return result
