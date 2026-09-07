@@ -23,7 +23,7 @@ def _case_scope(variable: str, parameter: str = "$case_id") -> str:
     case_link = schema.cypher_identifier(schema.REL_CASE_LINK)
     case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
     node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
-    return (f"({variable}.{case_prop} = {parameter} OR EXISTS {{{ "
+    return (f"({variable}.{case_prop} = {parameter} OR EXISTS {{ "
             f"MATCH ({variable})-[:{case_link}]->(:{case_label} {{{node_id}: {parameter}}}) }})")
 
 
