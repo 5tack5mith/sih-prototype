@@ -23,7 +23,7 @@ def _case_scope(variable: str, parameter: str = "$case_id") -> str:
     case_link = schema.cypher_identifier(schema.REL_CASE_LINK)
     case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
     node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
-    return (f"({variable}.{case_prop} = {parameter} OR EXISTS {{ "
+    return (f"({variable}.{case_prop} = {parameter} OR EXISTS {{{ "
             f"MATCH ({variable})-[:{case_link}]->(:{case_label} {{{node_id}: {parameter}}}) }})")
 
 
@@ -236,13 +236,13 @@ class Neo4jRepository:
         node_query = f"""
         MATCH (node) WHERE {labels} AND {_case_scope("node")}
           AND ($cutoff IS NULL OR coalesce(node.{betweenness}, 0.0) >= $cutoff)
-          AND (NOT $bridging_only OR EXISTS {
+          AND (NOT $bridging_only OR EXISTS {{
             MATCH (node)-[:{structural}]-(bridge_neighbor)
             WHERE {_case_scope("bridge_neighbor")} AND node.{community} IS NOT NULL
               AND bridge_neighbor.{community} IS NOT NULL
               AND node.{community} <> bridge_neighbor.{community}
               AND ($cutoff IS NULL OR coalesce(bridge_neighbor.{betweenness}, 0.0) >= $cutoff)
-          })
+          }})
         RETURN node.{node_id} AS node_id, node.{node_name} AS name,
               node.{entity_type} AS entity_type, node.{betweenness} AS betweenness,
               node.{degree} AS degree, node.{eigenvector} AS eigenvector,
