@@ -11,3 +11,4 @@
 | `GET /cases/{case_id}/communities/{community_id}` | Returns members, persisted densities, and a deterministic narrative. | Path: `case_id`, `community_id` | `CommunityDetail` |
 | `GET /cases/{case_id}/path` | Finds a scoped shortest path; strength is the mean `weight/(weight+1)`, never confidence. | Query: `from_node_id`, `to_node_id` | `PathResponse` |
 | `GET /cases/{case_id}/criticality` | Slices precomputed fragmentation ranks and provides a traceable impact template. | Query: `top_k=3|6|10` | `CriticalityResponse` |
+| `GET /cases/{case_id}/nodes/{node_id}/suggested_links` | Lists persisted Jaccard candidates that lack a structural edge; suggestions are not facts. | Path: `case_id`, `node_id` | `SuggestedLink[]` |

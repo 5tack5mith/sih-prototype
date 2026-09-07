@@ -4,7 +4,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 
 from .. import schema_config as schema
 from .dependencies import get_repository
-from .models import CaseFilter, CaseGraph, CaseOverview, CriticalityResponse, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, TopNodesResponse
+from .models import CaseFilter, CaseGraph, CaseOverview, CriticalityResponse, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, SuggestedLink, TopNodesResponse
 from .narratives import community_narrative, criticality_narrative, path_narrative
 from .repository import Neo4jRepository
 
@@ -112,3 +112,9 @@ def criticality(
         first_name = result["ranked_removals"][0].get("node_name") or result["ranked_removals"][0]["node_id"]
         result["impact_narrative"] = criticality_narrative(first_name, result["final_state"])
     return result
+
+
+@app.get("/cases/{case_id}/nodes/{node_id}/suggested_links", response_model=list[SuggestedLink])
+def suggested_links(case_id: str, node_id: str, repository: Repository) -> list[dict]:
+    """Read persisted Jaccard SIMILAR_TO candidates; results are suggestions, not facts."""
+    return repository.get_suggested_links(case_id, node_id)

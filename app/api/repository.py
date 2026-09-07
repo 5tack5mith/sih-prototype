@@ -404,3 +404,28 @@ class Neo4jRepository:
                 "final_state": {"components_created": int(final["num_components_after"]) if final else 0,
                     "largest_remaining_component": int(final["component_size_after"]) if final else 0,
                     "overall_efficiency_drop_pct": round(efficiency_drop, 1)}, "note": note}
+
+
+    def get_suggested_links(self, requested_case_id: str, requested_node_id: str) -> list[dict[str, Any]]:
+        labels = schema.entity_label_predicate("node")
+        suggested_labels = schema.entity_label_predicate("suggested")
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        similar = schema.cypher_identifier(schema.REL_SIMILAR_TO)
+        score = schema.cypher_identifier(schema.REL_SIMILAR_TO_SCORE_PROP)
+        structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+        query = f"""
+        MATCH (node)-[similarity:{similar}]-(suggested)
+        WHERE {labels} AND {suggested_labels} AND node.{node_id} = $node_id
+          AND node.{case_prop} = $case_id AND suggested.{case_prop} = $case_id
+          AND NOT (node)-[:{structural}]-(suggested)
+        RETURN DISTINCT suggested.{node_id} AS suggested_node_id,
+               suggested.{node_name} AS suggested_name,
+               similarity.{score} AS similarity_score
+        ORDER BY similarity_score DESC, suggested_node_id
+        """
+        with self.driver.session() as session:
+            return [_as_dict(row) for row in session.run(
+                query, case_id=requested_case_id, node_id=requested_node_id
+            )]
