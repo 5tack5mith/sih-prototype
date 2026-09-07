@@ -12,6 +12,7 @@ import random
 import sys
 from collections import Counter
 
+from bridges import inject_cross_case_bridges
 from config import RANDOM_SEED, RING_SIZE_TIERS, SCAM_SUBTYPES
 from motifs import (
     generate_dormant_then_burst,
@@ -41,27 +42,33 @@ DEFAULT_SEED = RANDOM_SEED
 NOISE_NODES_PER_CASE = 3
 NOISE_CROSS_LINKS_PER_CASE = 1
 
+# ASSUMPTION: roughly 1 bridge hub per 15 cases, each linking 2-5 spoke
+# cases into it - touches a deliberate minority of cases (most stay fully
+# standalone, matching a realistic base rate) while still giving graph
+# analysis genuine cross-case structure to find. See bridges.py.
+CASES_PER_BRIDGE_HUB = 15
+
 OUTPUT_DIR = "output"
 
 
 def generate_dataset(num_cases: int, case_selection_rng, entity_attribute_rng, noise_rng):
-    """Generates num_cases motif-driven cases plus one noise graph, merged
-    into combined node/edge lists. Returns (nodes, edges, case_metadata,
-    motif_counts, subtype_counts, tier_counts, case_node_counts_match).
+    """Generates num_cases motif-driven cases, links a minority of them via
+    cross-case bridge accounts, then adds one noise graph, merged into
+    combined node/edge lists. Returns (nodes, edges, case_metadata,
+    motif_counts, subtype_counts, tier_counts, case_node_counts_match,
+    bridge_ground_truth).
 
-    case_selection_rng picks each case's motif/scam_subtype/size_tier and is
-    also the case_rng threaded into that motif's own structural decisions;
-    entity_attribute_rng is threaded through to entities.py's factory calls;
-    noise_rng drives generate_noise() entirely. The three streams never mix,
-    so a change confined to one of them cannot shift what any of the others
-    produce."""
-    all_nodes = []
-    all_edges = []
-    all_case_metadata = []
+    case_selection_rng picks each case's motif/scam_subtype/size_tier, is
+    the case_rng threaded into that motif's own structural decisions, and
+    also drives inject_cross_case_bridges (a bridge is a case-spanning
+    structural decision, same category); entity_attribute_rng is threaded
+    through to entities.py's factory calls; noise_rng drives generate_noise()
+    entirely. The three streams never mix, so a change confined to one of
+    them cannot shift what any of the others produce."""
+    case_results = []
     motif_counts = Counter()
     subtype_counts = Counter()
     tier_counts = Counter()
-    ring_person_ids = []
     case_node_counts_match = True
 
     motif_names = list(MOTIF_GENERATORS.keys())
@@ -80,14 +87,26 @@ def generate_dataset(num_cases: int, case_selection_rng, entity_attribute_rng, n
         if len(result["nodes"]) != result["case_metadata"]["node_count"]:
             case_node_counts_match = False
 
+        case_results.append(result)
+        motif_counts[motif] += 1
+        subtype_counts[scam_subtype] += 1
+        tier_counts[size_tier] += 1
+
+    n_hubs = max(1, num_cases // CASES_PER_BRIDGE_HUB) if num_cases >= 3 else 0
+    bridge_edges, bridge_ground_truth = inject_cross_case_bridges(
+        case_results, case_selection_rng, n_hubs)
+
+    all_nodes = []
+    all_edges = []
+    all_case_metadata = []
+    ring_person_ids = []
+    for result in case_results:
         all_nodes.extend(result["nodes"])
         all_edges.extend(result["edges"])
         all_case_metadata.append(result["case_metadata"])
         ring_person_ids.extend(n["id"] for n in result["nodes"] if n["type"] == "PERSON")
 
-        motif_counts[motif] += 1
-        subtype_counts[scam_subtype] += 1
-        tier_counts[size_tier] += 1
+    all_edges.extend(bridge_edges)
 
     noise_result = generate_noise(
         num_nodes=num_cases * NOISE_NODES_PER_CASE,
@@ -99,10 +118,10 @@ def generate_dataset(num_cases: int, case_selection_rng, entity_attribute_rng, n
     all_edges.extend(noise_result["edges"])
 
     return (all_nodes, all_edges, all_case_metadata, motif_counts, subtype_counts,
-            tier_counts, case_node_counts_match)
+            tier_counts, case_node_counts_match, bridge_ground_truth)
 
 
-def run_sanity_checks(nodes, case_node_counts_match):
+def run_sanity_checks(nodes, case_node_counts_match, bridge_ground_truth):
     """Returns a list of (description, passed) tuples for the required
     sanity checks."""
     checks = []
@@ -126,13 +145,21 @@ def run_sanity_checks(nodes, case_node_counts_match):
     ids = [n["id"] for n in nodes]
     checks.append(("No duplicate entity IDs across the combined dataset", len(ids) == len(set(ids))))
 
+    bridges_cross_case = all(
+        b["hub_case_id"] != b["spoke_case_id"] for b in bridge_ground_truth
+    )
+    checks.append(("Every bridge edge's source and target belong to different case_ids", bridges_cross_case))
+
     return checks
 
 
-def write_output(nodes, edges, case_metadata):
+def write_output(nodes, edges, case_metadata, bridge_ground_truth):
     """Writes the combined nodes, edges, and case metadata to OUTPUT_DIR as
-    graph_nodes.json, graph_edges.json, and case_metadata.json, overwriting
-    any existing files there."""
+    graph_nodes.json, graph_edges.json, and case_metadata.json, plus the
+    bridge ground truth to a SEPARATE bridge_ground_truth.json (never
+    embedded in the observable graph files - it's exactly what a
+    discovery-style analysis is meant to find). Overwrites any existing
+    files there."""
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     with open(os.path.join(OUTPUT_DIR, "graph_nodes.json"), "w", encoding="utf-8") as f:
         json.dump(nodes, f, indent=2)
@@ -140,9 +167,12 @@ def write_output(nodes, edges, case_metadata):
         json.dump(edges, f, indent=2)
     with open(os.path.join(OUTPUT_DIR, "case_metadata.json"), "w", encoding="utf-8") as f:
         json.dump(case_metadata, f, indent=2)
+    with open(os.path.join(OUTPUT_DIR, "bridge_ground_truth.json"), "w", encoding="utf-8") as f:
+        json.dump(bridge_ground_truth, f, indent=2)
 
 
-def print_summary(nodes, edges, case_metadata, motif_counts, subtype_counts, tier_counts, seed):
+def print_summary(nodes, edges, case_metadata, motif_counts, subtype_counts, tier_counts,
+                   bridge_ground_truth, seed):
     """Prints the dataset summary report, including the seed that produced it
     so any run's output can be traced back to a reproducible command."""
     print("=" * 60)
@@ -152,6 +182,9 @@ def print_summary(nodes, edges, case_metadata, motif_counts, subtype_counts, tie
     print(f"Total nodes: {len(nodes)}")
     print(f"Total edges: {len(edges)}")
     print(f"Total cases: {len(case_metadata)}")
+    print(f"Bridge edges: {len(bridge_ground_truth)} "
+          f"(linking {len({b['hub_case_id'] for b in bridge_ground_truth})} hub case(s) to "
+          f"{len({b['spoke_case_id'] for b in bridge_ground_truth})} spoke case(s))")
     print("\nCases by motif:")
     for motif, count in motif_counts.items():
         print(f"  {motif}: {count}")
@@ -194,16 +227,17 @@ def main():
     noise_rng = random.Random(derive_seed(args.seed, "noise"))
 
     (nodes, edges, case_metadata, motif_counts, subtype_counts, tier_counts,
-     case_node_counts_match) = generate_dataset(
+     case_node_counts_match, bridge_ground_truth) = generate_dataset(
         args.num_cases, case_selection_rng, entity_attribute_rng, noise_rng)
 
-    write_output(nodes, edges, case_metadata)
-    print_summary(nodes, edges, case_metadata, motif_counts, subtype_counts, tier_counts, args.seed)
+    write_output(nodes, edges, case_metadata, bridge_ground_truth)
+    print_summary(nodes, edges, case_metadata, motif_counts, subtype_counts, tier_counts,
+                   bridge_ground_truth, args.seed)
 
     print("\n" + "=" * 60)
     print("SANITY CHECKS")
     print("=" * 60)
-    checks = run_sanity_checks(nodes, case_node_counts_match)
+    checks = run_sanity_checks(nodes, case_node_counts_match, bridge_ground_truth)
     all_passed = True
     for description, passed in checks:
         status = "PASS" if passed else "FAIL"

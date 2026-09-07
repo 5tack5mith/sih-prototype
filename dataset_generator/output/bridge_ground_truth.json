@@ -1,0 +1,527 @@
+[
+  {
+    "hub_case_id": "C-0007",
+    "hub_account_id": "A-00172",
+    "spoke_case_id": "C-0005",
+    "spoke_account_id": "A-00063",
+    "edge_amount": 35202.2
+  },
+  {
+    "hub_case_id": "C-0007",
+    "hub_account_id": "A-00172",
+    "spoke_case_id": "C-0056",
+    "spoke_account_id": "A-00999",
+    "edge_amount": 14615.55
+  },
+  {
+    "hub_case_id": "C-0007",
+    "hub_account_id": "A-00172",
+    "spoke_case_id": "C-0059",
+    "spoke_account_id": "A-01097",
+    "edge_amount": 38076.1
+  },
+  {
+    "hub_case_id": "C-0007",
+    "hub_account_id": "A-00172",
+    "spoke_case_id": "C-0112",
+    "spoke_account_id": "A-01904",
+    "edge_amount": 39314.5
+  },
+  {
+    "hub_case_id": "C-0007",
+    "hub_account_id": "A-00172",
+    "spoke_case_id": "C-0117",
+    "spoke_account_id": "A-02002",
+    "edge_amount": 28306.55
+  },
+  {
+    "hub_case_id": "C-0007",
+    "hub_account_id": "A-00172",
+    "spoke_case_id": "C-0148",
+    "spoke_account_id": "A-02435",
+    "edge_amount": 7917.33
+  },
+  {
+    "hub_case_id": "C-0032",
+    "hub_account_id": "A-00684",
+    "spoke_case_id": "C-0015",
+    "spoke_account_id": "A-00399",
+    "edge_amount": 1628.22
+  },
+  {
+    "hub_case_id": "C-0032",
+    "hub_account_id": "A-00684",
+    "spoke_case_id": "C-0008",
+    "spoke_account_id": "A-00249",
+    "edge_amount": 32265.01
+  },
+  {
+    "hub_case_id": "C-0032",
+    "hub_account_id": "A-00684",
+    "spoke_case_id": "C-0029",
+    "spoke_account_id": "A-00632",
+    "edge_amount": 23259.32
+  },
+  {
+    "hub_case_id": "C-0032",
+    "hub_account_id": "A-00684",
+    "spoke_case_id": "C-0069",
+    "spoke_account_id": "A-01231",
+    "edge_amount": 18225.1
+  },
+  {
+    "hub_case_id": "C-0032",
+    "hub_account_id": "A-00684",
+    "spoke_case_id": "C-0137",
+    "spoke_account_id": "A-02262",
+    "edge_amount": 8250.14
+  },
+  {
+    "hub_case_id": "C-0032",
+    "hub_account_id": "A-00684",
+    "spoke_case_id": "C-0004",
+    "spoke_account_id": "A-00054",
+    "edge_amount": 22321.83
+  },
+  {
+    "hub_case_id": "C-0032",
+    "hub_account_id": "A-00684",
+    "spoke_case_id": "C-0014",
+    "spoke_account_id": "A-00329",
+    "edge_amount": 46660.41
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0119",
+    "spoke_account_id": "A-02076",
+    "edge_amount": 32156.83
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0091",
+    "spoke_account_id": "A-01580",
+    "edge_amount": 30364.42
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0114",
+    "spoke_account_id": "A-01961",
+    "edge_amount": 17142.54
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0086",
+    "spoke_account_id": "A-01515",
+    "edge_amount": 48125.55
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0087",
+    "spoke_account_id": "A-01538",
+    "edge_amount": 14421.15
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0046",
+    "spoke_account_id": "A-00888",
+    "edge_amount": 11347.93
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0125",
+    "spoke_account_id": "A-02132",
+    "edge_amount": 47921.44
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0105",
+    "spoke_account_id": "A-01825",
+    "edge_amount": 19679.7
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0061",
+    "spoke_account_id": "A-01158",
+    "edge_amount": 862.96
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0049",
+    "spoke_account_id": "A-00939",
+    "edge_amount": 10889.96
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0042",
+    "spoke_account_id": "A-00828",
+    "edge_amount": 1479.9
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0075",
+    "spoke_account_id": "A-01339",
+    "edge_amount": 5540.75
+  },
+  {
+    "hub_case_id": "C-0098",
+    "hub_account_id": "A-01694",
+    "spoke_case_id": "C-0026",
+    "spoke_account_id": "A-00603",
+    "edge_amount": 5498.48
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0085",
+    "spoke_account_id": "A-01461",
+    "edge_amount": 5989.34
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0145",
+    "spoke_account_id": "A-02366",
+    "edge_amount": 37472.14
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0017",
+    "spoke_account_id": "A-00448",
+    "edge_amount": 45381.34
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0082",
+    "spoke_account_id": "A-01433",
+    "edge_amount": 9853.9
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0076",
+    "spoke_account_id": "A-01352",
+    "edge_amount": 21532.77
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0028",
+    "spoke_account_id": "A-00613",
+    "edge_amount": 28073.51
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0077",
+    "spoke_account_id": "A-01384",
+    "edge_amount": 26462.29
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0019",
+    "spoke_account_id": "A-00480",
+    "edge_amount": 18303.46
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0065",
+    "spoke_account_id": "A-01194",
+    "edge_amount": 23054.45
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0129",
+    "spoke_account_id": "A-02203",
+    "edge_amount": 31897.75
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0081",
+    "spoke_account_id": "A-01419",
+    "edge_amount": 44646.8
+  },
+  {
+    "hub_case_id": "C-0025",
+    "hub_account_id": "A-00528",
+    "spoke_case_id": "C-0088",
+    "spoke_account_id": "A-01566",
+    "edge_amount": 24207.03
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0079",
+    "spoke_account_id": "A-01393",
+    "edge_amount": 15356.63
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0045",
+    "spoke_account_id": "A-00867",
+    "edge_amount": 4379.34
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0096",
+    "spoke_account_id": "A-01678",
+    "edge_amount": 19887.37
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0106",
+    "spoke_account_id": "A-01849",
+    "edge_amount": 40162.25
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0094",
+    "spoke_account_id": "A-01648",
+    "edge_amount": 1264.74
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0095",
+    "spoke_account_id": "A-01661",
+    "edge_amount": 11040.63
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0092",
+    "spoke_account_id": "A-01625",
+    "edge_amount": 11221.71
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0128",
+    "spoke_account_id": "A-02173",
+    "edge_amount": 30092.82
+  },
+  {
+    "hub_case_id": "C-0006",
+    "hub_account_id": "A-00133",
+    "spoke_case_id": "C-0001",
+    "spoke_account_id": "A-00012",
+    "edge_amount": 28939.42
+  },
+  {
+    "hub_case_id": "C-0054",
+    "hub_account_id": "A-00993",
+    "spoke_case_id": "C-0146",
+    "spoke_account_id": "A-02416",
+    "edge_amount": 48997.8
+  },
+  {
+    "hub_case_id": "C-0054",
+    "hub_account_id": "A-00993",
+    "spoke_case_id": "C-0118",
+    "spoke_account_id": "A-02049",
+    "edge_amount": 10563.71
+  },
+  {
+    "hub_case_id": "C-0054",
+    "hub_account_id": "A-00993",
+    "spoke_case_id": "C-0120",
+    "spoke_account_id": "A-02097",
+    "edge_amount": 45815.27
+  },
+  {
+    "hub_case_id": "C-0054",
+    "hub_account_id": "A-00993",
+    "spoke_case_id": "C-0052",
+    "spoke_account_id": "A-00953",
+    "edge_amount": 5257.35
+  },
+  {
+    "hub_case_id": "C-0054",
+    "hub_account_id": "A-00993",
+    "spoke_case_id": "C-0108",
+    "spoke_account_id": "A-01879",
+    "edge_amount": 38487.84
+  },
+  {
+    "hub_case_id": "C-0054",
+    "hub_account_id": "A-00993",
+    "spoke_case_id": "C-0142",
+    "spoke_account_id": "A-02334",
+    "edge_amount": 7803.21
+  },
+  {
+    "hub_case_id": "C-0133",
+    "hub_account_id": "A-02228",
+    "spoke_case_id": "C-0002",
+    "spoke_account_id": "A-00023",
+    "edge_amount": 48863.18
+  },
+  {
+    "hub_case_id": "C-0133",
+    "hub_account_id": "A-02228",
+    "spoke_case_id": "C-0013",
+    "spoke_account_id": "A-00328",
+    "edge_amount": 32840.43
+  },
+  {
+    "hub_case_id": "C-0133",
+    "hub_account_id": "A-02228",
+    "spoke_case_id": "C-0093",
+    "spoke_account_id": "A-01637",
+    "edge_amount": 14150.75
+  },
+  {
+    "hub_case_id": "C-0133",
+    "hub_account_id": "A-02228",
+    "spoke_case_id": "C-0144",
+    "spoke_account_id": "A-02359",
+    "edge_amount": 24242.58
+  },
+  {
+    "hub_case_id": "C-0133",
+    "hub_account_id": "A-02228",
+    "spoke_case_id": "C-0057",
+    "spoke_account_id": "A-01074",
+    "edge_amount": 1706.09
+  },
+  {
+    "hub_case_id": "C-0133",
+    "hub_account_id": "A-02228",
+    "spoke_case_id": "C-0016",
+    "spoke_account_id": "A-00447",
+    "edge_amount": 35193.56
+  },
+  {
+    "hub_case_id": "C-0133",
+    "hub_account_id": "A-02228",
+    "spoke_case_id": "C-0111",
+    "spoke_account_id": "A-01899",
+    "edge_amount": 31116.18
+  },
+  {
+    "hub_case_id": "C-0102",
+    "hub_account_id": "A-01781",
+    "spoke_case_id": "C-0018",
+    "spoke_account_id": "A-00474",
+    "edge_amount": 29812.54
+  },
+  {
+    "hub_case_id": "C-0102",
+    "hub_account_id": "A-01781",
+    "spoke_case_id": "C-0003",
+    "spoke_account_id": "A-00040",
+    "edge_amount": 21381.36
+  },
+  {
+    "hub_case_id": "C-0102",
+    "hub_account_id": "A-01781",
+    "spoke_case_id": "C-0139",
+    "spoke_account_id": "A-02305",
+    "edge_amount": 33982.83
+  },
+  {
+    "hub_case_id": "C-0102",
+    "hub_account_id": "A-01781",
+    "spoke_case_id": "C-0010",
+    "spoke_account_id": "A-00311",
+    "edge_amount": 19711.15
+  },
+  {
+    "hub_case_id": "C-0023",
+    "hub_account_id": "A-00522",
+    "spoke_case_id": "C-0031",
+    "spoke_account_id": "A-00683",
+    "edge_amount": 1615.21
+  },
+  {
+    "hub_case_id": "C-0023",
+    "hub_account_id": "A-00522",
+    "spoke_case_id": "C-0116",
+    "spoke_account_id": "A-02000",
+    "edge_amount": 31694.44
+  },
+  {
+    "hub_case_id": "C-0023",
+    "hub_account_id": "A-00522",
+    "spoke_case_id": "C-0041",
+    "spoke_account_id": "A-00820",
+    "edge_amount": 31609.51
+  },
+  {
+    "hub_case_id": "C-0023",
+    "hub_account_id": "A-00522",
+    "spoke_case_id": "C-0044",
+    "spoke_account_id": "A-00849",
+    "edge_amount": 48495.54
+  },
+  {
+    "hub_case_id": "C-0023",
+    "hub_account_id": "A-00522",
+    "spoke_case_id": "C-0039",
+    "spoke_account_id": "A-00802",
+    "edge_amount": 38319.38
+  },
+  {
+    "hub_case_id": "C-0023",
+    "hub_account_id": "A-00522",
+    "spoke_case_id": "C-0037",
+    "spoke_account_id": "A-00789",
+    "edge_amount": 9856.84
+  },
+  {
+    "hub_case_id": "C-0058",
+    "hub_account_id": "A-01089",
+    "spoke_case_id": "C-0060",
+    "spoke_account_id": "A-01152",
+    "edge_amount": 14020.16
+  },
+  {
+    "hub_case_id": "C-0058",
+    "hub_account_id": "A-01089",
+    "spoke_case_id": "C-0036",
+    "spoke_account_id": "A-00780",
+    "edge_amount": 18882.71
+  },
+  {
+    "hub_case_id": "C-0058",
+    "hub_account_id": "A-01089",
+    "spoke_case_id": "C-0053",
+    "spoke_account_id": "A-00972",
+    "edge_amount": 10255.37
+  },
+  {
+    "hub_case_id": "C-0058",
+    "hub_account_id": "A-01089",
+    "spoke_case_id": "C-0051",
+    "spoke_account_id": "A-00952",
+    "edge_amount": 11044.65
+  },
+  {
+    "hub_case_id": "C-0058",
+    "hub_account_id": "A-01089",
+    "spoke_case_id": "C-0020",
+    "spoke_account_id": "A-00496",
+    "edge_amount": 30046.29
+  }
+]
