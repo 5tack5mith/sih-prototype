@@ -1,4 +1,4 @@
-from typing import Annotated, Literal
+from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException, Query
 
@@ -102,9 +102,11 @@ def path(
 @app.get("/cases/{case_id}/criticality", response_model=CriticalityResponse)
 def criticality(
     case_id: str, repository: Repository,
-    top_k: Annotated[Literal[3, 6, 10], Query()] = 6,
+    top_k: Annotated[int, Query()] = 6,
 ) -> dict:
     """Slice precomputed CriticalityRank nodes; this endpoint never runs simulation."""
+    if top_k not in {3, 6, 10}:
+        raise HTTPException(status_code=422, detail="top_k must be one of 3, 6, or 10")
     result = repository.get_criticality(case_id, top_k)
     if result["ranked_removals"]:
         first_name = result["ranked_removals"][0].get("node_name") or result["ranked_removals"][0]["node_id"]
