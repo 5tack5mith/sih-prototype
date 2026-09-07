@@ -2,8 +2,9 @@ from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException, Query
 
+from .. import schema_config as schema
 from .dependencies import get_repository
-from .models import CaseFilter, CaseOverview, CaseSort, CaseSummary
+from .models import CaseFilter, CaseOverview, CaseSort, CaseSummary, MetricName, TopNodesResponse
 from .repository import Neo4jRepository
 
 app = FastAPI(title="Criminal Network Analysis API", version="1.0.0")
@@ -27,3 +28,22 @@ def case_overview(case_id: str, repository: Repository) -> dict:
     if result is None:
         raise HTTPException(status_code=404, detail="Case not found")
     return result
+
+
+METRIC_PROPERTIES = {
+    "betweenness": schema.PROP_BETWEENNESS,
+    "eigenvector": schema.PROP_EIGENVECTOR,
+    "degree": schema.PROP_DEGREE,
+}
+
+
+@app.get("/cases/{case_id}/nodes/top", response_model=TopNodesResponse)
+def top_nodes(
+    case_id: str, repository: Repository,
+    metric: Annotated[MetricName, Query()] = "betweenness",
+    limit: Annotated[int, Query(ge=1, le=100)] = 10,
+) -> dict:
+    """Read persisted centrality scores; entity_type is schema-pending/null-safe."""
+    return {"metric": metric, "results": repository.get_top_nodes(
+        case_id, METRIC_PROPERTIES[metric], limit
+    )}

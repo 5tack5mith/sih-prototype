@@ -111,3 +111,28 @@ class Neo4jRepository:
         """
         with self.driver.session() as session:
             return _as_dict(session.run(query, case_id=requested_case_id).single())
+
+    def get_top_nodes(
+        self, requested_case_id: str, metric_property: str, limit: int
+    ) -> list[dict[str, Any]]:
+        allowed = {schema.PROP_BETWEENNESS, schema.PROP_EIGENVECTOR, schema.PROP_DEGREE}
+        if metric_property not in allowed:
+            raise ValueError("unsupported centrality property")
+        labels = schema.entity_label_predicate("node")
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        entity_type = schema.cypher_identifier(schema.PROP_ENTITY_TYPE)
+        metric = schema.cypher_identifier(metric_property)
+        query = f"""
+        MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+        WITH node ORDER BY node.{metric} DESC, node.{node_id}
+        LIMIT $limit
+        RETURN node.{node_id} AS node_id, node.{node_name} AS name,
+               node.{entity_type} AS entity_type, node.{metric} AS score
+        """
+        with self.driver.session() as session:
+            rows = [_as_dict(row) for row in session.run(
+                query, case_id=requested_case_id, limit=limit
+            )]
+        return [{**row, "rank": rank} for rank, row in enumerate(rows, 1)]
