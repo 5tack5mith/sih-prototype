@@ -4,7 +4,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 
 from .. import schema_config as schema
 from .dependencies import get_repository
-from .models import CaseFilter, CaseOverview, CaseSort, CaseSummary, MetricName, TopNodesResponse
+from .models import CaseFilter, CaseOverview, CaseSort, CaseSummary, MetricName, NodeDetail, TopNodesResponse
 from .repository import Neo4jRepository
 
 app = FastAPI(title="Criminal Network Analysis API", version="1.0.0")
@@ -47,3 +47,12 @@ def top_nodes(
     return {"metric": metric, "results": repository.get_top_nodes(
         case_id, METRIC_PROPERTIES[metric], limit
     )}
+
+
+@app.get("/cases/{case_id}/nodes/{node_id}", response_model=NodeDetail)
+def node_detail(case_id: str, node_id: str, repository: Repository) -> dict:
+    """Read persisted node scores/role and direct structural neighbors; subtype/date are null-safe."""
+    result = repository.get_node_detail(case_id, node_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Node not found in case")
+    return result

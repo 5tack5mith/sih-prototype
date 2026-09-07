@@ -136,3 +136,69 @@ class Neo4jRepository:
                 query, case_id=requested_case_id, limit=limit
             )]
         return [{**row, "rank": rank} for rank, row in enumerate(rows, 1)]
+
+
+    def get_node_detail(self, requested_case_id: str, requested_node_id: str) -> dict[str, Any] | None:
+        labels = schema.entity_label_predicate("node")
+        neighbor_labels = schema.entity_label_predicate("neighbor")
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        entity_type = schema.cypher_identifier(schema.PROP_ENTITY_TYPE)
+        first_contact = schema.cypher_identifier(schema.PROP_FIRST_CONTACT_DATE)
+        betweenness = schema.cypher_identifier(schema.PROP_BETWEENNESS)
+        eigenvector = schema.cypher_identifier(schema.PROP_EIGENVECTOR)
+        degree = schema.cypher_identifier(schema.PROP_DEGREE)
+        community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+        role = schema.cypher_identifier(schema.PROP_STRUCTURAL_ROLE)
+        structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+        weight = schema.cypher_identifier(schema.REL_WEIGHT_PROPERTY) if schema.REL_WEIGHT_PROPERTY else None
+        circular = schema.cypher_identifier(schema.NODE_LABEL_CIRCULAR_FLOW_FLAG)
+        structuring = schema.cypher_identifier(schema.NODE_LABEL_STRUCTURING_FLAG)
+        flag_nodes = schema.cypher_identifier(schema.PROP_FLAG_NODE_IDS)
+        flag_from = schema.cypher_identifier(schema.PROP_FLAG_FROM_NODE)
+        flag_to = schema.cypher_identifier(schema.PROP_FLAG_TO_NODE)
+        base_query = f"""
+        MATCH (node) WHERE {labels} AND node.{node_id} = $node_id
+          AND node.{case_prop} = $case_id
+        RETURN node.{node_id} AS node_id, node.{node_name} AS name,
+               node.{entity_type} AS entity_type, node.{first_contact} AS first_contact_date,
+               node.{betweenness} AS betweenness, node.{eigenvector} AS eigenvector,
+               node.{degree} AS degree, toString(node.{community}) AS community_id,
+               node.{role} AS structural_role
+        """
+        edge_query = f"""
+        MATCH (node)-[relationship:{structural}]-(neighbor)
+        WHERE {labels} AND {neighbor_labels} AND node.{node_id} = $node_id
+          AND node.{case_prop} = $case_id AND neighbor.{case_prop} = $case_id
+        RETURN node.{node_id} AS node_id, neighbor.{node_id} AS neighbor_id,
++              type(relationship) AS relationship_type{f', relationship.{weight} AS weight' if weight else ', null AS weight'}
+        """.replace('\n+', '\n')
+        alert_query = f"""
+        MATCH (flag) WHERE flag.{case_prop} = $case_id AND
++          ((flag:{circular} AND $node_id IN flag.{flag_nodes}) OR
++           (flag:{structuring} AND $node_id IN [flag.{flag_from}, flag.{flag_to}]))
+        RETURN count(flag) AS alert_count
+        """.replace('\n+', '\n')
+        parameters = {"case_id": requested_case_id, "node_id": requested_node_id}
+        with self.driver.session() as session:
+            node = _as_dict(session.run(base_query, **parameters).single())
+            if node is None:
+                return None
+            edges = [_as_dict(row) for row in session.run(edge_query, **parameters)]
+            alerts = _as_dict(session.run(alert_query, **parameters).single()) or {}
+        node["first_contact_date"] = _serialized(node.get("first_contact_date"))
+        return {
+            "node_id": node["node_id"], "name": node.get("name"),
+            "entity_type": node.get("entity_type"),
+            "first_contact_date": node.get("first_contact_date"),
+            "scores": {key: node.get(key) for key in ("betweenness", "eigenvector", "degree")},
+            "community_id": node.get("community_id"), "structural_role": node.get("structural_role"),
+            "connection_count": len(edges), "structural_alert_count": int(alerts.get("alert_count", 0)),
+            "ego_network": {
+                "nodes": [node["node_id"], *sorted({edge["neighbor_id"] for edge in edges})],
+                "edges": [{"source": node["node_id"], "target": edge["neighbor_id"],
+                           "type": edge["relationship_type"], "weight": edge.get("weight")}
+                          for edge in edges],
+            },
+        }
