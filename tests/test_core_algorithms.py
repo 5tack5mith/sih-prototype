@@ -11,6 +11,7 @@ def test_core_algorithms_write_contract_properties(fake_driver, monkeypatch):
     query_text = "\n".join(query for query, _ in fake_driver.calls)
     assert "gds.betweenness.write" in query_text
     assert "gds.degree.write" in query_text
+    assert "gds.eigenvector.write" in query_text
     assert "gds.louvain.write" in query_text
     assert "gds.nodeSimilarity.write" in query_text
     all_parameters = [parameters for _, parameters in fake_driver.calls]
@@ -20,6 +21,10 @@ def test_core_algorithms_write_contract_properties(fake_driver, monkeypatch):
     )
     assert any(
         parameters.get("write_property") == schema.PROP_COMMUNITY_ID
+        for parameters in all_parameters
+    )
+    assert any(
+        parameters.get("write_property") == schema.PROP_EIGENVECTOR
         for parameters in all_parameters
     )
     assert any(

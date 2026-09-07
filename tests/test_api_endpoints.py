@@ -1,0 +1,58 @@
+from fastapi.testclient import TestClient
+
+from app.api.dependencies import get_repository
+from app.api.main import app
+
+
+class StubRepository:
+    def list_cases(self, case_filter, sort):
+        return [{"case_id": "CASE-A", "name": "Alpha", "status": "ACTIVE", "priority": None, "description": None, "node_count": 2, "edge_count": 1, "updated_at": None, "lead_analyst": None, "jurisdiction_tag": None}]
+    def get_case_overview(self, case_id):
+        return {"case_id": case_id, "total_entities": 2, "total_relationships": 1, "community_count": 1, "modularity": 0.5, "structural_alert_count": 0, "direct_1hop_count": 1}
+    def get_top_nodes(self, case_id, metric_property, limit):
+        return [{"node_id": "N1", "name": "One", "entity_type": None, "score": .9, "rank": 1}]
+    def get_node_detail(self, case_id, node_id):
+        return {"node_id": node_id, "name": "One", "entity_type": None, "first_contact_date": None, "scores": {"betweenness": .9, "eigenvector": .8, "degree": 2}, "community_id": "1", "structural_role": "HUB", "connection_count": 1, "structural_alert_count": 0, "ego_network": {"nodes": ["N1", "N2"], "edges": [{"source": "N1", "target": "N2", "type": "CALLED"}]}}
+    def get_case_graph(self, case_id, bridging_only, cutoff):
+        return {"nodes": [{"node_id": "N1", "name": "One", "entity_type": None, "betweenness": .9, "degree": 2, "eigenvector": .8, "community_id": "1", "structural_role": "HUB"}], "edges": [], "metrics": {"density": .5, "diameter": 1, "reciprocity": 0}}
+    def get_communities(self, case_id):
+        return [{"community_id": "1", "label": "Cluster 1", "size": 2, "internal_density": 1, "external_density": 0, "member_node_ids": ["N1", "N2"]}]
+    def get_community_detail(self, case_id, community_id):
+        return {"community_id": community_id, "size": 2, "internal_density": 1, "external_density": 0, "members": [{"node_id": "N1", "name": "One", "entity_type": None, "centrality": .9}]}
+    def find_path(self, case_id, from_node_id, to_node_id):
+        return {"path_found": True, "hops": 1, "connection_strength": .5, "total_relationship_count": 1, "nodes": [from_node_id, to_node_id], "steps": [{"step": 1, "from": "One", "to": "Two", "relationship_type": "CALLED", "detail": "CALLED (weight 1)"}]}
+    def get_criticality(self, case_id, top_k):
+        return {"case_id": case_id, "initial_node_count": 2, "criterion": "largest_component_fragmentation", "ranked_removals": [{"rank": 1, "node_id": "N1", "node_name": "One", "entity_type_label": "CRITICAL CUT", "component_size_before": 2, "component_size_after": 1, "fragmentation_pct": 50}], "final_state": {"components_created": 1, "largest_remaining_component": 1, "overall_efficiency_drop_pct": 50}, "note": None}
+    def get_suggested_links(self, case_id, node_id):
+        return [{"suggested_node_id": "N2", "suggested_name": "Two", "similarity_score": .61}]
+
+
+def client():
+    app.dependency_overrides[get_repository] = lambda: StubRepository()
+    return TestClient(app)
+
+
+def test_case_and_node_endpoints():
+    with client() as api:
+        assert api.get("/cases?filter=active&sort=name").status_code == 200
+        assert api.get("/cases/CASE-A/overview").json()["structural_alert_count"] == 0
+        assert api.get("/cases/CASE-A/nodes/top?metric=eigenvector").json()["metric"] == "eigenvector"
+        assert api.get("/cases/CASE-A/nodes/N1").json()["ego_network"]["edges"][0]["type"] == "CALLED"
+
+
+def test_graph_community_and_path_endpoints():
+    with client() as api:
+        assert api.get("/cases/CASE-A/graph?filter=bridging_only&cutoff=.75").json()["metrics"]["diameter"] == 1
+        assert api.get("/cases/CASE-A/communities").json()[0]["label"] == "Cluster 1"
+        assert "1.00" in api.get("/cases/CASE-A/communities/1").json()["narrative"]
+        path = api.get("/cases/CASE-A/path?from_node_id=N1&to_node_id=N2").json()
+    assert path["connection_strength"] == .5 and "confidence" not in path
+
+
+def test_criticality_suggestions_and_validation():
+    with client() as api:
+        assert api.get("/cases/CASE-A/criticality?top_k=3").status_code == 200
+        assert api.get("/cases/CASE-A/nodes/N1/suggested_links").json()[0]["similarity_score"] == .61
+        assert api.get("/cases?filter=unknown").status_code == 422
+        assert api.get("/cases/CASE-A/nodes/top?metric=pagerank").status_code == 422
+        assert api.get("/cases/CASE-A/criticality?top_k=5").status_code == 422

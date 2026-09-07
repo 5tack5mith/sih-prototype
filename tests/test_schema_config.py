@@ -5,6 +5,8 @@ def test_placeholder_schema_contract_is_centralized():
     assert schema.ENTITY_NODE_LABELS == ("Person",)
     assert schema.STRUCTURAL_REL_TYPES == ("CALLED", "TRANSFERRED_TO", "ASSOCIATED_WITH")
     assert schema.PROP_BETWEENNESS == "betweenness_score"
+    assert schema.PROP_EIGENVECTOR == "eigenvector_score"
+    assert schema.CRITICALITY_DEFAULT_TOP_K == 10
     assert schema.PROP_STRUCTURAL_ROLE == "structural_role"
     assert schema.STRUCTURING_THRESHOLD_AMOUNT == 200_000
 
