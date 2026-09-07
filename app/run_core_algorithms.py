@@ -56,6 +56,42 @@ def _write_case_modularity(driver: Any, case_id: str, modularity: float | None) 
         session.run(query, case_id=case_id, modularity=modularity).consume()
 
 
+def _write_case_graph_metrics(driver: Any, case_id: str, graph_name: str) -> None:
+    """Persist graph metrics once; API requests only read these Case properties."""
+    case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+    node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+    density_prop = schema.cypher_identifier(schema.PROP_CASE_DENSITY)
+    diameter_prop = schema.cypher_identifier(schema.PROP_CASE_DIAMETER)
+    reciprocity_prop = schema.cypher_identifier(schema.PROP_CASE_RECIPROCITY)
+    case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+    structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+    with driver.session() as session:
+        graph_stats = session.run(
+            "CALL gds.graph.list($graph_name) YIELD density RETURN density",
+            graph_name=graph_name,
+        ).single() or {}
+        diameter_stats = session.run(
+            "CALL gds.allShortestPaths.delta.stream($graph_name, {}) "
+            "YIELD distance RETURN toInteger(max(distance)) AS diameter",
+            graph_name=graph_name,
+        ).single() or {}
+        reciprocity_stats = session.run(f"""
+            MATCH (source)-[relationship:{structural}]->(target)
+            WHERE source.{case_prop} = $case_id AND target.{case_prop} = $case_id
+            WITH collect(DISTINCT [elementId(source), elementId(target)]) AS pairs
+            RETURN CASE WHEN size(pairs) = 0 THEN 0.0 ELSE
+              toFloat(size([pair IN pairs WHERE [pair[1], pair[0]] IN pairs])) / size(pairs)
+            END AS reciprocity
+        """.replace('\n+', '\n'), case_id=case_id).single() or {}
+        session.run(f"""
+            MATCH (case:{case_label} {{{node_id}: $case_id}})
+            SET case.{density_prop} = $density, case.{diameter_prop} = $diameter,
+                case.{reciprocity_prop} = $reciprocity
+        """.replace('\n+', '\n'), case_id=case_id, density=graph_stats.get("density"),
+            diameter=diameter_stats.get("diameter"),
+            reciprocity=reciprocity_stats.get("reciprocity")).consume()
+
+
 def _delete_case_similarities(driver: Any, case_id: str) -> None:
     similar_type = schema.cypher_identifier(schema.REL_SIMILAR_TO)
     case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
@@ -127,6 +163,7 @@ def run_core_algorithms(driver: Any, case_id: str) -> CoreAlgorithmSummary:
         metrics["community_nodes"] = _metric(row, "nodePropertiesWritten")
 
     _write_case_modularity(driver, case_id, (row or {}).get("modularity"))
+    _write_case_graph_metrics(driver, case_id, graph_name)
     metrics["community_sizes"] = _write_community_sizes(driver, case_id)
     # Similarity is a suggestion layer and never participates in structural projections.
     _delete_case_similarities(driver, case_id)

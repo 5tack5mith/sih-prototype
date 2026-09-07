@@ -4,7 +4,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 
 from .. import schema_config as schema
 from .dependencies import get_repository
-from .models import CaseFilter, CaseOverview, CaseSort, CaseSummary, MetricName, NodeDetail, TopNodesResponse
+from .models import CaseFilter, CaseGraph, CaseOverview, CaseSort, CaseSummary, GraphFilter, MetricName, NodeDetail, TopNodesResponse
 from .repository import Neo4jRepository
 
 app = FastAPI(title="Criminal Network Analysis API", version="1.0.0")
@@ -56,3 +56,13 @@ def node_detail(case_id: str, node_id: str, repository: Repository) -> dict:
     if result is None:
         raise HTTPException(status_code=404, detail="Node not found in case")
     return result
+
+
+@app.get("/cases/{case_id}/graph", response_model=CaseGraph)
+def case_graph(
+    case_id: str, repository: Repository,
+    filter: Annotated[GraphFilter | None, Query()] = None,
+    cutoff: Annotated[float | None, Query(ge=0.0)] = None,
+) -> dict:
+    """Read persisted node metrics and Case graph metrics; filters are Cypher-side."""
+    return repository.get_case_graph(case_id, filter == "bridging_only", cutoff)

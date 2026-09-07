@@ -172,12 +172,12 @@ class Neo4jRepository:
         WHERE {labels} AND {neighbor_labels} AND node.{node_id} = $node_id
           AND node.{case_prop} = $case_id AND neighbor.{case_prop} = $case_id
         RETURN node.{node_id} AS node_id, neighbor.{node_id} AS neighbor_id,
-+              type(relationship) AS relationship_type{f', relationship.{weight} AS weight' if weight else ', null AS weight'}
+              type(relationship) AS relationship_type{f', relationship.{weight} AS weight' if weight else ', null AS weight'}
         """.replace('\n+', '\n')
         alert_query = f"""
         MATCH (flag) WHERE flag.{case_prop} = $case_id AND
-+          ((flag:{circular} AND $node_id IN flag.{flag_nodes}) OR
-+           (flag:{structuring} AND $node_id IN [flag.{flag_from}, flag.{flag_to}]))
+          ((flag:{circular} AND $node_id IN flag.{flag_nodes}) OR
+           (flag:{structuring} AND $node_id IN [flag.{flag_from}, flag.{flag_to}]))
         RETURN count(flag) AS alert_count
         """.replace('\n+', '\n')
         parameters = {"case_id": requested_case_id, "node_id": requested_node_id}
@@ -202,3 +202,57 @@ class Neo4jRepository:
                           for edge in edges],
             },
         }
+
+
+    def get_case_graph(self, requested_case_id: str, bridging_only: bool, cutoff: float | None) -> dict[str, Any]:
+        labels = schema.entity_label_predicate("node")
+        source_labels = schema.entity_label_predicate("source")
+        target_labels = schema.entity_label_predicate("target")
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        entity_type = schema.cypher_identifier(schema.PROP_ENTITY_TYPE)
+        betweenness = schema.cypher_identifier(schema.PROP_BETWEENNESS)
+        eigenvector = schema.cypher_identifier(schema.PROP_EIGENVECTOR)
+        degree = schema.cypher_identifier(schema.PROP_DEGREE)
+        community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+        role = schema.cypher_identifier(schema.PROP_STRUCTURAL_ROLE)
+        structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+        weight = schema.cypher_identifier(schema.REL_WEIGHT_PROPERTY) if schema.REL_WEIGHT_PROPERTY else None
+        node_query = f"""
+        MATCH (node) WHERE {labels} AND node.{case_prop} = $case_id
+          AND ($cutoff IS NULL OR coalesce(node.{betweenness}, 0.0) >= $cutoff)
+        RETURN node.{node_id} AS node_id, node.{node_name} AS name,
+              node.{entity_type} AS entity_type, node.{betweenness} AS betweenness,
+              node.{degree} AS degree, node.{eigenvector} AS eigenvector,
+              toString(node.{community}) AS community_id, node.{role} AS structural_role
+        ORDER BY node_id
+        """.replace('\n+', '\n')
+        edge_query = f"""
+        MATCH (source)-[relationship:{structural}]->(target)
+        WHERE {source_labels} AND {target_labels}
+          AND source.{case_prop} = $case_id AND target.{case_prop} = $case_id
+          AND ($cutoff IS NULL OR (coalesce(source.{betweenness}, 0.0) >= $cutoff
+               AND coalesce(target.{betweenness}, 0.0) >= $cutoff))
+        WITH source, target, relationship, source.{community} AS source_community,
+             target.{community} AS target_community
+        WHERE NOT $bridging_only OR (source_community IS NOT NULL
+              AND target_community IS NOT NULL AND source_community <> target_community)
+        RETURN source.{node_id} AS source, target.{node_id} AS target,
+              type(relationship) AS type{f', relationship.{weight} AS weight' if weight else ', null AS weight'}
+        """.replace('\n+', '\n')
+        density = schema.cypher_identifier(schema.PROP_CASE_DENSITY)
+        diameter = schema.cypher_identifier(schema.PROP_CASE_DIAMETER)
+        reciprocity = schema.cypher_identifier(schema.PROP_CASE_RECIPROCITY)
+        metric_query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})
+        RETURN case.{density} AS density, case.{diameter} AS diameter,
+              case.{reciprocity} AS reciprocity
+        """.replace('\n+', '\n')
+        parameters = {"case_id": requested_case_id, "cutoff": cutoff, "bridging_only": bridging_only}
+        with self.driver.session() as session:
+            nodes = [_as_dict(row) for row in session.run(node_query, **parameters)]
+            edges = [_as_dict(row) for row in session.run(edge_query, **parameters)]
+            metrics = _as_dict(session.run(metric_query, case_id=requested_case_id).single()) or {}
+        return {"nodes": nodes, "edges": edges, "metrics": metrics}
