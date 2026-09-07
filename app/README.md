@@ -1,8 +1,8 @@
-# Zone 1 graph construction and computation
+# Zone 1 graph analysis and serving
 
 This package contains independently runnable, case-scoped Neo4j analysis jobs. It
-has no HTTP API; the later API layer reads the properties and result nodes written
-by these jobs.
+also exposes persisted results through the read-oriented FastAPI application in
+`app/api`; only the pairwise path endpoint performs a request-time graph query.
 
 The placeholder schema lives only in `schema_config.py`. When the real dataset
 arrives, update labels, relationship types, and properties there. If entities are
@@ -22,6 +22,8 @@ docker compose --profile analysis run --rm core-algorithms
 docker compose --profile analysis run --rm structural-roles
 docker compose --profile analysis run --rm criticality
 docker compose --profile analysis run --rm financial-patterns
+docker compose up -d api
+# OpenAPI: http://localhost:8000/docs
 ```
 
 Each analysis command processes every discovered case by default. Most commands
