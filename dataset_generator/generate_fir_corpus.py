@@ -12,6 +12,7 @@ import os
 import random
 from collections import Counter
 
+from config import HOLDOUT_DISTRICTS
 from fir_generator import build_case_indices, generate_fir
 from rng_streams import derive_seed
 
@@ -63,17 +64,39 @@ def self_check(docs):
     return len(failing) == 0, failing
 
 
-def split_by_case(docs, rng):
-    """Splits docs into train/dev/test (80/10/10) by case_id, not by
-    document, so that no case's documents leak across splits."""
-    case_ids = sorted({d["case_id"] for d in docs})
-    rng.shuffle(case_ids)
+def _case_uses_holdout_district(case_index, case_id):
+    """True if any victim in this case lives in a HOLDOUT_DISTRICTS value -
+    such a case must never land in train (see split_by_case)."""
+    victims = case_index[case_id]["victims"]
+    return any(v["visible"]["district"] in HOLDOUT_DISTRICTS for v in victims)
 
-    n = len(case_ids)
+
+def split_by_case(docs, case_index, rng):
+    """Splits docs into train/dev/test (~80/10/10) by case_id, not by
+    document, so that no case's documents leak across splits.
+
+    Additionally: any case using a HOLDOUT_DISTRICTS value is forced into
+    dev or test, never train - otherwise a dev/test split would just be
+    unseen combinations of an already-fully-observed value set, which
+    measures nothing about generalization on the LOCATION label. This is
+    the actual generalization test, not optional: train's share drops
+    slightly below the target 80% to accommodate whatever fraction of
+    cases happen to use a held-out district."""
+    all_case_ids = sorted({d["case_id"] for d in docs})
+    holdout_cases = [c for c in all_case_ids if _case_uses_holdout_district(case_index, c)]
+    normal_cases = [c for c in all_case_ids if c not in holdout_cases]
+
+    rng.shuffle(normal_cases)
+    rng.shuffle(holdout_cases)
+
+    n = len(all_case_ids)
     n_train = int(n * TRAIN_FRACTION)
     n_dev = int(n * DEV_FRACTION)
-    train_cases = set(case_ids[:n_train])
-    dev_cases = set(case_ids[n_train:n_train + n_dev])
+
+    train_cases = set(normal_cases[:n_train])
+    remaining_pool = normal_cases[n_train:] + holdout_cases
+    rng.shuffle(remaining_pool)
+    dev_cases = set(remaining_pool[:n_dev])
     # everything else (including any remainder from integer rounding) is test
 
     train, dev, test = [], [], []
@@ -123,7 +146,7 @@ def main():
             skipped_cases.append(case_id)
 
     passed, failing_ids = self_check(docs)
-    train, dev, test = split_by_case(docs, fir_text_rng)
+    train, dev, test = split_by_case(docs, case_index, fir_text_rng)
 
     write_jsonl(os.path.join(OUTPUT_DIR, "fir_corpus_full.jsonl"), docs)
     write_jsonl(os.path.join(OUTPUT_DIR, "fir_corpus_train.jsonl"), train)
@@ -151,6 +174,21 @@ def main():
         print(f"  {label}: {count}")
 
     print(f"\nSplit sizes: train={len(train)}  dev={len(dev)}  test={len(test)}")
+
+    def holdout_hits(split_docs):
+        hits = set()
+        for doc in split_docs:
+            for span in doc["labeled_entities"]:
+                if span["label"] == "LOCATION":
+                    for d in HOLDOUT_DISTRICTS:
+                        if span["text"].startswith(d):
+                            hits.add(d)
+        return hits
+
+    train_holdout = holdout_hits(train)
+    dev_test_holdout = holdout_hits(dev) | holdout_hits(test)
+    print(f"\nHeld-out districts in train (must be empty): {sorted(train_holdout)}")
+    print(f"Held-out districts in dev/test: {sorted(dev_test_holdout)}")
 
     print(f"\nSpan self-check: {'PASS' if passed else 'FAIL'} "
           f"({len(docs) - len(failing_ids)}/{len(docs)} documents clean)")

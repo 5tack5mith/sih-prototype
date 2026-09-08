@@ -59,13 +59,55 @@ MULE_TYPE_WEIGHTS = {
 
 RECRUITMENT_CHANNELS = ["whatsapp", "telegram", "instagram_bot", "facebook_bot", "in_person"]
 
-# SOURCED: states/districts flagged as high-risk by I4C reporting
+# SOURCED: states flagged as high-risk by I4C reporting. Left untouched
+# (not diluted with arbitrary extra states) — this list is the source-backed
+# constraint; district-level variety below is where diversity is added.
 INDIAN_STATES_HIGH_RISK = [
     "Haryana", "Jharkhand", "Uttar Pradesh", "Rajasthan", "Bihar",
     "Karnataka", "Maharashtra", "Delhi", "Madhya Pradesh", "Tamil Nadu",
 ]
 
-OCCUPATIONS = ["student", "homemaker", "gig_worker", "salaried", "unemployed", "retired", "business_owner"]
+# ASSUMPTION: real, well-known districts within each high-risk state (not
+# claimed as an exhaustive or risk-ranked list, just genuine district names
+# so LOCATION values read as real places rather than only 10 state names
+# repeated across thousands of persons). 4-6 per state, ~48 total.
+STATE_DISTRICTS = {
+    "Haryana": ["Gurugram", "Faridabad", "Nuh", "Panipat", "Rohtak"],
+    "Jharkhand": ["Jamtara", "Dhanbad", "Ranchi", "Deoghar", "Giridih"],
+    "Uttar Pradesh": ["Noida", "Ghaziabad", "Lucknow", "Kanpur", "Varanasi", "Meerut"],
+    "Rajasthan": ["Jaipur", "Alwar", "Bharatpur", "Jodhpur", "Udaipur"],
+    "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Nawada"],
+    "Karnataka": ["Bengaluru Urban", "Mysuru", "Mangaluru", "Belagavi", "Hubballi"],
+    "Maharashtra": ["Mumbai", "Pune", "Thane", "Nagpur", "Nashik", "Aurangabad"],
+    "Delhi": ["South Delhi", "North Delhi", "West Delhi", "East Delhi", "Dwarka"],
+    "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain"],
+    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Salem", "Tiruchirappalli"],
+}
+
+# Held-out district values: never assigned to a case that lands in the
+# TRAIN split of the FIR corpus (generate_fir_corpus.py forces any case
+# using one of these into dev/test). This is the actual generalization
+# test for the LOCATION label — without it, dev/test would just be unseen
+# combinations of an already-fully-observed value set, which measures
+# nothing about generalization. ~18% of the 48 district values above.
+HOLDOUT_DISTRICTS = [
+    "Nuh", "Panipat", "Deoghar", "Giridih", "Varanasi", "Meerut",
+    "Udaipur", "Nawada", "Hubballi", "Aurangabad",
+]
+
+OCCUPATIONS = [
+    "student", "homemaker", "gig_worker", "salaried", "unemployed",
+    "retired", "business_owner", "daily_wage_laborer", "farmer",
+    "government_employee", "self_employed_professional",
+]
+
+# ASSUMPTION: schema Sec. 5 documents that complicit mules should show
+# transaction volume disconnected from stated_occupation (e.g. a student
+# account moving lakhs) - this wasn't actually wired to anything visible
+# before; complicit mules now skew toward these lower-income-presenting
+# occupations specifically so that mismatch is a real, visible signal
+# rather than only a hidden ground_truth score.
+COMPLICIT_OCCUPATION_POOL = ["student", "unemployed", "gig_worker", "homemaker", "daily_wage_laborer"]
 
 BANK_TIERS = ["public_sector", "private", "cooperative", "payment_bank"]
 
