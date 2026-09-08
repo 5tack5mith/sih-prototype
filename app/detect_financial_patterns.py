@@ -1,13 +1,23 @@
 """Detect and persist explainable circular-flow and structuring flags.
 
-PLACEHOLDER SCHEMA WARNING: this implementation assumes transactions are direct
-relationships between configured entity labels. If the real dataset represents a
-transaction as a node, update schema_config and restructure only the query-loading
-functions in this module.
+Transactions are raw Account->Account relationships (RAW_REL_TRANSACTION),
+not the aggregated Person->Person TRANSACTED_WITH analytical edges -
+aggregation destroys the individual timestamps/amounts this module's cycle
+and structuring detectors need. load_case_transactions resolves each raw
+transaction's endpoints to their owning Person via OWNS (excluding
+self-transactions and CryptoOfframp-terminating ones, same as
+project_person_graph.py), producing Person-keyed Transaction records so the
+resulting flags' node_ids match what the Person-only analytical graph and
+get_node_detail's alert-count lookup expect.
 
-The directed GDS projection is created as the per-case analysis boundary. Neo4j
-Cypher cannot MATCH paths inside a named GDS graph, so ordered cycle matching runs
-against the raw relationships with the identical case predicate.
+Circular-flow detection reuses detect_circular_flows (pure Python, DFS over
+the same Transaction list structuring detection already loads) rather than a
+separate raw Cypher path query: once each "hop" is really three raw
+relationships (Person-OWNS->Account-TRANSACTION->Account<-OWNS-Person), a
+single variable-length Cypher path mixing OWNS and TRANSACTION types becomes
+fragile to express correctly, and there is no accuracy or semantic
+difference from running the same already-tested algorithm in Python against
+data already being loaded for structuring detection anyway.
 """
 from __future__ import annotations
 
@@ -168,19 +178,28 @@ def _as_datetime(value: Any) -> datetime:
 
 
 def load_case_transactions(driver: Any, case_id: str) -> list[Transaction]:
-    source_labels = schema.entity_label_predicate("source")
-    target_labels = schema.entity_label_predicate("target")
-    relationship_type = schema.cypher_identifier(schema.REL_TRANSACTION)
+    """Reads raw, per-transaction Account-level TRANSACTION edges (not the
+    aggregated TRANSACTED_WITH analytical edges - aggregation destroys the
+    individual timestamps/amounts this detector needs) and resolves each
+    endpoint to its owning Person via OWNS, so the flags this produces are
+    keyed by Person id - matching the Person-only analytical graph and
+    get_node_detail's alert-count lookup. Self-transactions (an account
+    owned by the same person on both sides) are excluded, same as the
+    TRANSACTED_WITH projection."""
+    person_label = schema.cypher_identifier(schema.NODE_LABEL_ENTITY)
+    account_label = schema.cypher_identifier(schema.RAW_NODE_LABEL_ACCOUNT)
+    owns = schema.cypher_identifier(schema.RAW_REL_OWNS)
+    relationship_type = schema.cypher_identifier(schema.RAW_REL_TRANSACTION)
     relationship_id = schema.cypher_identifier(schema.PROP_RELATIONSHIP_ID)
     node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
     case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
     amount = schema.cypher_identifier(schema.TXN_PROP_AMOUNT)
     timestamp = schema.cypher_identifier(schema.TXN_PROP_TIMESTAMP)
     query = f"""
-    MATCH (source)-[transaction:{relationship_type}]->(target)
-    WHERE {source_labels} AND {target_labels}
+    MATCH (source:{person_label})-[:{owns}]->(:{account_label})-[transaction:{relationship_type}]->
+          (:{account_label})<-[:{owns}]-(target:{person_label})
+    WHERE source.{node_id} <> target.{node_id}
       AND source.{case_prop} = $case_id AND target.{case_prop} = $case_id
-      AND coalesce(transaction.{case_prop}, source.{case_prop}) = $case_id
       AND transaction.{amount} IS NOT NULL AND transaction.{timestamp} IS NOT NULL
     RETURN coalesce(transaction.{relationship_id}, elementId(transaction)) AS transaction_id,
            source.{node_id} AS source_id, target.{node_id} AS target_id,
@@ -198,49 +217,6 @@ def load_case_transactions(driver: Any, case_id: str) -> list[Transaction]:
         )
         for row in rows
     ]
-
-
-def load_ordered_cycle_flags(driver: Any, case_id: str) -> list[CircularFlowFlag]:
-    """Use Cypher path matching for ordered 3-5 hop cycles in the scoped raw graph."""
-    source_labels = schema.entity_label_predicate("start")
-    relationship_type = schema.cypher_identifier(schema.REL_TRANSACTION)
-    relationship_id = schema.cypher_identifier(schema.PROP_RELATIONSHIP_ID)
-    node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
-    case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
-    amount = schema.cypher_identifier(schema.TXN_PROP_AMOUNT)
-    timestamp = schema.cypher_identifier(schema.TXN_PROP_TIMESTAMP)
-    minimum = schema.CIRCULAR_FLOW_MIN_LENGTH
-    maximum = schema.CIRCULAR_FLOW_MAX_LENGTH
-    query = f"""
-    MATCH path = (start)-[transactions:{relationship_type}*{minimum}..{maximum}]->(start)
-    WHERE {source_labels} AND start.{case_prop} = $case_id
-      AND all(transaction IN transactions WHERE
-          coalesce(transaction.{case_prop}, start.{case_prop}) = $case_id
-          AND transaction.{amount} IS NOT NULL AND transaction.{timestamp} IS NOT NULL)
-      AND all(index IN range(0, size(transactions) - 2) WHERE
-          transactions[index].{timestamp} < transactions[index + 1].{timestamp})
-    RETURN [node IN nodes(path)[0..-1] | node.{node_id}] AS node_ids,
-           [transaction IN transactions |
-              coalesce(transaction.{relationship_id}, elementId(transaction))] AS transaction_ids,
-           reduce(total = 0.0, transaction IN transactions |
-              total + toFloat(transaction.{amount})) AS total_amount
-    """
-    with driver.session() as session:
-        rows = list(session.run(query, case_id=case_id))
-    flags: dict[tuple[str, ...], CircularFlowFlag] = {}
-    for row in rows:
-        nodes = _canonical_rotation(tuple(row["node_ids"]))
-        flags.setdefault(
-            nodes,
-            CircularFlowFlag(
-                flag_id=_stable_id("circular", nodes),
-                node_ids=nodes,
-                transaction_ids=tuple(str(value) for value in row["transaction_ids"]),
-                total_amount=float(row["total_amount"]),
-                cycle_length=len(nodes),
-            ),
-        )
-    return sorted(flags.values(), key=lambda flag: flag.flag_id)
 
 
 def persist_financial_flags(
@@ -304,8 +280,8 @@ def detect_financial_patterns(
     driver: Any, case_id: str
 ) -> tuple[list[CircularFlowFlag], list[StructuringFlag]]:
     project_case_graph(driver, case_id, directed=True)
-    circular = load_ordered_cycle_flags(driver, case_id)
     transactions = load_case_transactions(driver, case_id)
+    circular = detect_circular_flows(transactions)
     structuring = detect_structuring(transactions)
     persist_financial_flags(driver, case_id, circular, structuring)
     return circular, structuring

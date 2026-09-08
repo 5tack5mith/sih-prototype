@@ -1,14 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import CaseHeader from '../components/overview/CaseHeader'
 import Sidebar from '../components/overview/Sidebar'
 import GraphViewport from '../components/overview/GraphViewport'
 import CaseOverviewPanel from '../components/overview/CaseOverviewPanel'
 import OverviewNetworkGraph from '../components/overview/OverviewNetworkGraph'
 import { fetchCaseOverview, fetchCaseGraph } from '../api/overviewApi'
-import { scoreOf } from '../components/overview/graphLayout'
+import { scoreOf, computeDegrees } from '../components/overview/graphLayout'
 import './Overview.css'
 
 const TOP_PLAYER_COUNT = 5
+const CUTOFF_VALUE = 0.75
 
 function Overview({ caseId, onBack, onNavigate }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
@@ -16,6 +17,16 @@ function Overview({ caseId, onBack, onNavigate }) {
   const [graph, setGraph] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [retryToken, setRetryToken] = useState(0)
+
+  // Subset filters. bridgingOnly/cutoffEnabled trigger a real refetch against
+  // the API's filter/cutoff params; isolatesVisible is a pure client-side
+  // render filter (the API has no "isolates" concept). None of these apply
+  // on initial load — the graph always starts unfiltered.
+  const [bridgingOnly, setBridgingOnly] = useState(false)
+  const [cutoffEnabled, setCutoffEnabled] = useState(false)
+  const [isolatesVisible, setIsolatesVisible] = useState(false)
+
+  const controlsRef = useRef(null)
 
   useEffect(() => {
     if (!caseId) {
@@ -31,7 +42,10 @@ function Overview({ caseId, onBack, onNavigate }) {
       try {
         const [overviewResult, graphResult] = await Promise.all([
           fetchCaseOverview(caseId),
-          fetchCaseGraph(caseId),
+          fetchCaseGraph(caseId, {
+            filter: bridgingOnly ? 'bridging_only' : undefined,
+            cutoff: cutoffEnabled ? CUTOFF_VALUE : undefined,
+          }),
         ])
         if (cancelled) return
 
@@ -54,14 +68,28 @@ function Overview({ caseId, onBack, onNavigate }) {
     return () => {
       cancelled = true
     }
-  }, [caseId, retryToken])
+    // bridgingOnly/cutoffEnabled intentionally re-trigger a fetch: they're
+    // real API query params, unlike isolatesVisible which is client-only.
+  }, [caseId, retryToken, bridgingOnly, cutoffEnabled])
 
   const topPlayers = useMemo(() => {
     const nodes = graph?.nodes ?? []
     return [...nodes].sort((a, b) => scoreOf(b) - scoreOf(a)).slice(0, TOP_PLAYER_COUNT)
   }, [graph])
 
+  const isolateCount = useMemo(() => {
+    const nodes = graph?.nodes ?? []
+    const edges = graph?.edges ?? []
+    const degrees = computeDegrees(nodes, edges)
+    return nodes.filter((n) => (degrees.get(String(n.node_id)) ?? 0) === 0).length
+  }, [graph])
+
   const targetValue = topPlayers[0]?.name || topPlayers[0]?.node_id
+
+  // Sidebar badge counts, derived from data this page already loaded — no
+  // extra requests just to populate the nav.
+  const communityCount = overview?.community_count ?? undefined
+  const keyPlayerCount = graph ? Math.min(10, graph.nodes.length) : undefined
 
   const handleRetry = () => setRetryToken((t) => t + 1)
 
@@ -69,16 +97,35 @@ function Overview({ caseId, onBack, onNavigate }) {
     <div className="overview-page">
       <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} />
       <div className="overview-page__body">
-        <Sidebar active="overview" onNavigate={onNavigate} />
+        <Sidebar
+          active="overview"
+          onNavigate={onNavigate}
+          isolatesVisible={isolatesVisible}
+          isolateCount={isolateCount}
+          onToggleIsolates={caseId ? () => setIsolatesVisible((v) => !v) : undefined}
+          bridgingOnly={bridgingOnly}
+          onToggleBridging={caseId ? () => setBridgingOnly((v) => !v) : undefined}
+          cutoffEnabled={cutoffEnabled}
+          onToggleCutoff={caseId ? () => setCutoffEnabled((v) => !v) : undefined}
+          communityCount={communityCount}
+          keyPlayerCount={keyPlayerCount}
+        />
         <GraphViewport
           docket={caseId || '—'}
           {...(targetValue ? { targetValue } : {})}
           backgroundImage={null}
+          onZoomIn={loadState === 'ready' ? () => controlsRef.current?.zoomIn() : undefined}
+          onZoomOut={loadState === 'ready' ? () => controlsRef.current?.zoomOut() : undefined}
+          onFit={loadState === 'ready' ? () => controlsRef.current?.fit() : undefined}
         >
           <OverviewNetworkGraph
             loadState={loadState}
             errorMessage={errorMessage}
             graph={graph}
+            showIsolates={isolatesVisible}
+            registerControls={(api) => {
+              controlsRef.current = api
+            }}
             onRetry={handleRetry}
           />
         </GraphViewport>

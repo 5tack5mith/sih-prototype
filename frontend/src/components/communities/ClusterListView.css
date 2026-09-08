@@ -142,6 +142,15 @@
   color: #8d9aab;
 }
 
+.cl-list__empty {
+  padding: 40px 16px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
 .cl-list__footer {
   flex-shrink: 0;
   display: flex;

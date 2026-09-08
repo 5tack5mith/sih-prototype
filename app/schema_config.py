@@ -1,12 +1,22 @@
-"""Single source of truth for the placeholder Neo4j schema.
+"""Single source of truth for the Neo4j schema.
 
-PLACEHOLDER SCHEMA: replace values in this module when the real dataset arrives.
-All graph-analysis modules import labels, relationship types, and property names
-from here. They must never duplicate those schema identifiers inline.
+Two graphs live in Neo4j side by side:
+  - The RAW heterogeneous graph (Person/Account/Phone/RecruiterPlatform/
+    CryptoOfframp + TRANSACTION/RECRUITED_VIA/SHARED_ADDRESS/SHARED_DEVICE/
+    OWNS), a faithful copy of dataset_generator/output/ for detailed
+    inspection.
+  - The PERSON-only analytical graph that every Zone 1 algorithm and API
+    endpoint actually queries, via ``ENTITY_NODE_LABELS`` and
+    ``STRUCTURAL_REL_TYPES`` below: Person nodes connected by TRANSACTED_WITH
+    (a materialized, aggregated projection of Account-level TRANSACTION
+    edges resolved through OWNS/linked_person_id — see
+    app/project_person_graph.py) plus the already-Person-to-Person
+    SHARED_ADDRESS/SHARED_DEVICE edges used directly, unmodified, from the
+    raw graph.
 
-If the real graph splits entities across labels, update ``ENTITY_NODE_LABELS``.
-Every query builder creates a label-union predicate from that tuple; search for
-``entity_label_predicate`` when adapting unusual multi-label semantics.
+If the analytical graph ever needs to span more labels, update
+``ENTITY_NODE_LABELS``; every query builder already creates a label-union
+predicate from that tuple via ``entity_label_predicate``.
 """
 from __future__ import annotations
 
@@ -20,6 +30,13 @@ NODE_LABEL_CRITICALITY_RESULT = "CriticalityRank"
 NODE_LABEL_CIRCULAR_FLOW_FLAG = "CircularFlowFlag"
 NODE_LABEL_STRUCTURING_FLAG = "StructuringFlag"
 
+# Raw-graph-only node labels (never part of ENTITY_NODE_LABELS/the analytical
+# graph; reachable only via OWNS/RECRUITED_VIA for detail inspection).
+RAW_NODE_LABEL_ACCOUNT = "Account"
+RAW_NODE_LABEL_PHONE = "Phone"
+RAW_NODE_LABEL_RECRUITER_PLATFORM = "RecruiterPlatform"
+RAW_NODE_LABEL_CRYPTO_OFFRAMP = "CryptoOfframp"
+
 # Entity and relationship properties
 PROP_NODE_ID = "id"
 PROP_NODE_NAME = "name"
@@ -27,6 +44,7 @@ PROP_CASE_ID = "case_id"
 PROP_RELATIONSHIP_ID = "id"
 PROP_ENTITY_TYPE = "entity_type"
 PROP_FIRST_CONTACT_DATE = "first_contact_date"
+PROP_IS_BACKGROUND_NOISE = "is_background_noise"
 PROP_CASE_STATUS = "status"
 PROP_CASE_PRIORITY = "priority"
 PROP_CASE_DESCRIPTION = "description"
@@ -39,12 +57,34 @@ PROP_CASE_DIAMETER = "diameter"
 PROP_CASE_RECIPROCITY = "reciprocity"
 
 # Relationship types
-REL_CALL = "CALLED"
-REL_TRANSACTION = "TRANSFERRED_TO"
-REL_ASSOCIATION = "ASSOCIATED_WITH"
+REL_TRANSACTION = "TRANSACTED_WITH"
+REL_SHARED_ADDRESS = "SHARED_ADDRESS"
+REL_SHARED_DEVICE = "SHARED_DEVICE"
 REL_CASE_LINK = "BELONGS_TO"
-STRUCTURAL_REL_TYPES = (REL_CALL, REL_TRANSACTION, REL_ASSOCIATION)
+STRUCTURAL_REL_TYPES = (REL_TRANSACTION, REL_SHARED_ADDRESS, REL_SHARED_DEVICE)
+# Analytical edge types whose case scoping is one-sided (see
+# repository.get_case_graph): a noise-side person has no case_id, so only
+# the ring-side endpoint needs to resolve to the requested case.
+ONE_SIDED_SCOPE_REL_TYPES = (REL_SHARED_ADDRESS, REL_SHARED_DEVICE)
 REL_WEIGHT_PROPERTY = "weight"
+
+# Raw-graph-only relationship types (never in STRUCTURAL_REL_TYPES).
+# RAW_REL_TRANSACTION ("TRANSACTION", Account->Account) is intentionally
+# distinct from REL_TRANSACTION ("TRANSACTED_WITH", the aggregated Person
+# analytical edge above) - detect_financial_patterns.py's circular-flow and
+# structuring detection need real per-transaction timestamps/amounts, which
+# aggregation destroys, so those two loaders read this raw type directly
+# (resolved to Person ids via OWNS) rather than the aggregated one.
+RAW_REL_OWNS = "OWNS"
+RAW_REL_RECRUITED_VIA = "RECRUITED_VIA"
+RAW_REL_TRANSACTION = "TRANSACTION"
+
+# TRANSACTED_WITH aggregation properties (see app/project_person_graph.py)
+PROP_TXN_COUNT = "transaction_count"
+PROP_TOTAL_AMOUNT = "total_amount"
+PROP_FIRST_TIMESTAMP = "first_timestamp"
+PROP_LAST_TIMESTAMP = "last_timestamp"
+PROP_TRANSACTION_IDS = "transaction_ids"
 
 # Financial relationship properties
 TXN_PROP_AMOUNT = "amount"
@@ -126,6 +166,19 @@ def entity_label_predicate(variable: str) -> str:
 def relationship_type_union(types: tuple[str, ...] | list[str]) -> str:
     """Return a safe relationship-type union for a Cypher pattern."""
     return "|".join(cypher_identifier(value) for value in types)
+
+
+def cypher_string_list(values: tuple[str, ...] | list[str]) -> str:
+    """Return a safe Cypher list-of-string-literals, e.g. for `type(rel) IN [...]`.
+
+    Reuses the same identifier validation as cypher_identifier (rejecting
+    anything that isn't a plain identifier) even though the output here is
+    quoted as a string literal, not a backtick-quoted identifier.
+    """
+    for value in values:
+        if not _IDENTIFIER_PATTERN.fullmatch(value):
+            raise ValueError(f"unsafe schema identifier: {value!r}")
+    return "[" + ", ".join(f"'{value}'" for value in values) + "]"
 
 
 def projection_name(case_id: str, directed: bool = False) -> str:

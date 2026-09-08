@@ -56,6 +56,7 @@
 }
 
 .tss__endpoint-box {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -64,7 +65,30 @@
   background: #111722;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 4px;
+}
+
+.tss__endpoint-select {
+  flex: 1;
+  min-width: 0;
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  padding-right: 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #f8fafc;
   cursor: pointer;
+}
+
+.tss__endpoint-select:focus {
+  outline: none;
+}
+
+.tss__endpoint-select option {
+  background: #111722;
+  color: #f8fafc;
 }
 
 .tss__endpoint-name {
@@ -78,6 +102,11 @@
 }
 
 .tss__endpoint-chevron {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
   flex-shrink: 0;
   font-size: 12px;
   color: #8d9aab;
@@ -135,4 +164,10 @@
 
 .tss__trace-btn:hover {
   background: #f5d478;
+}
+
+.tss__trace-btn:disabled {
+  background: #4a4530;
+  color: #8d8567;
+  cursor: not-allowed;
 }

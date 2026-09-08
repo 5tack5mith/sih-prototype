@@ -232,9 +232,24 @@ class Neo4jRepository:
         community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
         role = schema.cypher_identifier(schema.PROP_STRUCTURAL_ROLE)
         structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+        one_sided_types = schema.cypher_string_list(schema.ONE_SIDED_SCOPE_REL_TYPES)
+        noise_prop = schema.cypher_identifier(schema.PROP_IS_BACKGROUND_NOISE)
         weight = schema.cypher_identifier(schema.REL_WEIGHT_PROPERTY) if schema.REL_WEIGHT_PROPERTY else None
+        # SHARED_ADDRESS/SHARED_DEVICE use one-sided case scoping, restricted
+        # to a background-noise person (no case_id) connected to that case's
+        # own person - the approved noise-handling design, not general
+        # one-sided leniency (which could otherwise leak a different case's
+        # person into this one via a hypothetical cross-case shared-address
+        # link). Every other structural edge type keeps normal two-sided
+        # scoping.
         node_query = f"""
-        MATCH (node) WHERE {labels} AND {_case_scope("node")}
+        MATCH (node) WHERE {labels}
+          AND ({_case_scope("node")} OR (
+            coalesce(node.{noise_prop}, false) = true AND EXISTS {{
+              MATCH (node)-[noise_link]-(ring)
+              WHERE type(noise_link) IN {one_sided_types} AND {_case_scope("ring")}
+            }}
+          ))
           AND ($cutoff IS NULL OR coalesce(node.{betweenness}, 0.0) >= $cutoff)
           AND (NOT $bridging_only OR EXISTS {{
             MATCH (node)-[:{structural}]-(bridge_neighbor)
@@ -252,7 +267,14 @@ class Neo4jRepository:
         edge_query = f"""
         MATCH (source)-[relationship:{structural}]->(target)
         WHERE {source_labels} AND {target_labels}
-          AND {_case_scope("source")} AND {_case_scope("target")}
+          AND (
+            (type(relationship) IN {one_sided_types} AND (
+              ({_case_scope("source")} AND (coalesce(target.{noise_prop}, false) = true OR {_case_scope("target")}))
+              OR ({_case_scope("target")} AND (coalesce(source.{noise_prop}, false) = true OR {_case_scope("source")}))
+            ))
+            OR (NOT type(relationship) IN {one_sided_types}
+              AND {_case_scope("source")} AND {_case_scope("target")})
+          )
           AND ($cutoff IS NULL OR (coalesce(source.{betweenness}, 0.0) >= $cutoff
                AND coalesce(target.{betweenness}, 0.0) >= $cutoff))
         WITH source, target, relationship, source.{community} AS source_community,

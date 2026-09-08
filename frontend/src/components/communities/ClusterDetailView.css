@@ -299,6 +299,19 @@
   border-radius: 2px;
 }
 
+.cd__state {
+  padding: 40px 16px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.cd__state--error {
+  color: #fb7185;
+}
+
 .cd__footer {
   flex-shrink: 0;
   display: flex;

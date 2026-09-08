@@ -144,6 +144,18 @@
   align-items: flex-start;
 }
 
+.ov-sidebar__filter-row--btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ov-sidebar__filter-row--btn:disabled {
+  cursor: default;
+}
+
 .ov-sidebar__filter-text {
   display: flex;
   flex-direction: column;

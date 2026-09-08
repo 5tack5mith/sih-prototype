@@ -11,6 +11,9 @@ function GraphViewport({
   subBar = null,
   backgroundImage = graphNetwork,
   children = null,
+  onZoomIn,
+  onZoomOut,
+  onFit,
 }) {
   return (
     <section className="ov-graph">
@@ -44,12 +47,21 @@ function GraphViewport({
         <div className="ov-graph__watermark">MATRIX KERNEL v4.1.0-FIPS // ENGINE OK</div>
 
         <div className="ov-graph__controls">
-          <button type="button">+</button>
-          <button type="button">−</button>
-          <button type="button" className="ov-graph__controls-icon">
+          <button type="button" onClick={onZoomIn} disabled={!onZoomIn}>
+            +
+          </button>
+          <button type="button" onClick={onZoomOut} disabled={!onZoomOut}>
+            −
+          </button>
+          <button
+            type="button"
+            className="ov-graph__controls-icon"
+            onClick={onFit}
+            disabled={!onFit}
+            title="Fit to screen"
+          >
             <img src={fitScreenIcon} alt="Fit to screen" />
           </button>
-          <button type="button">||</button>
         </div>
 
         <div className="ov-graph__minimap">

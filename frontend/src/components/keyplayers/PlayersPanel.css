@@ -92,16 +92,80 @@
 }
 
 .kp-panel__sort-tab {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
   font-weight: 400;
   font-size: 11px;
   color: #8d9aab;
   cursor: pointer;
 }
 
+.kp-panel__sort-tab:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
 .kp-panel__sort-tab--active {
   font-weight: 700;
   color: #f2ca50;
   text-decoration: underline;
+}
+
+.kp-panel__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #64748b;
+  text-align: center;
+}
+
+.kp-panel__state--inline {
+  padding: 16px;
+  font-size: 11px;
+}
+
+.kp-panel__state--error {
+  color: #fb7185;
+}
+
+.kp-panel__state-title {
+  margin: 0;
+  font-size: 12px;
+  color: #fb7185;
+}
+
+.kp-panel__state-detail {
+  margin: 0;
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #94a3b8;
+}
+
+.kp-panel__state-retry {
+  margin-top: 4px;
+  padding: 6px 16px;
+  background: #f2ca50;
+  border: none;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: #3c2f00;
+  cursor: pointer;
+}
+
+.kp-panel__state-retry:hover {
+  background: #f5d478;
 }
 
 .kp-panel__scroll {
@@ -113,6 +177,11 @@
 .kp-row {
   padding: 9px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+}
+
+.kp-row:hover {
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .kp-row--top {
