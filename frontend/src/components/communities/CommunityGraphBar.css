@@ -1,0 +1,85 @@
+.cgb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 32px;
+  padding: 0 12px;
+  background: rgba(18, 24, 32, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: 'IBM Plex Mono', monospace;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cgb__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cgb__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.cgb__label {
+  font-weight: 700;
+  font-size: 10px;
+  color: #cbd5e1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cgb__sep {
+  font-size: 11px;
+  color: #334155;
+  flex-shrink: 0;
+}
+
+.cgb__item {
+  font-size: 9px;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.cgb__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cgb__back {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: #8d9aab;
+}
+
+.cgb__back:hover {
+  color: #f2ca50;
+}
+
+.cgb__right button:not(.cgb__back) {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #94a3b8;
+  cursor: pointer;
+}

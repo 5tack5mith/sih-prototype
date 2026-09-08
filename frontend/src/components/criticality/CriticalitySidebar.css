@@ -1,0 +1,275 @@
+.cs-sidebar {
+  width: 256px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: #0d121a;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-y: auto;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.cs-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 9px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cs-sidebar__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.55px;
+  color: #d4af37;
+}
+
+.cs-sidebar__title-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: #d4af37;
+  flex-shrink: 0;
+}
+
+.cs-sidebar__version {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.cs-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+}
+
+.cs-sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cs-sidebar__nav-item img {
+  width: 16px;
+  height: 16px;
+}
+
+.cs-sidebar__nav-label {
+  flex: 1;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.cs-sidebar__nav-item--active {
+  background: #17202e;
+  border-left: 2px solid #d4af37;
+  padding-left: 12px;
+  cursor: default;
+}
+
+.cs-sidebar__nav-item--active .cs-sidebar__nav-label {
+  color: #d4af37;
+  font-weight: 500;
+}
+
+.cs-sidebar__nav-tag {
+  padding: 3px 5px;
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+  color: #d4af37;
+}
+
+.cs-sidebar__section {
+  padding: 13px 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cs-sidebar__section--grow {
+  flex: 1;
+}
+
+.cs-sidebar__section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cs-sidebar__section-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.cs-sidebar__info {
+  font-size: 11px;
+  color: #556272;
+  cursor: help;
+}
+
+.cs-sidebar__applied-tag {
+  font-size: 11px;
+  color: #556272;
+}
+
+.cs-sidebar__calculated-tag {
+  font-size: 11px;
+  color: #2dd4bf;
+}
+
+.cs-sidebar__net-tag {
+  font-size: 11px;
+  color: #556272;
+}
+
+.cs-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.cs-filter-row--value {
+  color: #e2e7ed;
+}
+
+.cs-filter-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  color: #d4af37;
+}
+
+.cs-toggle {
+  position: relative;
+  width: 28px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: block;
+  flex-shrink: 0;
+}
+
+.cs-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: #64748b;
+}
+
+.cs-toggle--on {
+  background: rgba(19, 78, 74, 0.6);
+  border-color: rgba(20, 184, 166, 0.4);
+}
+
+.cs-toggle--on::after {
+  left: auto;
+  right: 2px;
+  background: #2dd4bf;
+}
+
+.cs-cutoff-track {
+  height: 4px;
+  border-radius: 2px;
+  background: #1e293b;
+  overflow: hidden;
+  margin-top: -2px;
+}
+
+.cs-cutoff-fill {
+  display: block;
+  height: 100%;
+  background: #d4af37;
+  border-radius: 2px;
+}
+
+.cs-metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 10px;
+  background: #111722;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+}
+
+.cs-metric-row__label {
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  color: #94a3b8;
+}
+
+.cs-metric-row__value {
+  font-weight: 700;
+  font-size: 13px;
+  color: #e2e7ed;
+}
+
+.cs-cluster-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-cluster-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+.cs-cluster-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.cs-sidebar__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 13px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.cs-sidebar__legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.cs-sidebar__legend-value {
+  color: #94a3b8;
+}

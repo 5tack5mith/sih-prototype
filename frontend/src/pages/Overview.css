@@ -1,0 +1,14 @@
+.overview-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #07090e;
+}
+
+.overview-page__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  margin-top: 56px;
+  overflow-x: auto;
+}

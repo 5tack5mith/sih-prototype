@@ -1,0 +1,71 @@
+export const SUMMARY = {
+  cutLabel: 'TOP-6 CUT',
+  initialNodes: 22,
+  reachablePct: '100% REACHABLE',
+  removalCriterion: 'GLOBAL EFFICIENCY',
+  removalSub: 'MAX DROP OPTION',
+  fragmentation: '+68.2%',
+  fragmentationSub: 'CRITICAL DISRUPTION',
+  secondaryNodes: 8,
+  secondarySub: 'LARGEST SUBGRAPH',
+}
+
+export const CHOKEPOINTS = [
+  {
+    rank: 1,
+    name: 'Valkyrie Holdings Ltd',
+    sub: 'CRITICAL CUT',
+    subVariant: 'red',
+    bfr: 22,
+    aft: 8,
+    frg: '78.4%',
+    frgVariant: 'red',
+    highlight: true,
+  },
+  {
+    rank: 2,
+    name: 'Al-Miraj Forex Gateway',
+    sub: 'OFFSHORE BROKER',
+    subVariant: 'default',
+    bfr: 8,
+    aft: 4,
+    frg: '52.1%',
+    frgVariant: 'amber',
+  },
+  {
+    rank: 3,
+    name: 'Kestrel Escrow AG',
+    sub: 'FIDUCIARY ESCROW',
+    subVariant: 'default',
+    bfr: 8,
+    aft: 5,
+    frg: '41.0%',
+    frgVariant: 'amber',
+  },
+  {
+    rank: 4,
+    name: 'Apex Settlement Pool 4',
+    sub: 'SETTLEMENT LEDGER',
+    subVariant: 'default',
+    bfr: 5,
+    aft: 3,
+    frg: '29.5%',
+    frgVariant: 'teal',
+  },
+  {
+    rank: 5,
+    name: 'Boreas Logistics BV',
+    sub: 'CONTAINER FREIGHT',
+    subVariant: 'default',
+    bfr: 3,
+    aft: 2,
+    frg: '18.2%',
+    frgVariant: 'teal',
+  },
+]
+
+export const IMPACT = {
+  entity: 'Valkyrie Holdings Ltd',
+  components: 3,
+  decline: '-58.6%',
+}
