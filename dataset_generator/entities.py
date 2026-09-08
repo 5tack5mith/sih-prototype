@@ -14,7 +14,14 @@ entities) fully determines and isolates this function's randomness.
 
 import itertools
 
-from config import OCCUPATIONS, BANK_TIERS, INDIAN_STATES_HIGH_RISK, RECRUITMENT_CHANNELS
+from config import (
+    BANK_TIERS,
+    COMPLICIT_OCCUPATION_POOL,
+    INDIAN_STATES_HIGH_RISK,
+    OCCUPATIONS,
+    RECRUITMENT_CHANNELS,
+    STATE_DISTRICTS,
+)
 
 _person_counter = itertools.count(1)
 _account_counter = itertools.count(1)
@@ -22,13 +29,46 @@ _phone_counter = itertools.count(1)
 _org_counter = itertools.count(1)
 _exit_counter = itertools.count(1)
 
+# ASSUMPTION: curated common Indian first/last names spanning multiple
+# linguistic regions (Hindi-belt, Punjabi, Bengali, Marathi, Gujarati,
+# Tamil, Telugu, Kannada, Malayalam, Odia) - not an exhaustive or
+# demographically-weighted list, just enough real names (120 x 100 =
+# 12,000 combinations) that a ~3,000-person dataset doesn't force
+# collisions the way the previous 16 x 16 = 256-combination pool did.
 FIRST_NAMES = [
     "Amit", "Priya", "Ravi", "Sunita", "Vijay", "Anjali", "Rahul", "Pooja",
     "Suresh", "Kavita", "Manoj", "Deepa", "Arjun", "Neha", "Sanjay", "Rekha",
+    "Rohit", "Sneha", "Vikas", "Anita", "Ashok", "Meena", "Deepak", "Shalini",
+    "Ramesh", "Geeta", "Naveen", "Swati", "Kiran", "Poonam", "Rajesh", "Nisha",
+    "Ajay", "Ritu", "Anil", "Seema", "Prakash", "Usha", "Vinod", "Manju",
+    "Ashwin", "Divya", "Karan", "Isha", "Aakash", "Simran", "Varun", "Preeti",
+    "Nikhil", "Shreya", "Gaurav", "Priyanka", "Abhishek", "Kritika", "Yogesh",
+    "Sarita", "Mahesh", "Radha", "Sunil", "Jyoti", "Vivek", "Alka", "Harsh",
+    "Payal", "Amar", "Lata", "Dinesh", "Vandana", "Girish", "Bhavna", "Naresh",
+    "Chitra", "Mukesh", "Rani", "Satish", "Suman", "Raju", "Kamla", "Vishal",
+    "Renu", "Sandeep", "Archana", "Pankaj", "Nidhi", "Manish", "Shweta",
+    "Rakesh", "Madhuri", "Anand", "Sonal", "Devendra", "Aarti", "Jitendra",
+    "Vidya", "Balaji", "Lakshmi", "Karthik", "Meenakshi", "Arun", "Kalyani",
+    "Murali", "Vasanthi", "Rajan", "Padma", "Senthil", "Kavya", "Prasad",
+    "Uma", "Venkat", "Latha", "Ganesh", "Saraswati", "Mohan", "Shanti",
+    "Bharat", "Indira", "Krishnan", "Malathi", "Raghav", "Deepika",
+    "Siddharth", "Ananya", "Aditya", "Farhan", "Ayesha",
 ]
 LAST_NAMES = [
     "Sharma", "Verma", "Patel", "Reddy", "Singh", "Kumar", "Gupta", "Nair",
     "Iyer", "Das", "Mehta", "Joshi", "Rao", "Chauhan", "Yadav", "Pillai",
+    "Agarwal", "Bhatt", "Chatterjee", "Desai", "Ghosh", "Iyengar", "Jain",
+    "Kapoor", "Krishnan", "Malhotra", "Menon", "Mishra", "Mukherjee", "Nayak",
+    "Pandey", "Pandit", "Panicker", "Pathak", "Rajan", "Rathore", "Saxena",
+    "Sengupta", "Shah", "Shetty", "Shukla", "Sinha", "Srinivasan", "Subramaniam",
+    "Thakur", "Tiwari", "Trivedi", "Venkatesh", "Bose", "Chakraborty", "Dutta",
+    "Goel", "Goyal", "Grover", "Jha", "Kaur", "Khanna", "Kohli", "Lal",
+    "Mahajan", "Mahato", "Mistry", "Naidu", "Oberoi", "Prasad", "Puri",
+    "Raghunathan", "Rana", "Ranganathan", "Sethi", "Suri", "Tandon", "Varma",
+    "Vora", "Ahuja", "Anand", "Bajaj", "Balakrishnan", "Bedi", "Bhagat",
+    "Chandran", "Chopra", "Dixit", "Dubey", "Gill", "Hegde", "Kannan",
+    "Kaushik", "Konda", "Lakshman", "Mane", "Naik", "Pai", "Rawat",
+    "Sarkar", "Soni", "Talwar", "Vaidya", "Vasudevan", "Warrier",
 ]
 
 
@@ -36,18 +76,34 @@ def _random_name(rng):
     return f"{rng.choice(FIRST_NAMES)} {rng.choice(LAST_NAMES)}"
 
 
+def _choose_occupation(rng, mule_type):
+    """Schema Sec. 5: complicit mules should show occupation disconnected
+    from their actual transaction volume (a student/unemployed account
+    moving lakhs) - previously stated_occupation was drawn fully
+    independently of mule_type, so this documented signal was never
+    actually visible anywhere. Complicit mules now skew (70% of the time)
+    toward lower-income-presenting occupations specifically to make that
+    mismatch a real, visible signal rather than only the existing hidden
+    economic_profile_deviation_score number."""
+    if mule_type == "complicit" and rng.random() < 0.7:
+        return rng.choice(COMPLICIT_OCCUPATION_POOL)
+    return rng.choice(OCCUPATIONS)
+
+
 def make_person(rng, role, mule_type=None, recruitment_channel=None):
     """role: victim | mule | mastermind | recruiter_operator | legitimate"""
     pid = f"P-{next(_person_counter):05d}"
     is_complicit = mule_type == "complicit"
+    state = rng.choice(INDIAN_STATES_HIGH_RISK)
     return {
         "id": pid,
         "type": "PERSON",
         "canonical_name": _random_name(rng),
         "aliases": [],
         "visible": {
-            "stated_occupation": rng.choice(OCCUPATIONS),
-            "state": rng.choice(INDIAN_STATES_HIGH_RISK),
+            "stated_occupation": _choose_occupation(rng, mule_type),
+            "state": state,
+            "district": rng.choice(STATE_DISTRICTS[state]),
             "district_risk_tier": rng.choice(["high", "medium", "low"]),
         },
         "ground_truth": {
