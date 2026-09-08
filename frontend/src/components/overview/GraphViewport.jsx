@@ -63,25 +63,6 @@ function GraphViewport({
             <img src={fitScreenIcon} alt="Fit to screen" />
           </button>
         </div>
-
-        <div className="ov-graph__minimap">
-          <div className="ov-graph__minimap-header">
-            <span>RADAR MINIMAP</span>
-            <span className="ov-graph__minimap-loc">LOC: 0.0, 0.0</span>
-          </div>
-          <div className="ov-graph__minimap-canvas">
-            <div className="ov-graph__minimap-viewport">
-              <span className="ov-graph__minimap-center" />
-            </div>
-            <span className="ov-graph__minimap-cluster ov-graph__minimap-cluster--blue" />
-            <span className="ov-graph__minimap-cluster ov-graph__minimap-cluster--purple" />
-            <span className="ov-graph__minimap-cluster ov-graph__minimap-cluster--amber" />
-          </div>
-          <div className="ov-graph__minimap-footer">
-            <span>SCALE: 0.25x</span>
-            <span>FOI: ALL COMMUNITIES</span>
-          </div>
-        </div>
       </div>
     </section>
   )

@@ -93,9 +93,23 @@ function Overview({ caseId, onBack, onNavigate, cases, onSelectCase }) {
 
   const handleRetry = () => setRetryToken((t) => t + 1)
 
+  // Clicking a node here has nothing of its own to show it in (Overview has
+  // no per-node panel) — hand off to Key Players, which does, carrying the
+  // clicked node id so it opens straight into that person's profile.
+  const handleNodeSelect = (nodeId) => {
+    if (nodeId) onNavigate?.('key-players', { selectedNodeId: nodeId })
+  }
+
   return (
     <div className="overview-page">
-      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} cases={cases} onSelectCase={onSelectCase} />
+      <CaseHeader
+        onBack={onBack}
+        caseLabel={caseId || 'No case selected'}
+        cases={cases}
+        onSelectCase={onSelectCase}
+        personNodes={graph?.nodes}
+        onSelectPerson={handleNodeSelect}
+      />
       <div className="overview-page__body">
         <Sidebar
           active="overview"
@@ -128,6 +142,7 @@ function Overview({ caseId, onBack, onNavigate, cases, onSelectCase }) {
               controlsRef.current = api
             }}
             onRetry={handleRetry}
+            onNodeSelect={handleNodeSelect}
           />
         </GraphViewport>
         <CaseOverviewPanel

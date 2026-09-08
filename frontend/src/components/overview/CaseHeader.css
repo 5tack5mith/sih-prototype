@@ -149,6 +149,20 @@
   z-index: 30;
 }
 
+.case-header__search-group + .case-header__search-group {
+  border-top: 1px solid #2d3947;
+}
+
+.case-header__search-group-label {
+  display: block;
+  padding: 6px 12px 4px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #64748b;
+}
+
 .case-header__search-item {
   display: flex;
   align-items: center;

@@ -25,6 +25,17 @@ function App() {
   // own fetch (sort/filter-aware, its own loading state) is separate and
   // intentionally not replaced by this.
   const [cases, setCases] = useState([])
+  // Optional payload for the destination page (e.g. a graph-node-click ->
+  // Key Players navigation carrying which node to open). A plain
+  // onNavigate(key) call (every existing Sidebar click) passes no payload,
+  // so it's cleared on any ordinary navigation — only a caller that
+  // explicitly passes one keeps it for the page it's navigating to.
+  const [navState, setNavState] = useState(null)
+
+  const handleNavigate = (targetPage, payload = null) => {
+    setPage(targetPage)
+    setNavState(payload)
+  }
 
   useEffect(() => {
     if (page === 'login') return
@@ -55,9 +66,10 @@ function App() {
       <CasePage
         caseId={selectedCase?.id}
         onBack={() => setPage('cases')}
-        onNavigate={setPage}
+        onNavigate={handleNavigate}
         cases={cases}
         onSelectCase={(caseItem) => handleOpenCase({ id: caseItem.case_id })}
+        navState={navState}
       />
     )
   }

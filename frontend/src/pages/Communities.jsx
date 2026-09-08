@@ -118,6 +118,12 @@ function Communities({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const handleSelect = (communityId) => setSelectedId(communityId)
   const handleBack = () => setSelectedId(null)
 
+  // Search-selecting a person here has no in-page place to show them — hand
+  // off to Key Players, same as every other page's search-driven selection.
+  const handleSelectPerson = (nodeId) => {
+    if (nodeId) onNavigate?.('key-players', { selectedNodeId: nodeId })
+  }
+
   const selectedSummary = communities.find((c) => c.community_id === selectedId) || null
 
   // Sidebar badge counts, derived from data this page already loaded — no
@@ -127,7 +133,14 @@ function Communities({ caseId, onBack, onNavigate, cases, onSelectCase }) {
 
   return (
     <div className="overview-page">
-      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} cases={cases} onSelectCase={onSelectCase} />
+      <CaseHeader
+        onBack={onBack}
+        caseLabel={caseId || 'No case selected'}
+        cases={cases}
+        onSelectCase={onSelectCase}
+        personNodes={graph?.nodes}
+        onSelectPerson={handleSelectPerson}
+      />
       <div className="overview-page__body">
         <Sidebar
           active="communities"

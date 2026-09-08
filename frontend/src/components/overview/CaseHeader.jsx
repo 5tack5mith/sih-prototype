@@ -6,14 +6,14 @@ import searchIcon from '../../assets/overview/search.svg'
 import userAvatarIcon from '../../assets/overview/user-avatar.svg'
 import './CaseHeader.css'
 
-const MAX_RESULTS = 8
+const MAX_RESULTS = 5
 
-function CaseHeader({ onBack, caseLabel, cases = [], onSelectCase }) {
+function CaseHeader({ onBack, caseLabel, cases = [], onSelectCase, personNodes = [], onSelectPerson }) {
   const [query, setQuery] = useState('')
   const [isFocused, setIsFocused] = useState(false)
 
   const trimmed = query.trim().toLowerCase()
-  const matches = trimmed
+  const caseMatches = trimmed
     ? cases
         .filter((c) => {
           const id = (c.case_id || '').toLowerCase()
@@ -22,10 +22,26 @@ function CaseHeader({ onBack, caseLabel, cases = [], onSelectCase }) {
         })
         .slice(0, MAX_RESULTS)
     : []
+  const personMatches = trimmed
+    ? personNodes
+        .filter((n) => {
+          const id = String(n.node_id ?? '').toLowerCase()
+          const name = (n.name || '').toLowerCase()
+          return id.includes(trimmed) || name.includes(trimmed)
+        })
+        .slice(0, MAX_RESULTS)
+    : []
   const showDropdown = isFocused && trimmed.length > 0
+  const hasMatches = caseMatches.length > 0 || personMatches.length > 0
 
-  const handleSelect = (caseItem) => {
+  const handleSelectCase = (caseItem) => {
     onSelectCase?.(caseItem)
+    setQuery('')
+    setIsFocused(false)
+  }
+
+  const handleSelectPerson = (personNode) => {
+    onSelectPerson?.(personNode.node_id)
     setQuery('')
     setIsFocused(false)
   }
@@ -53,7 +69,7 @@ function CaseHeader({ onBack, caseLabel, cases = [], onSelectCase }) {
         <input
           className="case-header__search-input"
           type="text"
-          placeholder="Search cases by ID or name..."
+          placeholder="Search cases or persons by ID/name..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
@@ -62,23 +78,49 @@ function CaseHeader({ onBack, caseLabel, cases = [], onSelectCase }) {
         <span className="case-header__search-kbd">⌘K</span>
         {showDropdown && (
           <div className="case-header__search-dropdown">
-            {matches.length === 0 ? (
-              <div className="case-header__search-empty">NO CASES FOUND</div>
+            {!hasMatches ? (
+              <div className="case-header__search-empty">NO CASES OR PERSONS FOUND</div>
             ) : (
-              matches.map((c) => (
-                <button
-                  type="button"
-                  key={c.case_id}
-                  className="case-header__search-item"
-                  onMouseDown={(e) => {
-                    e.preventDefault()
-                    handleSelect(c)
-                  }}
-                >
-                  <span className="case-header__search-item-id">{c.case_id}</span>
-                  <span className="case-header__search-item-name">{c.name}</span>
-                </button>
-              ))
+              <>
+                {caseMatches.length > 0 && (
+                  <div className="case-header__search-group">
+                    <span className="case-header__search-group-label">CASES</span>
+                    {caseMatches.map((c) => (
+                      <button
+                        type="button"
+                        key={c.case_id}
+                        className="case-header__search-item"
+                        onMouseDown={(e) => {
+                          e.preventDefault()
+                          handleSelectCase(c)
+                        }}
+                      >
+                        <span className="case-header__search-item-id">{c.case_id}</span>
+                        <span className="case-header__search-item-name">{c.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {personMatches.length > 0 && (
+                  <div className="case-header__search-group">
+                    <span className="case-header__search-group-label">PERSONS</span>
+                    {personMatches.map((n) => (
+                      <button
+                        type="button"
+                        key={n.node_id}
+                        className="case-header__search-item"
+                        onMouseDown={(e) => {
+                          e.preventDefault()
+                          handleSelectPerson(n)
+                        }}
+                      >
+                        <span className="case-header__search-item-id">{n.node_id}</span>
+                        <span className="case-header__search-item-name">{n.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}

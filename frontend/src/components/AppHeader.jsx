@@ -3,7 +3,7 @@ import searchIcon from '../assets/cases/search.svg'
 import userIcon from '../assets/cases/user.svg'
 import './AppHeader.css'
 
-function AppHeader() {
+function AppHeader({ searchQuery = '', onSearchChange }) {
   return (
     <header className="app-header">
       <div className="app-header__left">
@@ -18,7 +18,9 @@ function AppHeader() {
           <input
             className="app-header__search-input"
             type="text"
-            placeholder="QUERY CASE ID, ENTITY HASH, WALLET, OR IMEI..."
+            placeholder="SEARCH CASES BY ID OR NAME..."
+            value={searchQuery}
+            onChange={(e) => onSearchChange?.(e.target.value)}
           />
           <span className="app-header__search-kbd">⌘K</span>
         </div>

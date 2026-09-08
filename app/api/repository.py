@@ -193,6 +193,26 @@ class Neo4jRepository:
            (flag:{structuring} AND $node_id IN [flag.{flag_from}, flag.{flag_to}]))
         RETURN count(flag) AS alert_count
         """.replace('\n+', '\n')
+        # Identity fields (phone/account) live on the raw Phone/Account nodes,
+        # not on Person itself - reached the same way project_person_graph.py
+        # resolves ownership, via the Person-[:OWNS]->{Account,Phone} edges
+        # ingest_dataset.py synthesizes. aliases is defensive: every person in
+        # the current dataset has an empty aliases list (entities.py never
+        # populates it, and ingest_dataset.py doesn't currently carry it onto
+        # the node at all), so this always returns [] today - coalesce here
+        # means it starts working automatically if that ever changes, with
+        # zero query changes needed.
+        owns = schema.cypher_identifier(schema.RAW_REL_OWNS)
+        phone_label = schema.cypher_identifier(schema.RAW_NODE_LABEL_PHONE)
+        account_label = schema.cypher_identifier(schema.RAW_NODE_LABEL_ACCOUNT)
+        identity_query = f"""
+        MATCH (node) WHERE {labels} AND node.{node_id} = $node_id AND {_case_scope("node")}
+        OPTIONAL MATCH (node)-[:{owns}]->(phone:{phone_label})
+        OPTIONAL MATCH (node)-[:{owns}]->(account:{account_label})
+        RETURN coalesce(node.aliases, []) AS aliases,
+               [p IN collect(DISTINCT phone.phone_number) WHERE p IS NOT NULL] AS phone_numbers,
+               [a IN collect(DISTINCT account.{node_id}) WHERE a IS NOT NULL] AS account_ids
+        """.replace('\n+', '\n')
         parameters = {"case_id": requested_case_id, "node_id": requested_node_id}
         with self.driver.session() as session:
             node = _as_dict(session.run(base_query, **parameters).single())
@@ -200,6 +220,7 @@ class Neo4jRepository:
                 return None
             edges = [_as_dict(row) for row in session.run(edge_query, **parameters)]
             alerts = _as_dict(session.run(alert_query, **parameters).single()) or {}
+            identity = _as_dict(session.run(identity_query, **parameters).single()) or {}
         node["first_contact_date"] = _serialized(node.get("first_contact_date"))
         return {
             "node_id": node["node_id"], "name": node.get("name"),
@@ -208,6 +229,9 @@ class Neo4jRepository:
             "scores": {key: node.get(key) for key in ("betweenness", "eigenvector", "degree")},
             "community_id": node.get("community_id"), "structural_role": node.get("structural_role"),
             "connection_count": len(edges), "structural_alert_count": int(alerts.get("alert_count", 0)),
+            "aliases": identity.get("aliases") or [],
+            "phone_numbers": identity.get("phone_numbers") or [],
+            "account_ids": identity.get("account_ids") or [],
             "ego_network": {
                 "nodes": [node["node_id"], *sorted({edge["neighbor_id"] for edge in edges})],
                 "edges": [{"source": node["node_id"], "target": edge["neighbor_id"],

@@ -1,4 +1,5 @@
 import downloadIcon from '../../assets/keyplayers/download-icon.svg'
+import backArrowIcon from '../../assets/overview/back-arrow.svg'
 import './PlayersPanel.css'
 
 const TOP_DISPLAY_COUNT = 10
@@ -32,6 +33,111 @@ function buildRows(players) {
   }))
 }
 
+function formatDate(value) {
+  if (!value) return '—'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value
+  return date.toISOString().slice(0, 10)
+}
+
+function ProfileField({ label, value }) {
+  return (
+    <div className="kp-profile__field">
+      <span className="kp-profile__field-label">{label}</span>
+      <span className="kp-profile__field-value">{value ?? '—'}</span>
+    </div>
+  )
+}
+
+function formatList(values) {
+  return values && values.length > 0 ? values.join(', ') : '—'
+}
+
+function NodeProfile({ detailLoadState, nodeDetail, onExitProfile, onRetry }) {
+  return (
+    <div className="kp-profile">
+      <button type="button" className="kp-profile__back" onClick={onExitProfile}>
+        <img src={backArrowIcon} alt="" />
+        <span>Back to Key Players</span>
+      </button>
+
+      {detailLoadState === 'loading' && (
+        <div className="kp-panel__state kp-panel__state--inline">LOADING PROFILE…</div>
+      )}
+
+      {detailLoadState === 'error' && (
+        <div className="kp-panel__state kp-panel__state--inline kp-panel__state--error">
+          <p className="kp-panel__state-title">UNABLE TO LOAD PERSON DETAIL</p>
+          <button type="button" className="kp-panel__state-retry" onClick={onRetry}>
+            RETRY
+          </button>
+        </div>
+      )}
+
+      {detailLoadState === 'not-found' && (
+        <div className="kp-panel__state kp-panel__state--inline">PERSON NOT FOUND IN THIS CASE</div>
+      )}
+
+      {detailLoadState === 'ready' && nodeDetail && (
+        <div className="kp-profile__body">
+          <div className="kp-profile__score">
+            <span className="kp-profile__score-value">{formatScore(nodeDetail.scores?.betweenness)}</span>
+            <span className="kp-profile__score-label">BETWEENNESS SCORE</span>
+          </div>
+
+          <div className="kp-profile__section">
+            <span className="kp-profile__section-title">IDENTITY</span>
+            <div className="kp-profile__identity">
+              <span className="kp-profile__name">{nodeDetail.name || nodeDetail.node_id}</span>
+            </div>
+            <div className="kp-profile__grid">
+              <ProfileField label="PERSON ID" value={nodeDetail.node_id} />
+              <ProfileField label="PHONE NUMBER" value={formatList(nodeDetail.phone_numbers)} />
+              <ProfileField label="ACCOUNT NUMBER" value={formatList(nodeDetail.account_ids)} />
+              <ProfileField label="ALIASES" value={formatList(nodeDetail.aliases)} />
+            </div>
+          </div>
+
+          <div className="kp-profile__section">
+            <span className="kp-profile__section-title">ENTITY DETAILS</span>
+            <div className="kp-profile__grid">
+              <ProfileField label="STRUCTURAL ROLE" value={nodeDetail.structural_role} />
+              <ProfileField label="COMMUNITY ID" value={nodeDetail.community_id} />
+              <ProfileField label="FIRST CONTACT" value={formatDate(nodeDetail.first_contact_date)} />
+              <ProfileField label="CONNECTIONS" value={nodeDetail.connection_count} />
+              {nodeDetail.structural_alert_count > 0 && (
+                <ProfileField label="STRUCTURAL ALERTS" value={nodeDetail.structural_alert_count} />
+              )}
+            </div>
+          </div>
+
+          <div className="kp-profile__section kp-profile__section--ego">
+            <span className="kp-profile__section-title kp-profile__section-title--accent">
+              EGO NETWORK
+              <span className="kp-profile__section-count">
+                {nodeDetail.ego_network?.nodes?.length ?? 0} NODES · {nodeDetail.ego_network?.edges?.length ?? 0} EDGES
+              </span>
+            </span>
+            <div className="kp-profile__ego-list">
+              {(nodeDetail.ego_network?.edges ?? []).map((edge, i) => (
+                <div key={`${edge.source}-${edge.target}-${i}`} className="kp-profile__ego-row">
+                  <span className="kp-profile__ego-target">
+                    {edge.source === nodeDetail.node_id ? edge.target : edge.source}
+                  </span>
+                  <span className="kp-profile__ego-type">{edge.type}</span>
+                </div>
+              ))}
+              {(nodeDetail.ego_network?.edges ?? []).length === 0 && (
+                <span className="kp-profile__ego-empty">NO DIRECT CONNECTIONS</span>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function PlayersPanel({
   loadState,
   errorMessage,
@@ -45,6 +151,9 @@ function PlayersPanel({
   nodeDetail,
   detailLoadState,
   onRetry,
+  profileMode,
+  onExitProfile,
+  onOpenProfile,
 }) {
   const isLoading = loadState === 'loading'
   const isError = loadState === 'error'
@@ -53,37 +162,40 @@ function PlayersPanel({
   const isReady = loadState === 'ready'
 
   const rows = isReady ? buildRows(players ?? []) : []
+  const showProfile = isReady && profileMode
 
   return (
     <aside className="kp-panel">
       <div className="kp-panel__header">
         <div className="kp-panel__header-top">
           <div className="kp-panel__title-row">
-            <h2 className="kp-panel__title">Key Players</h2>
-            <span className="kp-panel__top10-tag">TOP {TOP_DISPLAY_COUNT}</span>
+            <h2 className="kp-panel__title">{showProfile ? 'Detail View' : 'Key Players'}</h2>
+            {!showProfile && <span className="kp-panel__top10-tag">TOP {TOP_DISPLAY_COUNT}</span>}
           </div>
           <button type="button" className="kp-panel__download">
             <img src={downloadIcon} alt="Export" />
           </button>
         </div>
-        <div className="kp-panel__sort-row">
-          <span className="kp-panel__ranked-by">RANKED BY CENTRALITY ↓</span>
-          <div className="kp-panel__sort-tabs">
-            {SORT_TABS.map((tab, index) => (
-              <span key={tab.key} className="kp-panel__sort-tab-group">
-                {index > 0 && <span className="kp-panel__sort-sep">|</span>}
-                <button
-                  type="button"
-                  className={`kp-panel__sort-tab${tab.key === sortMetric ? ' kp-panel__sort-tab--active' : ''}`}
-                  onClick={() => onChangeSortMetric?.(tab.key)}
-                  disabled={!isReady}
-                >
-                  {tab.label}
-                </button>
-              </span>
-            ))}
+        {!showProfile && (
+          <div className="kp-panel__sort-row">
+            <span className="kp-panel__ranked-by">RANKED BY CENTRALITY ↓</span>
+            <div className="kp-panel__sort-tabs">
+              {SORT_TABS.map((tab, index) => (
+                <span key={tab.key} className="kp-panel__sort-tab-group">
+                  {index > 0 && <span className="kp-panel__sort-sep">|</span>}
+                  <button
+                    type="button"
+                    className={`kp-panel__sort-tab${tab.key === sortMetric ? ' kp-panel__sort-tab--active' : ''}`}
+                    onClick={() => onChangeSortMetric?.(tab.key)}
+                    disabled={!isReady}
+                  >
+                    {tab.label}
+                  </button>
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {isNoCase && <div className="kp-panel__state">RETURN TO CASES TO SELECT A CASE</div>}
@@ -102,11 +214,20 @@ function PlayersPanel({
         </div>
       )}
 
-      {isReady && rows.length === 0 && (
+      {showProfile && (
+        <NodeProfile
+          detailLoadState={detailLoadState}
+          nodeDetail={nodeDetail}
+          onExitProfile={onExitProfile}
+          onRetry={onRetry}
+        />
+      )}
+
+      {isReady && !profileMode && rows.length === 0 && (
         <div className="kp-panel__state">NO RANKED PLAYERS AVAILABLE FOR THIS CASE</div>
       )}
 
-      {isReady && rows.length > 0 && (
+      {isReady && !profileMode && rows.length > 0 && (
         <>
           <div className="kp-panel__scroll">
             {rows.map((row) => {
@@ -190,7 +311,7 @@ function PlayersPanel({
                     <span className="kp-dossier__stat-label">EIGENVECTOR</span>
                   </div>
                 </div>
-                <button type="button" className="kp-dossier__btn">
+                <button type="button" className="kp-dossier__btn" onClick={onOpenProfile}>
                   VIEW FULL ENTITY LEDGER →
                 </button>
               </>

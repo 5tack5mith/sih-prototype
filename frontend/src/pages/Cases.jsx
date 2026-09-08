@@ -122,6 +122,7 @@ function CaseCard({ caseItem, onOpen }) {
 function Cases({ onOpenCase }) {
   const [sort, setSort] = useState('last_activity')
   const [activeTab, setActiveTab] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
   const [allCases, setAllCases] = useState([])
   const [flaggedCases, setFlaggedCases] = useState([])
   const [loadState, setLoadState] = useState('loading') // 'loading' | 'ready' | 'error'
@@ -170,7 +171,7 @@ function Cases({ onOpenCase }) {
   const archivedCount = archivedCases.length
   const flaggedCount = flaggedCases.length
 
-  const displayedCases =
+  const tabCases =
     activeTab === 'active'
       ? activeCases
       : activeTab === 'archived'
@@ -179,11 +180,20 @@ function Cases({ onOpenCase }) {
           ? flaggedCases
           : allCases
 
+  const trimmedQuery = searchQuery.trim().toLowerCase()
+  const displayedCases = trimmedQuery
+    ? tabCases.filter((c) => {
+        const id = (c.case_id || '').toLowerCase()
+        const name = (c.name || '').toLowerCase()
+        return id.includes(trimmedQuery) || name.includes(trimmedQuery)
+      })
+    : tabCases
+
   const tabCounts = { all: total, active: activeCount, archived: archivedCount, flagged: flaggedCount }
 
   return (
     <div className="cases-page">
-      <AppHeader />
+      <AppHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
       <main className="cases-main">
         <div className="cases-toolbar">

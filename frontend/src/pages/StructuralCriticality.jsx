@@ -105,11 +105,24 @@ function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase
     controlsRef.current?.selectNodeById(nodeId)
   }
 
+  // Search-selecting a person here has no in-page place to show them — hand
+  // off to Key Players, same as every other page's search-driven selection.
+  const handleSearchSelectPerson = (nodeId) => {
+    if (nodeId) onNavigate?.('key-players', { selectedNodeId: nodeId })
+  }
+
   const topEntity = criticality?.ranked_removals?.[0]
 
   return (
     <div className="overview-page">
-      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} cases={cases} onSelectCase={onSelectCase} />
+      <CaseHeader
+        onBack={onBack}
+        caseLabel={caseId || 'No case selected'}
+        cases={cases}
+        onSelectCase={onSelectCase}
+        personNodes={graph?.nodes}
+        onSelectPerson={handleSearchSelectPerson}
+      />
       <div className="overview-page__body">
         <Sidebar
           active="structural-criticality"
