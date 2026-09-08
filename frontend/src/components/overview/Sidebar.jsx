@@ -16,12 +16,6 @@ const NAV_ITEMS = [
   { key: 'structural-criticality', icon: navStructuralCriticality, label: 'Structural Criticality', meta: 'λ max' },
 ]
 
-const CLUSTERS = [
-  { color: '#38bdf8', label: 'Cluster α: Offshore FinTech' },
-  { color: '#c084fc', label: 'Cluster β: Layered Shell Entities' },
-  { color: '#fbbf24', label: 'Cluster γ: Escrow & Settlement' },
-]
-
 const NAVIGABLE_KEYS = new Set([
   'overview',
   'key-players',
@@ -36,6 +30,21 @@ function metaFor(item, { communityCount, keyPlayerCount }) {
   return item.meta ?? null
 }
 
+function formatDensity(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return '—'
+  return value.toFixed(4)
+}
+
+function formatDiameter(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return '—'
+  return `${value} HOPS`
+}
+
+function formatReciprocity(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return '—'
+  return `${(value * 100).toFixed(1)}%`
+}
+
 function Sidebar({
   active = 'overview',
   onNavigate,
@@ -48,6 +57,7 @@ function Sidebar({
   onToggleCutoff,
   communityCount,
   keyPlayerCount,
+  metrics,
 }) {
   return (
     <aside className="ov-sidebar">
@@ -133,33 +143,20 @@ function Sidebar({
         <div className="ov-metrics-grid">
           <div className="ov-metric-card">
             <span className="ov-metric-card__label">DENSITY</span>
-            <span className="ov-metric-card__value">0.1742</span>
+            <span className="ov-metric-card__value">{formatDensity(metrics?.density)}</span>
           </div>
           <div className="ov-metric-card">
             <span className="ov-metric-card__label">DIAMETER</span>
-            <span className="ov-metric-card__value">6 HOPS</span>
+            <span className="ov-metric-card__value">{formatDiameter(metrics?.diameter)}</span>
           </div>
           <div className="ov-metric-card">
             <span className="ov-metric-card__label">RECIPROCITY</span>
-            <span className="ov-metric-card__value">41.8%</span>
+            <span className="ov-metric-card__value">{formatReciprocity(metrics?.reciprocity)}</span>
           </div>
         </div>
       </div>
 
       <div className="ov-sidebar__section">
-        <div className="ov-sidebar__section-title-row">
-          <span className="ov-sidebar__section-title">TAXONOMY // METRICS</span>
-          <span className="ov-sidebar__synced ov-sidebar__synced--muted">K-MEANS</span>
-        </div>
-        <div className="ov-cluster-list">
-          {CLUSTERS.map((cluster) => (
-            <div className="ov-cluster-item" key={cluster.label}>
-              <span className="ov-cluster-dot" style={{ background: cluster.color, boxShadow: `0 0 6px ${cluster.color}80` }} />
-              <span>{cluster.label}</span>
-            </div>
-          ))}
-        </div>
-
         <div className="ov-sidebar__legend">
           <div className="ov-sidebar__legend-row">
             <span>Node Size ∝ Betweenness σst(v)</span>

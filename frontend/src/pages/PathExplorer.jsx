@@ -7,7 +7,7 @@ import PathExplorerPanel from '../components/pathexplorer/PathExplorerPanel'
 import { fetchCaseOverview, fetchCaseGraph, fetchPath } from '../api/overviewApi'
 import './Overview.css'
 
-function PathExplorer({ caseId, onBack, onNavigate }) {
+function PathExplorer({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
   const [graph, setGraph] = useState(null)
   const [overview, setOverview] = useState(null)
@@ -120,13 +120,14 @@ function PathExplorer({ caseId, onBack, onNavigate }) {
 
   return (
     <div className="overview-page">
-      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} />
+      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} cases={cases} onSelectCase={onSelectCase} />
       <div className="overview-page__body">
         <Sidebar
           active="path-explorer"
           onNavigate={onNavigate}
           communityCount={communityCount}
           keyPlayerCount={keyPlayerCount}
+          metrics={graph?.metrics}
         />
         <GraphViewport
           docket={caseId || '—'}

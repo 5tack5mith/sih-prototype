@@ -8,7 +8,7 @@ import CommunityGraphBar from '../components/communities/CommunityGraphBar'
 import { fetchCaseOverview, fetchCaseGraph, fetchCommunities, fetchCommunityDetail } from '../api/overviewApi'
 import './Overview.css'
 
-function Communities({ caseId, onBack, onNavigate }) {
+function Communities({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
   const [graph, setGraph] = useState(null)
   const [communities, setCommunities] = useState([])
@@ -127,13 +127,14 @@ function Communities({ caseId, onBack, onNavigate }) {
 
   return (
     <div className="overview-page">
-      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} />
+      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} cases={cases} onSelectCase={onSelectCase} />
       <div className="overview-page__body">
         <Sidebar
           active="communities"
           onNavigate={onNavigate}
           communityCount={communityCount}
           keyPlayerCount={keyPlayerCount}
+          metrics={graph?.metrics}
         />
         <GraphViewport
           docket={caseId || '—'}

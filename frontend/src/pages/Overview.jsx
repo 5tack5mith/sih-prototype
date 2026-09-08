@@ -11,7 +11,7 @@ import './Overview.css'
 const TOP_PLAYER_COUNT = 5
 const CUTOFF_VALUE = 0.75
 
-function Overview({ caseId, onBack, onNavigate }) {
+function Overview({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
   const [overview, setOverview] = useState(null)
   const [graph, setGraph] = useState(null)
@@ -95,7 +95,7 @@ function Overview({ caseId, onBack, onNavigate }) {
 
   return (
     <div className="overview-page">
-      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} />
+      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} cases={cases} onSelectCase={onSelectCase} />
       <div className="overview-page__body">
         <Sidebar
           active="overview"
@@ -109,6 +109,7 @@ function Overview({ caseId, onBack, onNavigate }) {
           onToggleCutoff={caseId ? () => setCutoffEnabled((v) => !v) : undefined}
           communityCount={communityCount}
           keyPlayerCount={keyPlayerCount}
+          metrics={graph?.metrics}
         />
         <GraphViewport
           docket={caseId || '—'}

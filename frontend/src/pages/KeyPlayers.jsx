@@ -7,7 +7,7 @@ import PlayersPanel from '../components/keyplayers/PlayersPanel'
 import { fetchCaseOverview, fetchCaseGraph, fetchTopNodes, fetchNodeDetail } from '../api/overviewApi'
 import './Overview.css'
 
-function KeyPlayers({ caseId, onBack, onNavigate }) {
+function KeyPlayers({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
   const [overview, setOverview] = useState(null)
   const [graph, setGraph] = useState(null)
@@ -123,13 +123,14 @@ function KeyPlayers({ caseId, onBack, onNavigate }) {
 
   return (
     <div className="overview-page">
-      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} />
+      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} cases={cases} onSelectCase={onSelectCase} />
       <div className="overview-page__body">
         <Sidebar
           active="key-players"
           onNavigate={onNavigate}
           communityCount={communityCount}
           keyPlayerCount={keyPlayerCount}
+          metrics={graph?.metrics}
         />
         <GraphViewport
           title="VIEWPORT: KEY PLAYER CENTRALITY MAP"

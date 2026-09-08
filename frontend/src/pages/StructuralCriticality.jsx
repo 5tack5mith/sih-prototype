@@ -8,7 +8,7 @@ import CriticalityPanel from '../components/criticality/CriticalityPanel'
 import { fetchCaseOverview, fetchCaseGraph, fetchCriticality } from '../api/overviewApi'
 import './Overview.css'
 
-function StructuralCriticality({ caseId, onBack, onNavigate }) {
+function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
   const [graph, setGraph] = useState(null)
   const [overview, setOverview] = useState(null)
@@ -109,13 +109,14 @@ function StructuralCriticality({ caseId, onBack, onNavigate }) {
 
   return (
     <div className="overview-page">
-      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} />
+      <CaseHeader onBack={onBack} caseLabel={caseId || 'No case selected'} cases={cases} onSelectCase={onSelectCase} />
       <div className="overview-page__body">
         <Sidebar
           active="structural-criticality"
           onNavigate={onNavigate}
           communityCount={overview?.community_count ?? undefined}
           keyPlayerCount={graph ? Math.min(10, graph.nodes.length) : undefined}
+          metrics={graph?.metrics}
         />
         <GraphViewport
           title="VIEWPORT: STRUCTURAL RESILIENCE ENGINE"
