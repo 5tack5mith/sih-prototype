@@ -193,6 +193,26 @@ class Neo4jRepository:
            (flag:{structuring} AND $node_id IN [flag.{flag_from}, flag.{flag_to}]))
         RETURN count(flag) AS alert_count
         """.replace('\n+', '\n')
+        # Identity fields (phone/account) live on the raw Phone/Account nodes,
+        # not on Person itself - reached the same way project_person_graph.py
+        # resolves ownership, via the Person-[:OWNS]->{Account,Phone} edges
+        # ingest_dataset.py synthesizes. aliases is defensive: every person in
+        # the current dataset has an empty aliases list (entities.py never
+        # populates it, and ingest_dataset.py doesn't currently carry it onto
+        # the node at all), so this always returns [] today - coalesce here
+        # means it starts working automatically if that ever changes, with
+        # zero query changes needed.
+        owns = schema.cypher_identifier(schema.RAW_REL_OWNS)
+        phone_label = schema.cypher_identifier(schema.RAW_NODE_LABEL_PHONE)
+        account_label = schema.cypher_identifier(schema.RAW_NODE_LABEL_ACCOUNT)
+        identity_query = f"""
+        MATCH (node) WHERE {labels} AND node.{node_id} = $node_id AND {_case_scope("node")}
+        OPTIONAL MATCH (node)-[:{owns}]->(phone:{phone_label})
+        OPTIONAL MATCH (node)-[:{owns}]->(account:{account_label})
+        RETURN coalesce(node.aliases, []) AS aliases,
+               [p IN collect(DISTINCT phone.phone_number) WHERE p IS NOT NULL] AS phone_numbers,
+               [a IN collect(DISTINCT account.{node_id}) WHERE a IS NOT NULL] AS account_ids
+        """.replace('\n+', '\n')
         parameters = {"case_id": requested_case_id, "node_id": requested_node_id}
         with self.driver.session() as session:
             node = _as_dict(session.run(base_query, **parameters).single())
@@ -200,6 +220,7 @@ class Neo4jRepository:
                 return None
             edges = [_as_dict(row) for row in session.run(edge_query, **parameters)]
             alerts = _as_dict(session.run(alert_query, **parameters).single()) or {}
+            identity = _as_dict(session.run(identity_query, **parameters).single()) or {}
         node["first_contact_date"] = _serialized(node.get("first_contact_date"))
         return {
             "node_id": node["node_id"], "name": node.get("name"),
@@ -208,6 +229,9 @@ class Neo4jRepository:
             "scores": {key: node.get(key) for key in ("betweenness", "eigenvector", "degree")},
             "community_id": node.get("community_id"), "structural_role": node.get("structural_role"),
             "connection_count": len(edges), "structural_alert_count": int(alerts.get("alert_count", 0)),
+            "aliases": identity.get("aliases") or [],
+            "phone_numbers": identity.get("phone_numbers") or [],
+            "account_ids": identity.get("account_ids") or [],
             "ego_network": {
                 "nodes": [node["node_id"], *sorted({edge["neighbor_id"] for edge in edges})],
                 "edges": [{"source": node["node_id"], "target": edge["neighbor_id"],
@@ -232,9 +256,24 @@ class Neo4jRepository:
         community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
         role = schema.cypher_identifier(schema.PROP_STRUCTURAL_ROLE)
         structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
+        one_sided_types = schema.cypher_string_list(schema.ONE_SIDED_SCOPE_REL_TYPES)
+        noise_prop = schema.cypher_identifier(schema.PROP_IS_BACKGROUND_NOISE)
         weight = schema.cypher_identifier(schema.REL_WEIGHT_PROPERTY) if schema.REL_WEIGHT_PROPERTY else None
+        # SHARED_ADDRESS/SHARED_DEVICE use one-sided case scoping, restricted
+        # to a background-noise person (no case_id) connected to that case's
+        # own person - the approved noise-handling design, not general
+        # one-sided leniency (which could otherwise leak a different case's
+        # person into this one via a hypothetical cross-case shared-address
+        # link). Every other structural edge type keeps normal two-sided
+        # scoping.
         node_query = f"""
-        MATCH (node) WHERE {labels} AND {_case_scope("node")}
+        MATCH (node) WHERE {labels}
+          AND ({_case_scope("node")} OR (
+            coalesce(node.{noise_prop}, false) = true AND EXISTS {{
+              MATCH (node)-[noise_link]-(ring)
+              WHERE type(noise_link) IN {one_sided_types} AND {_case_scope("ring")}
+            }}
+          ))
           AND ($cutoff IS NULL OR coalesce(node.{betweenness}, 0.0) >= $cutoff)
           AND (NOT $bridging_only OR EXISTS {{
             MATCH (node)-[:{structural}]-(bridge_neighbor)
@@ -252,7 +291,14 @@ class Neo4jRepository:
         edge_query = f"""
         MATCH (source)-[relationship:{structural}]->(target)
         WHERE {source_labels} AND {target_labels}
-          AND {_case_scope("source")} AND {_case_scope("target")}
+          AND (
+            (type(relationship) IN {one_sided_types} AND (
+              ({_case_scope("source")} AND (coalesce(target.{noise_prop}, false) = true OR {_case_scope("target")}))
+              OR ({_case_scope("target")} AND (coalesce(source.{noise_prop}, false) = true OR {_case_scope("source")}))
+            ))
+            OR (NOT type(relationship) IN {one_sided_types}
+              AND {_case_scope("source")} AND {_case_scope("target")})
+          )
           AND ($cutoff IS NULL OR (coalesce(source.{betweenness}, 0.0) >= $cutoff
                AND coalesce(target.{betweenness}, 0.0) >= $cutoff))
         WITH source, target, relationship, source.{community} AS source_community,

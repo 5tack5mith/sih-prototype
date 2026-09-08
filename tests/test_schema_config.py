@@ -3,7 +3,8 @@ from app import schema_config as schema
 
 def test_placeholder_schema_contract_is_centralized():
     assert schema.ENTITY_NODE_LABELS == ("Person",)
-    assert schema.STRUCTURAL_REL_TYPES == ("CALLED", "TRANSFERRED_TO", "ASSOCIATED_WITH")
+    assert schema.STRUCTURAL_REL_TYPES == ("TRANSACTED_WITH", "SHARED_ADDRESS", "SHARED_DEVICE")
+    assert schema.ONE_SIDED_SCOPE_REL_TYPES == ("SHARED_ADDRESS", "SHARED_DEVICE")
     assert schema.PROP_BETWEENNESS == "betweenness_score"
     assert schema.PROP_EIGENVECTOR == "eigenvector_score"
     assert schema.CRITICALITY_DEFAULT_TOP_K == 10

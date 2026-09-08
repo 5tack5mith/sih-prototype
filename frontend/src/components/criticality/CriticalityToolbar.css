@@ -1,0 +1,137 @@
+.ctb {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(11, 14, 20, 0.92);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'IBM Plex Mono', monospace;
+  flex-shrink: 0;
+}
+
+.ctb__row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ctb__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ctb__field-label {
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.ctb__pill-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ctb__pill {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111722;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.ctb__pill--active {
+  background: #d4af37;
+  border-color: #d4af37;
+  color: #3c2f00;
+  font-weight: 700;
+}
+
+.ctb__dropdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  background: #111722;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  color: #cbd5e1;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ctb__run-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 8px 16px;
+  background: #d4af37;
+  border: none;
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  color: #1a1400;
+  cursor: pointer;
+}
+
+.ctb__run-btn:hover {
+  background: #e0bd4c;
+}
+
+.ctb__run-btn:disabled {
+  background: #4a4530;
+  color: #8d8567;
+  cursor: not-allowed;
+}
+
+.ctb__pill:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ctb__status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ctb__status-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #fb7185;
+}
+
+.ctb__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #f43f5e;
+  flex-shrink: 0;
+}
+
+.ctb__status-right {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #d4af37;
+}

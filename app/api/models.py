@@ -69,6 +69,9 @@ class NodeDetail(BaseModel):
     structural_role: str | None = None
     connection_count: int
     structural_alert_count: int
+    aliases: list[str] = []
+    phone_numbers: list[str] = []
+    account_ids: list[str] = []
     ego_network: EgoNetwork
 
 

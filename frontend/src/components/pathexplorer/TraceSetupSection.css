@@ -1,0 +1,173 @@
+.tss {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid #1f2833;
+  font-family: 'Space Mono', monospace;
+}
+
+.tss__row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tss__section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  color: #8d9aab;
+}
+
+.tss__algo-tag {
+  padding: 3px 9px;
+  background: rgba(242, 202, 80, 0.1);
+  border: 1px solid rgba(242, 202, 80, 0.4);
+  border-radius: 4px;
+  font-size: 12px;
+  color: #f2ca50;
+  white-space: nowrap;
+}
+
+.tss__endpoints {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tss__endpoint {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tss__endpoint-label {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  color: #8d9aab;
+}
+
+.tss__endpoint-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 9px 10px;
+  background: #111722;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+.tss__endpoint-select {
+  flex: 1;
+  min-width: 0;
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  padding-right: 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #f8fafc;
+  cursor: pointer;
+}
+
+.tss__endpoint-select:focus {
+  outline: none;
+}
+
+.tss__endpoint-select option {
+  background: #111722;
+  color: #f8fafc;
+}
+
+.tss__endpoint-name {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tss__endpoint-chevron {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: #8d9aab;
+}
+
+.tss__endpoint-meta {
+  font-size: 12px;
+  color: #8d9aab;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tss__arrow {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #f2ca50;
+  color: #3c2f00;
+  font-size: 15px;
+}
+
+.tss__weighting-row {
+  flex-wrap: wrap;
+}
+
+.tss__weighting {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #8d9aab;
+}
+
+.tss__trace-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  background: #f2ca50;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  color: #3c2f00;
+  cursor: pointer;
+}
+
+.tss__trace-btn:hover {
+  background: #f5d478;
+}
+
+.tss__trace-btn:disabled {
+  background: #4a4530;
+  color: #8d8567;
+  cursor: not-allowed;
+}

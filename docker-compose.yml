@@ -37,6 +37,18 @@ services:
     profiles: ["placeholder"]
     command: python -m app.generate_placeholder_data
 
+  ingest-dataset:
+    <<: *analysis-service
+    profiles: ["dataset"]
+    volumes:
+      - ./dataset_generator/output:/app/dataset_generator/output:ro
+    command: python -m app.ingest_dataset
+
+  project-person-graph:
+    <<: *analysis-service
+    profiles: ["dataset"]
+    command: python -m app.project_person_graph
+
   validate-scoping:
     <<: *analysis-service
     profiles: ["analysis"]

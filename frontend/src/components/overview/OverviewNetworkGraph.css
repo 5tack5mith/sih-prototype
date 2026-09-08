@@ -1,0 +1,57 @@
+.ovng {
+  position: absolute;
+  inset: 0;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.ovng-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #556272;
+  text-align: center;
+}
+
+.ovng-state--error {
+  color: #ffbfb9;
+}
+
+.ovng-state__title {
+  margin: 0;
+  font-size: 13px;
+  color: #ffbfb9;
+}
+
+.ovng-state__detail {
+  margin: 0;
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #8d9aab;
+}
+
+.ovng-state__retry {
+  margin-top: 4px;
+  padding: 6px 16px;
+  background: #f2ca50;
+  border: none;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: #3c2f00;
+  cursor: pointer;
+}
+
+.ovng-state__retry:hover {
+  background: #f5d478;
+}

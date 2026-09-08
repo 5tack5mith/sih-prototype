@@ -1,0 +1,315 @@
+.ov-sidebar {
+  width: 256px;
+  flex-shrink: 0;
+  background: #0d121a;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-y: auto;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.ov-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 9px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ov-sidebar__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.55px;
+  color: #d4af37;
+}
+
+.ov-sidebar__title-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: #d4af37;
+  flex-shrink: 0;
+}
+
+.ov-sidebar__version {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.ov-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+}
+
+.ov-sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ov-sidebar__nav-item--active {
+  background: #17202e;
+  border-left: 2px solid #d4af37;
+  padding-left: 12px;
+}
+
+.ov-sidebar__nav-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ov-sidebar__nav-left img {
+  width: 16px;
+  height: 16px;
+}
+
+.ov-sidebar__nav-label {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.ov-sidebar__nav-item--active .ov-sidebar__nav-label {
+  color: #d4af37;
+  font-weight: 500;
+}
+
+.ov-sidebar__nav-meta {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.ov-sidebar__nav-meta--active {
+  padding: 3px 5px;
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+  color: #d4af37;
+}
+
+.ov-sidebar__section {
+  padding: 13px 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ov-sidebar__section-title {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.ov-sidebar__section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ov-sidebar__synced {
+  font-size: 11px;
+  color: #2dd4bf;
+}
+
+.ov-sidebar__synced--muted {
+  color: #64748b;
+}
+
+.ov-sidebar__filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.ov-sidebar__filter-row--stacked {
+  align-items: flex-start;
+}
+
+.ov-sidebar__filter-row--btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ov-sidebar__filter-row--btn:disabled {
+  cursor: default;
+}
+
+.ov-sidebar__filter-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ov-sidebar__filter-subtext {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.ov-toggle {
+  position: relative;
+  width: 28px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.ov-toggle::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: #64748b;
+}
+
+.ov-toggle--on-teal {
+  background: rgba(19, 78, 74, 0.6);
+  border-color: rgba(20, 184, 166, 0.4);
+  justify-content: flex-end;
+}
+
+.ov-toggle--on-teal::after {
+  background: #2dd4bf;
+}
+
+.ov-toggle--on-gold {
+  background: #423413;
+  border-color: rgba(212, 175, 55, 0.4);
+  justify-content: flex-end;
+}
+
+.ov-toggle--on-gold::after {
+  background: #d4af37;
+}
+
+.ov-metrics-grid {
+  display: flex;
+  gap: 6px;
+}
+
+.ov-metric-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  padding: 9px;
+  background: #111722;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.ov-metric-card__label {
+  font-size: 11px;
+  letter-spacing: -0.45px;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.ov-metric-card__value {
+  font-weight: 700;
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.ov-cluster-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ov-cluster-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+.ov-cluster-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.ov-sidebar__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 13px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.ov-sidebar__legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.ov-sidebar__legend-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ov-dot {
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.ov-dot--sm {
+  width: 4px;
+  height: 4px;
+  background: #8d9aab;
+}
+
+.ov-dot--md {
+  width: 6px;
+  height: 6px;
+  background: #94a3b8;
+}
+
+.ov-dot--ring {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #d4af37;
+  background: transparent;
+}
+
+.ov-sidebar__legend-line {
+  width: 24px;
+  height: 1.5px;
+  background: rgba(212, 175, 55, 0.6);
+}

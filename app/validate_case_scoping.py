@@ -24,11 +24,16 @@ class CaseScopingReport:
 
     @property
     def valid(self) -> bool:
-        return not (
-            self.missing_entity_count
-            or self.cross_case_relationship_count
-            or self.unresolved_relationship_count
-        )
+        """cross_case_relationship_count is deliberately excluded: the
+        approved architecture keeps 75 cross-case TRANSACTED_WITH edges
+        (bridge transactions between two different cases' terminal
+        accounts) as a legitimate, ground-truth-tracked dataset feature,
+        not a data-quality error - every case-scoped query already excludes
+        them by requiring both endpoints to resolve to the same case_id, so
+        their existence is informational, not blocking. missing_entity_count
+        already excludes explicit background-noise entities (see
+        missing_query) before this check ever sees it."""
+        return not (self.missing_entity_count or self.unresolved_relationship_count)
 
 
 def _identifiers() -> dict[str, str]:
@@ -63,19 +68,21 @@ def validate_case_scoping(driver: Any) -> CaseScopingReport:
     RETURN case_id, scoping_mode, count(DISTINCT entity) AS node_count
     ORDER BY case_id, scoping_mode
     """
+    noise_prop = schema.cypher_identifier(schema.PROP_IS_BACKGROUND_NOISE)
     missing_query = f"""
     MATCH (entity) WHERE {entity}
     OPTIONAL MATCH (entity)-[:{case_link}]->(case:{case_label})
     WITH entity, coalesce(entity.{case_id}, case.{node_id}) AS resolved_case_id
-    WHERE resolved_case_id IS NULL
+    WHERE resolved_case_id IS NULL AND coalesce(entity.{noise_prop}, false) = false
     RETURN count(DISTINCT entity) AS missing_case_count
     """
+    one_sided_types = schema.cypher_string_list(schema.ONE_SIDED_SCOPE_REL_TYPES)
     relationship_prefix = f"""
     MATCH (source)-[relationship:{structural}]->(target)
     WHERE {source} AND {target}
     OPTIONAL MATCH (source)-[:{case_link}]->(source_case:{case_label})
     OPTIONAL MATCH (target)-[:{case_link}]->(target_case:{case_label})
-    WITH relationship,
+    WITH relationship, source, target,
          coalesce(source.{case_id}, source_case.{node_id}) AS source_case_id,
          coalesce(target.{case_id}, target_case.{node_id}) AS target_case_id
     """
@@ -84,11 +91,30 @@ def validate_case_scoping(driver: Any) -> CaseScopingReport:
       AND source_case_id <> target_case_id
     RETURN count(DISTINCT relationship) AS cross_case_count
     """
+    # Two categories are legitimate, not bugs, and must not count as
+    # "unresolved" even though neither endpoint pair cleanly agrees on one
+    # case: (1) a deliberate cross-case bridge (both endpoints resolve to a
+    # real, different case - already tracked, informationally, by
+    # cross_case_query above) and (2) a one-sided noise link (a
+    # SHARED_ADDRESS/SHARED_DEVICE edge where exactly one endpoint is
+    # unresolved because it is flagged background noise, by design - see
+    # repository.get_case_graph's one-sided scoping). Anything else that
+    # fails to resolve is a genuine ingestion problem.
     unresolved_query = relationship_prefix + f"""
-    WHERE (relationship.{case_id} IS NULL AND (
-             source_case_id IS NULL OR target_case_id IS NULL OR source_case_id <> target_case_id
-          ))
-       OR (relationship.{case_id} IS NOT NULL AND (
+    WHERE (
+        relationship.{case_id} IS NULL
+        AND (source_case_id IS NULL OR target_case_id IS NULL OR source_case_id <> target_case_id)
+        AND NOT (
+          (source_case_id IS NOT NULL AND target_case_id IS NOT NULL AND source_case_id <> target_case_id)
+          OR (type(relationship) IN {one_sided_types} AND (
+                (source_case_id IS NULL AND target_case_id IS NOT NULL
+                  AND coalesce(source.{noise_prop}, false) = true)
+                OR (target_case_id IS NULL AND source_case_id IS NOT NULL
+                  AND coalesce(target.{noise_prop}, false) = true)
+             ))
+        )
+      )
+      OR (relationship.{case_id} IS NOT NULL AND (
              (source_case_id IS NOT NULL AND relationship.{case_id} <> source_case_id)
              OR (target_case_id IS NOT NULL AND relationship.{case_id} <> target_case_id)
           ))
@@ -122,8 +148,9 @@ def _print_report(report: CaseScopingReport) -> None:
     print("-" * 45)
     for row in report.cases:
         print(f"{row.case_id} | {row.scoping_mode} | {row.node_count}")
-    print(f"Missing entity case identifiers: {report.missing_entity_count}")
-    print(f"Cross-case structural relationships: {report.cross_case_relationship_count}")
+    print(f"Missing entity case identifiers (excludes background noise): {report.missing_entity_count}")
+    print(f"Cross-case structural relationships (informational, not blocking; "
+          f"expect 75 TRANSACTED_WITH bridge edges): {report.cross_case_relationship_count}")
     print(f"Unresolved structural relationships: {report.unresolved_relationship_count}")
     if not report.valid:
         print("BLOCKING WARNING: case scoping is invalid; algorithms must not run.")
