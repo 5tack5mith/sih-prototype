@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from typing import Any
 
 from .. import schema_config as schema
+from .case_ids import allocate_case_id
 
 
 def _as_dict(row: Any) -> dict[str, Any] | None:
@@ -95,6 +97,121 @@ class Neo4jRepository:
         """
         with self.driver.session() as session:
             return _as_dict(session.run(query, case_id=requested_case_id).single())
+
+    def create_case(
+        self,
+        name: str,
+        priority: str | None,
+        description: str | None,
+        jurisdiction_tag: str | None,
+        lead_analyst: str | None,
+        updated_at: str,
+    ) -> dict[str, Any] | None:
+        """Create one empty ACTIVE case. Graph data of other cases is not touched."""
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        status = schema.cypher_identifier(schema.PROP_CASE_STATUS)
+        priority_prop = schema.cypher_identifier(schema.PROP_CASE_PRIORITY)
+        description_prop = schema.cypher_identifier(schema.PROP_CASE_DESCRIPTION)
+        updated = schema.cypher_identifier(schema.PROP_CASE_UPDATED_AT)
+        analyst = schema.cypher_identifier(schema.PROP_CASE_LEAD_ANALYST)
+        jurisdiction = schema.cypher_identifier(schema.PROP_CASE_JURISDICTION_TAG)
+        existing_query = f"""
+        MATCH (case:{case_label})
+        WHERE case.{node_id} = $prefix OR case.{node_id} STARTS WITH $numbered_prefix
+        RETURN case.{node_id} AS case_id
+        """
+        create_query = f"""
+        OPTIONAL MATCH (existing:{case_label} {{{node_id}: $case_id}})
+        WITH existing
+        WHERE existing IS NULL
+        CREATE (case:{case_label})
+        SET case.{node_id} = $case_id,
+            case.{node_name} = $name,
+            case.{status} = $status,
+            case.{priority_prop} = $priority,
+            case.{description_prop} = $description,
+            case.{jurisdiction} = $jurisdiction_tag,
+            case.{analyst} = $lead_analyst,
+            case.{updated} = $updated_at
+        RETURN case.{node_id} AS case_id, case.{node_name} AS name,
+               case.{status} AS status, case.{priority_prop} AS priority,
+               case.{description_prop} AS description, case.{updated} AS updated_at,
+               case.{analyst} AS lead_analyst, case.{jurisdiction} AS jurisdiction_tag
+        """
+        with self.driver.session() as session:
+            now = datetime.now(timezone.utc)
+            id_prefix = f"NX-{now.year}-{now.month:02d}{now.day:02d}"
+            existing_rows = session.run(
+                existing_query, prefix=id_prefix, numbered_prefix=f"{id_prefix}-"
+            )
+            existing_ids = {row["case_id"] for row in existing_rows if row.get("case_id")}
+            for _ in range(8):
+                case_id = allocate_case_id(existing_ids, now)
+                row = _as_dict(session.run(
+                    create_query,
+                    case_id=case_id,
+                    name=name,
+                    status="ACTIVE",
+                    priority=priority,
+                    description=description,
+                    jurisdiction_tag=jurisdiction_tag,
+                    lead_analyst=lead_analyst,
+                    updated_at=updated_at,
+                ).single())
+                if row is not None:
+                    row["updated_at"] = _serialized(row.get("updated_at"))
+                    row["node_count"] = 0
+                    row["edge_count"] = 0
+                    return row
+                existing_ids.add(case_id)
+        return None
+
+    def update_case_metadata(
+        self,
+        requested_case_id: str,
+        name: str,
+        priority: str | None,
+        description: str | None,
+        jurisdiction_tag: str | None,
+        updated_at: str,
+    ) -> dict[str, Any] | None:
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
+        status = schema.cypher_identifier(schema.PROP_CASE_STATUS)
+        priority_prop = schema.cypher_identifier(schema.PROP_CASE_PRIORITY)
+        description_prop = schema.cypher_identifier(schema.PROP_CASE_DESCRIPTION)
+        updated = schema.cypher_identifier(schema.PROP_CASE_UPDATED_AT)
+        analyst = schema.cypher_identifier(schema.PROP_CASE_LEAD_ANALYST)
+        jurisdiction = schema.cypher_identifier(schema.PROP_CASE_JURISDICTION_TAG)
+        query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})
+        SET case.{node_name} = $name,
+            case.{priority_prop} = $priority,
+            case.{description_prop} = $description,
+            case.{jurisdiction} = $jurisdiction_tag,
+            case.{updated} = $updated_at
+        RETURN case.{node_id} AS case_id, case.{node_name} AS name,
+               case.{status} AS status, case.{priority_prop} AS priority,
+               case.{description_prop} AS description, case.{updated} AS updated_at,
+               case.{analyst} AS lead_analyst, case.{jurisdiction} AS jurisdiction_tag
+        """
+        with self.driver.session() as session:
+            row = _as_dict(session.run(
+                query,
+                case_id=requested_case_id,
+                name=name,
+                priority=priority,
+                description=description,
+                jurisdiction_tag=jurisdiction_tag,
+                updated_at=updated_at,
+            ).single())
+        if row is None:
+            return None
+        row["updated_at"] = _serialized(row.get("updated_at"))
+        return row
 
     def set_case_status(self, requested_case_id: str, new_status: str) -> dict[str, Any] | None:
         case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)

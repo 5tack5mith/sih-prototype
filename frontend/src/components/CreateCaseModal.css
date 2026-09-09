@@ -171,6 +171,71 @@
   color: #ffbfb9;
 }
 
+.admin-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  border: 1px solid #1f2833;
+}
+
+.admin-list__row,
+.admin-list__empty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-top: 1px solid #1f2833;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: #e2e7ed;
+}
+
+.admin-list__row:first-child,
+.admin-list__empty:first-child {
+  border-top: 0;
+}
+
+.admin-list__meta {
+  text-transform: uppercase;
+  color: #8d9aab;
+}
+
+.admin-list__empty {
+  color: #556272;
+}
+
+.admin-list__action {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid #30353d;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #e2e7ed;
+  cursor: pointer;
+}
+
+.admin-list__action:hover:not(:disabled) {
+  color: #f2ca50;
+  border-color: #f2ca50;
+}
+
+.admin-list__action:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.create-case-field--spaced {
+  margin-top: 12px;
+}
+
+.create-case-modal__actions--spaced {
+  margin-top: 16px;
+}
+
 .create-case-field-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

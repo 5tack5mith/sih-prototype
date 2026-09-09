@@ -110,6 +110,24 @@
   background: #30353d;
 }
 
+.cases-admin-btn {
+  min-height: 32px;
+  padding: 8px 14px;
+  background: #171c23;
+  border: 1px solid #30353d;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.12px;
+  color: #e2e7ed;
+  cursor: pointer;
+}
+
+.cases-admin-btn:hover {
+  border-color: #f2ca50;
+  color: #f2ca50;
+}
+
 .cases-new-btn {
   display: flex;
   align-items: center;
@@ -232,6 +250,20 @@
   grid-template-columns: 1fr;
 }
 
+.cases-grid--list .case-card {
+  height: auto;
+}
+
+.cases-grid--list .case-card__summary {
+  min-height: 0;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.cases-grid--list .case-card__actions {
+  max-width: 420px;
+}
+
 @media (max-width: 960px) {
   .cases-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -307,22 +339,27 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 24px;
+  min-width: 0;
+  height: 100%;
+  padding: 20px 20px 16px;
   background: #11161d;
   cursor: pointer;
 }
 
+.case-card__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
 .case-card__star {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
+  margin-left: auto;
   padding: 0;
   border: none;
   background: transparent;
@@ -364,23 +401,24 @@
 
 .case-card__top {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 4px;
-  padding-bottom: 4px;
+  gap: 12px;
 }
 
 .case-card__heading {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .case-card__badges {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-bottom: 4px;
+  min-height: 24px;
+  margin-bottom: 8px;
 }
 
 .case-card__status {
@@ -426,13 +464,15 @@
   margin: 0;
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.5px;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.4px;
   color: #e2e7ed;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .case-card__topology {
@@ -452,49 +492,58 @@
 }
 
 .case-card__docket {
-  margin: 0 0 8px;
+  margin: 6px 0 0;
   font-family: 'Space Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.275px;
   color: #8d9aab;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .case-card__summary {
-  margin: 0 0 16px;
+  margin: 12px 0 0;
+  min-height: 60px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 13px;
   line-height: 20px;
   letter-spacing: 0.065px;
   color: #8d9aab;
-  display: flex;
-  flex-direction: column;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1 1 auto;
 }
 
 .case-card__footer {
-  padding-top: 12px;
-  background: rgba(17, 22, 29, 0.4);
-  margin: 0 -24px -24px;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #1f2833;
 }
 
 .case-card__stats {
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-  padding-bottom: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .case-card__stat {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  gap: 2px;
+  min-width: 0;
 }
 
 .case-card__stat-label {
   font-family: 'Space Mono', monospace;
   font-size: 10px;
+  letter-spacing: 0.4px;
   color: #556272;
 }
 
@@ -502,7 +551,11 @@
   font-family: 'Space Mono', monospace;
   font-weight: 700;
   font-size: 11px;
+  line-height: 16px;
   color: #e2e7ed;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .case-card__stat-value--plain {
@@ -518,16 +571,41 @@
 }
 
 .case-card__meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding-top: 4px;
   font-family: 'Space Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.5px;
   color: #556272;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.case-card__actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.case-card__edit {
+  min-width: 0;
+  min-height: 28px;
+  padding: 6px 4px;
+  background: transparent;
+  border: 1px solid #30353d;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #8d9aab;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.case-card__edit:hover {
+  color: #f2ca50;
+  border-color: #f2ca50;
 }
 
 /* Status bar */

@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException, Query
@@ -7,7 +8,7 @@ from .. import schema_config as schema
 from ..auth import router as auth_router, get_current_user, init_db, require_admin
 from ..auth.database import (assigned_case_ids, assign_investigator, get_user, list_assignments, remove_assignment, remove_case_assignments)
 from .dependencies import get_repository, require_case_access
-from .models import CaseAssignment, CaseStatusResponse, CaseFilter, CaseGraph, CaseOverview, CriticalityResponse, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, SuggestedLink, TopNodesResponse
+from .models import CaseAssignment, CaseCreate, CaseMetadataResponse, CaseMetadataUpdate, CaseStatusResponse, CaseFilter, CaseGraph, CaseOverview, CriticalityResponse, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, SuggestedLink, TopNodesResponse
 from .narratives import community_narrative, criticality_narrative, path_narrative
 from .repository import Neo4jRepository
 
@@ -36,8 +37,67 @@ def list_cases(
     """Read Case metadata and scoped structural node/edge counts; metadata is null-safe."""
     if user["role"] == "admin":
         return repository.list_cases(filter, sort)
-    # An investigator cannot enumerate archived assignments, even with filter=archived.
-    return repository.list_cases("active" if filter == "archived" else filter, sort, assigned_case_ids(user["username"]))
+    # Investigators may enumerate only assigned ACTIVE cases. Archive retains
+    # assignment rows, but those cases must not appear in investigator lists.
+    investigator_filter = "active" if filter in (None, "archived") else filter
+    rows = repository.list_cases(
+        investigator_filter, sort, assigned_case_ids(user["username"])
+    )
+    return [row for row in rows if (row.get("status") or "").upper() != "ARCHIVED"]
+
+
+@app.post("/cases", response_model=CaseSummary, status_code=201)
+def create_case(
+    payload: CaseCreate,
+    repository: Repository,
+    admin: Annotated[dict, Depends(require_admin)],
+) -> dict:
+    """Create an empty ACTIVE case. Admin only. Case identity is assigned by the store."""
+    name = payload.name.strip()
+    if not name:
+        raise HTTPException(status_code=422, detail="Case name is required.")
+    description = payload.description
+    if isinstance(description, str):
+        description = description.strip() or None
+    result = repository.create_case(
+        name,
+        payload.priority,
+        description,
+        payload.jurisdiction_tag,
+        admin["username"],
+        datetime.now(timezone.utc).isoformat(),
+    )
+    if result is None:
+        raise HTTPException(status_code=409, detail="Unable to allocate a unique case ID")
+    return result
+
+
+@app.patch("/cases/{case_id}", response_model=CaseMetadataResponse)
+def update_case(
+    case_id: str,
+    payload: CaseMetadataUpdate,
+    repository: Repository,
+    _admin: Annotated[dict, Depends(require_admin)],
+    _: CaseAccess,
+) -> dict:
+    """Update case metadata only; graph data and case identity stay unchanged. Admin only."""
+    name = payload.name.strip()
+    if not name:
+        raise HTTPException(status_code=422, detail="Case name is required.")
+    description = payload.description
+    if isinstance(description, str):
+        description = description.strip() or None
+    result = repository.update_case_metadata(
+        case_id,
+        name,
+        payload.priority,
+        description,
+        payload.jurisdiction_tag,
+        datetime.now(timezone.utc).isoformat(),
+    )
+    if result is None:
+        raise HTTPException(status_code=404, detail="Case not found")
+    return result
 
 
 @app.get("/cases/{case_id}/overview", response_model=CaseOverview)
