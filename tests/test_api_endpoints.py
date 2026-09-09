@@ -1,5 +1,8 @@
+from datetime import datetime, timezone
+
 from fastapi.testclient import TestClient
 
+from app.api.case_ids import allocate_case_id
 from app.api.dependencies import get_repository
 from app.api.main import app
 from app.auth import get_current_user
@@ -7,6 +10,49 @@ from app.auth import get_current_user
 
 class StubRepository:
     def __init__(self):
+        self.created_cases = []
+        self.known_ids = {"CASE-A", "CASE-B", "CASE-ARCHIVED"}
+
+    def get_case(self, case_id):
+        if case_id == "CASE-ARCHIVED":
+            return {"case_id": case_id, "status": "ARCHIVED"}
+        if case_id in self.known_ids:
+            return {"case_id": case_id, "status": "ACTIVE"}
+        return None
+
+    def create_case(self, name, priority, description, jurisdiction_tag, lead_analyst, updated_at):
+        case_id = allocate_case_id(self.known_ids, datetime.now(timezone.utc))
+        self.known_ids.add(case_id)
+        row = {
+            "case_id": case_id,
+            "name": name,
+            "status": "ACTIVE",
+            "priority": priority,
+            "description": description,
+            "node_count": 0,
+            "edge_count": 0,
+            "updated_at": updated_at,
+            "lead_analyst": lead_analyst,
+            "jurisdiction_tag": jurisdiction_tag,
+        }
+        self.created_cases.append(row)
+        return row
+
+    def set_case_status(self, case_id, status):
+        if self.get_case(case_id) is None:
+            return None
+        return {"case_id": case_id, "status": status}
+
+    def purge_archived_case(self, case_id):
+        case = self.get_case(case_id)
+        if case is None:
+            return False
+        if (case.get("status") or "").upper() != "ARCHIVED":
+            raise ValueError("case must be archived before purging")
+        return True
+    def list_cases(self, case_filter, sort, allowed_case_ids=None):
+        existing = [{"case_id": "CASE-A", "name": "Alpha", "status": "ACTIVE", "priority": None, "description": None, "node_count": 2, "edge_count": 1, "updated_at": None, "lead_analyst": None, "jurisdiction_tag": None}]
+        return self.created_cases + existing
         self.status = "ACTIVE"
 
     def get_case(self, case_id):
@@ -38,12 +84,30 @@ class StubRepository:
         return {"case_id": case_id, "initial_node_count": 2, "criterion": "largest_component_fragmentation", "ranked_removals": [{"rank": 1, "node_id": "N1", "node_name": "One", "entity_type_label": "CRITICAL CUT", "component_size_before": 2, "component_size_after": 1, "fragmentation_pct": 50}], "final_state": {"components_created": 1, "largest_remaining_component": 1, "overall_efficiency_drop_pct": 50}, "note": None}
     def get_suggested_links(self, case_id, node_id):
         return [{"suggested_node_id": "N2", "suggested_name": "Two", "similarity_score": .61}]
+    def update_case_metadata(self, case_id, name, priority, description, jurisdiction_tag, updated_at):
+        if case_id != "CASE-A":
+            return None
+        return {
+            "case_id": case_id,
+            "name": name,
+            "status": "ACTIVE",
+            "priority": priority,
+            "description": description,
+            "updated_at": updated_at,
+            "lead_analyst": "AN-84920",
+            "jurisdiction_tag": jurisdiction_tag,
+        }
 
 
+def client():
+    repository = StubRepository()
+    app.dependency_overrides[get_repository] = lambda: repository
 def client(repository=None):
     app.dependency_overrides[get_repository] = lambda: repository or StubRepository()
     app.dependency_overrides[get_current_user] = lambda: {"username": "test", "role": "admin"}
-    return TestClient(app)
+    api = TestClient(app)
+    api.repository = repository
+    return api
 
 
 def test_case_and_node_endpoints():
@@ -72,6 +136,61 @@ def test_criticality_suggestions_and_validation():
         assert api.get("/cases/CASE-A/criticality?top_k=5").status_code == 422
 
 
+def test_update_case_metadata():
+    with client() as api:
+        response = api.patch(
+            "/cases/CASE-A",
+            json={
+                "name": "Operation Blackthorn II",
+                "priority": "I",
+                "description": "Updated summary",
+                "jurisdiction_tag": "FINANCIAL CRIMES",
+            },
+        )
+        assert response.status_code == 200
+        body = response.json()
+        assert body["case_id"] == "CASE-A"
+        assert body["name"] == "Operation Blackthorn II"
+        assert body["priority"] == "I"
+        assert body["jurisdiction_tag"] == "FINANCIAL CRIMES"
+        assert body["status"] == "ACTIVE"
+        assert api.patch("/cases/CASE-A", json={"name": ""}).status_code == 422
+        assert api.patch("/cases/MISSING", json={"name": "Nope"}).status_code == 404
+
+
+def test_admin_can_create_case():
+    with client() as api:
+        before = {row["case_id"] for row in api.get("/cases").json()}
+        response = api.post(
+            "/cases",
+            json={
+                "case_name": "Operation Silverline",
+                "priority": "II",
+                "jurisdiction": "CYBER-INTEL",
+                "summary": "Empty docket",
+            },
+        )
+        assert response.status_code == 201
+        body = response.json()
+        assert body["case_id"] not in before
+        assert body["case_id"].startswith("NX-")
+        assert body["name"] == "Operation Silverline"
+        assert body["status"] == "ACTIVE"
+        assert body["priority"] == "II"
+        assert body["jurisdiction_tag"] == "CYBER-INTEL"
+        assert body["description"] == "Empty docket"
+        assert body["node_count"] == 0
+        assert body["edge_count"] == 0
+        assert body["lead_analyst"] == "test"
+        listed = api.get("/cases").json()
+        assert any(row["case_id"] == body["case_id"] for row in listed)
+        assert "CASE-A" in {row["case_id"] for row in listed}
+
+
+def test_create_case_rejects_blank_name():
+    with client() as api:
+        assert api.post("/cases", json={"case_name": "   "}).status_code == 422
+        assert api.post("/cases", json={}).status_code == 422
 def test_case_status_filters_and_lifecycle():
     repository = StubRepository()
     with client(repository) as api:

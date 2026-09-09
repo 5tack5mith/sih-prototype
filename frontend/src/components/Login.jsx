@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { login } from '../api/client'
+import { useAuth } from '../auth/AuthContext'
 import logoMark from '../assets/login/logo-mark.svg'
 import eyeToggle from '../assets/login/eye-toggle.svg'
 import loginBackground from '../assets/login/login-background.png'
@@ -60,12 +60,15 @@ const ROLE_COPY = {
   },
 }
 
-function Login({ onLogin }) {
+function Login() {
   // Role selection is a purely visual first step (frames which sign-in
   // experience the analyst is entering) - it never talks to the backend.
-  // The credential step underneath is unchanged: it still submits to the
-  // real /login endpoint via api/client's login(), and the account's own
-  // role (not whichever card was clicked) is what the server returns.
+  // The credential step underneath is unchanged: it still submits through
+  // AuthContext's signIn() (the real /login endpoint), and the account's
+  // own role (not whichever card was clicked) is what the server returns -
+  // AuthContext updates isAuthenticated on success, and App.jsx reacts to
+  // that itself, so there's no onLogin callback to invoke here.
+  const { signIn } = useAuth()
   const [step, setStep] = useState('role')
   const [role, setRole] = useState(null)
   const [analystId, setAnalystId] = useState('')
@@ -95,8 +98,7 @@ function Login({ onLogin }) {
     }
     setSubmitting(true)
     try {
-      await login(analystId.trim(), passkey)
-      onLogin?.()
+      await signIn(analystId.trim(), passkey)
     } catch (err) {
       setErrorMessage(err.message || 'Login failed')
     } finally {
