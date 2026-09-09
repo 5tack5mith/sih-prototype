@@ -76,3 +76,14 @@ not an error.
 ## API authentication
 
 Set `AUTH_SECRET_KEY` plus the two bootstrap-admin variables in `.env` before starting the API. Log in with `POST /login`, then pass its bearer token on API requests. Admins manage accounts, case assignments, lifecycle, and all case data. Investigators only see active cases assigned to them; access to anything else intentionally returns `404`. Auth SQLite data is persisted in the Compose `auth_data` volume. See `app/api/API.md` for assignment and purge endpoints.
+
+
+### One-command authentication smoke test
+
+After setting `.env`, run:
+
+```bash
+docker compose --profile smoke run --rm smoke-test
+```
+
+It starts Neo4j and the API as dependencies, logs in as the bootstrap admin, verifies `/me`, and makes an authenticated `/cases` request.
