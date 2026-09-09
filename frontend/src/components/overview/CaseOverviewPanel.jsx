@@ -1,7 +1,4 @@
 import sortArrowIcon from '../../assets/overview/sort-arrow.svg'
-import exportIcon from '../../assets/overview/export-evidence.svg'
-import flagIcon from '../../assets/overview/flag-subpoena.svg'
-import runAnalysisIcon from '../../assets/overview/run-analysis.svg'
 import { scoreOf } from './graphLayout'
 import './CaseOverviewPanel.css'
 
@@ -166,35 +163,8 @@ function CaseOverviewPanel({ caseId, loadState, errorMessage, overview, topPlaye
                 </div>
               )}
             </div>
-
-            <div className="ov-panel__activity">
-              <div className="ov-panel__section-row">
-                <span className="ov-panel__section-title">TEMPORAL LOG // ACTIVITY</span>
-                <span className="ov-panel__utc">UTC SYNC</span>
-              </div>
-              <div className="ov-panel__state ov-panel__state--inline">
-                NO ACTIVITY DATA AVAILABLE FROM CURRENT API
-              </div>
-            </div>
           </>
         )}
-      </div>
-
-      <div className="ov-panel__footer">
-        <div className="ov-panel__footer-row">
-          <button type="button" className="ov-panel__btn ov-panel__btn--ghost">
-            <img src={exportIcon} alt="" />
-            <span>EXPORT EVIDENCE PDF</span>
-          </button>
-          <button type="button" className="ov-panel__btn ov-panel__btn--danger">
-            <img src={flagIcon} alt="" />
-            <span>FLAG SUBPOENA</span>
-          </button>
-        </div>
-        <button type="button" className="ov-panel__btn-primary">
-          <img src={runAnalysisIcon} alt="" />
-          RUN FULL CASE ANALYSIS
-        </button>
       </div>
     </aside>
   )

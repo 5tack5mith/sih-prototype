@@ -1,4 +1,3 @@
-import downloadIcon from '../../assets/keyplayers/download-icon.svg'
 import backArrowIcon from '../../assets/overview/back-arrow.svg'
 import './PlayersPanel.css'
 
@@ -172,9 +171,6 @@ function PlayersPanel({
             <h2 className="kp-panel__title">{showProfile ? 'Detail View' : 'Key Players'}</h2>
             {!showProfile && <span className="kp-panel__top10-tag">TOP {TOP_DISPLAY_COUNT}</span>}
           </div>
-          <button type="button" className="kp-panel__download">
-            <img src={downloadIcon} alt="Export" />
-          </button>
         </div>
         {!showProfile && (
           <div className="kp-panel__sort-row">

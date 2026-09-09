@@ -12,8 +12,54 @@ function formatScore(value) {
   return value.toFixed(3)
 }
 
-function ClusterDetailView({ communityId, detail, detailLoadState, onBack }) {
+function safeFilenamePart(value) {
+  return String(value ?? 'unknown').replace(/[^a-zA-Z0-9._-]+/g, '-')
+}
+
+function buildDossierText({ caseId, clusterLabel, communityId, detail, members }) {
+  const memberLines = members.map((member, index) => {
+    const rank = String(index + 1).padStart(2, '0')
+    const name = member.name || member.node_id
+    const type = (member.entity_type || 'PERSON').toUpperCase()
+    return `${rank}. ${name}  [${type}]  centrality ${formatScore(member.centrality)}  id=${member.node_id}`
+  })
+
+  return [
+    'NEXUS CLUSTER DOSSIER',
+    `Case: ${caseId || '—'}`,
+    `Cluster: ${clusterLabel}`,
+    `Community ID: ${communityId}`,
+    `Generated: ${new Date().toISOString()}`,
+    '',
+    'SUMMARY',
+    `Size: ${detail.size} person nodes`,
+    `Internal density: ${formatDensity(detail.internal_density)}`,
+    `External density: ${formatDensity(detail.external_density)}`,
+    '',
+    'STRUCTURAL PATTERN ANALYSIS',
+    detail.narrative || '—',
+    '',
+    `COMMUNITY MEMBERS (${members.length} total, centrality descending)`,
+    ...(memberLines.length > 0 ? memberLines : ['None']),
+    '',
+  ].join('\n')
+}
+
+function downloadTextFile(filename, text) {
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  URL.revokeObjectURL(url)
+}
+
+function ClusterDetailView({ caseId, communityId, displayRank, detail, detailLoadState, onBack }) {
   const color = communityColor(communityId)
+  const clusterLabel = displayRank ? `Cluster ${displayRank}` : `Cluster ${communityId}`
 
   if (detailLoadState === 'loading') {
     return (
@@ -72,13 +118,13 @@ function ClusterDetailView({ communityId, detail, detailLoadState, onBack }) {
             <span className="cd__modularity-label" style={{ color }}>
               COMMUNITY
             </span>
-            <span className="cd__modularity-value">{detail.community_id}</span>
+            <span className="cd__modularity-value">{displayRank ?? detail.community_id}</span>
           </div>
         </div>
 
         <div className="cd__title-row">
           <span className="cd__title-dot" style={{ background: color, boxShadow: `0 0 6px ${color}66` }} />
-          <h2 className="cd__title">Cluster {detail.community_id}</h2>
+          <h2 className="cd__title">{clusterLabel}</h2>
         </div>
 
         <div className="cd__stats">
@@ -147,7 +193,15 @@ function ClusterDetailView({ communityId, detail, detailLoadState, onBack }) {
       </div>
 
       <div className="cd__footer">
-        <button type="button" className="cd__btn cd__btn--ghost">
+        <button
+          type="button"
+          className="cd__btn cd__btn--ghost"
+          onClick={() => {
+            const text = buildDossierText({ caseId, clusterLabel, communityId, detail, members })
+            const filename = `${safeFilenamePart(caseId)}-${safeFilenamePart(clusterLabel).toLowerCase()}-dossier.txt`
+            downloadTextFile(filename, text)
+          }}
+        >
           <span aria-hidden="true">⭳</span> EXPORT CLUSTER DOSSIER
         </button>
       </div>

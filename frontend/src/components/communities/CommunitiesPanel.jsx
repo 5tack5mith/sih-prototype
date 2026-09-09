@@ -3,6 +3,7 @@ import ClusterDetailView from './ClusterDetailView'
 import './CommunitiesPanel.css'
 
 function CommunitiesPanel({
+  caseId,
   loadState,
   errorMessage,
   communities,
@@ -40,7 +41,9 @@ function CommunitiesPanel({
 
       {isReady && selectedId ? (
         <ClusterDetailView
+          caseId={caseId}
           communityId={selectedId}
+          displayRank={communities.find((c) => c.community_id === selectedId)?.displayRank}
           detail={detail}
           detailLoadState={detailLoadState}
           onBack={onBack}

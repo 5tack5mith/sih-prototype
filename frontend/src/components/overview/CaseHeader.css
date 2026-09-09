@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 0 16px;
+  padding: 0 20px;
   background: #11161d;
   border-bottom: 1px solid #1f2833;
   z-index: 20;
@@ -103,8 +103,8 @@
 
 .case-header__search-input {
   width: 100%;
-  height: 30px;
-  padding: 0 49px 0 33px;
+  height: 32px;
+  padding: 0 12px 0 33px;
   background: #0b0e13;
   border: 1px solid #1f2833;
   border-radius: 2px;
@@ -218,8 +218,8 @@
 .case-header__status {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 9px;
+  gap: 6px;
+  padding: 4px 10px;
   background: rgba(8, 80, 74, 0.2);
   border: 1px solid #4e8a83;
   border-radius: 2px;

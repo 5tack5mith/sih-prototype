@@ -1,6 +1,6 @@
 .ov-graph {
-  flex: 1 0 320px;
-  min-width: 320px;
+  flex: 1 1 0;
+  min-width: 280px;
   display: flex;
   flex-direction: column;
   background: #07090e;
@@ -9,15 +9,18 @@
 .ov-graph__topbar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  height: 36px;
-  padding: 0 12px;
+  gap: 10px;
+  height: auto;
+  min-height: 40px;
+  padding: 8px 16px;
   background: rgba(11, 14, 20, 0.9);
   backdrop-filter: blur(4px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-family: 'IBM Plex Mono', monospace;
-  overflow: hidden;
-  white-space: nowrap;
+  overflow: visible;
+  white-space: normal;
+  flex-wrap: wrap;
+  row-gap: 4px;
 }
 
 .ov-graph__topbar-dot {
@@ -29,8 +32,8 @@
 
 .ov-graph__topbar-title {
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.55px;
+  font-size: 11.5px;
+  letter-spacing: 0.4px;
   color: #e2e8f0;
 }
 
@@ -40,7 +43,7 @@
 }
 
 .ov-graph__topbar-item {
-  font-size: 10px;
+  font-size: 11px;
   color: #64748b;
 }
 
@@ -74,12 +77,12 @@
 
 .ov-graph__controls {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 14px;
+  right: 14px;
   display: flex;
   align-items: center;
-  gap: 2px;
-  padding: 3px;
+  gap: 4px;
+  padding: 4px;
   background: rgba(11, 14, 20, 0.9);
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -87,8 +90,8 @@
 }
 
 .ov-graph__controls button {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,8 +104,18 @@
   cursor: pointer;
 }
 
+.ov-graph__controls button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e2e8f0;
+}
+
+.ov-graph__controls button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
 .ov-graph__controls-icon img {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
 }
 

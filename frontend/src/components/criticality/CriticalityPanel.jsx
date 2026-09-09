@@ -11,7 +11,147 @@ function fragmentationVariant(pct) {
   return 'teal'
 }
 
+function safeFilenamePart(value) {
+  return String(value ?? 'unknown').replace(/[^a-zA-Z0-9._-]+/g, '-')
+}
+
+function escapePdfText(value) {
+  return String(value).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)')
+}
+
+function wrapLine(text, maxChars) {
+  const words = String(text).split(/\s+/)
+  const lines = []
+  let current = ''
+  for (const word of words) {
+    const next = current ? `${current} ${word}` : word
+    if (next.length > maxChars && current) {
+      lines.push(current)
+      current = word
+    } else {
+      current = next
+    }
+  }
+  if (current) lines.push(current)
+  return lines.length ? lines : ['']
+}
+
+function buildRobustnessLines({ caseId, topK, criticality }) {
+  const removals = criticality.ranked_removals ?? []
+  const finalState = criticality.final_state
+  const lines = [
+    'NEXUS ROBUSTNESS REPORT',
+    `Case: ${caseId || '—'}`,
+    `Generated: ${new Date().toISOString()}`,
+    `Top-K cut: ${topK}`,
+    `Initial component: ${criticality.initial_node_count} nodes`,
+    `Removal criterion: ${formatCriterion(criticality.criterion)}`,
+    '',
+  ]
+
+  if (finalState) {
+    lines.push(
+      'FINAL STATE',
+      `Efficiency drop: ${finalState.overall_efficiency_drop_pct.toFixed(1)}%`,
+      `Largest remaining component: ${finalState.largest_remaining_component} nodes`,
+      `Components created: ${finalState.components_created ?? '—'}`,
+      ''
+    )
+  }
+
+  if (criticality.impact_narrative) {
+    lines.push('IMPACT SYNTHESIS', ...wrapLine(criticality.impact_narrative, 88), '')
+  }
+
+  if (criticality.note) {
+    lines.push('NOTE', ...wrapLine(criticality.note, 88), '')
+  }
+
+  lines.push('RANKED CHOKEPOINTS (BFR / AFT / FRG)')
+  for (const removal of removals) {
+    lines.push(
+      `${String(removal.rank).padStart(2, '0')}. ${removal.node_name || removal.node_id}  [${removal.entity_type_label}]  ${removal.component_size_before} / ${removal.component_size_after} / ${removal.fragmentation_pct.toFixed(1)}%  id=${removal.node_id}`
+    )
+  }
+  return lines
+}
+
+function buildSimplePdf(lines) {
+  const lineHeight = 13
+  const pageHeight = 792
+  const margin = 50
+  const maxLines = Math.max(1, Math.floor((pageHeight - margin * 2) / lineHeight))
+  const pages = []
+  for (let i = 0; i < lines.length; i += maxLines) pages.push(lines.slice(i, i + maxLines))
+  if (pages.length === 0) pages.push([''])
+
+  const objects = ['']
+  const addObject = (body) => {
+    objects.push(body)
+    return objects.length - 1
+  }
+
+  const fontId = addObject('<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>')
+  const pageIds = []
+  const contentIds = []
+
+  for (const pageLines of pages) {
+    const commands = ['BT', '/F1 10 Tf', `${margin} ${pageHeight - margin} Td`, `${lineHeight} TL`]
+    pageLines.forEach((line, index) => {
+      const escaped = escapePdfText(line)
+      commands.push(index === 0 ? `(${escaped}) Tj` : `T* (${escaped}) Tj`)
+    })
+    commands.push('ET')
+    const stream = commands.join('\n')
+    contentIds.push(
+      addObject(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`)
+    )
+  }
+
+  const kids = []
+  contentIds.forEach((contentId) => {
+    const pageId = addObject(
+      `<< /Type /Page /Parent 0 0 R /MediaBox [0 0 612 792] /Contents ${contentId} 0 R /Resources << /Font << /F1 ${fontId} 0 R >> >> >>`
+    )
+    pageIds.push(pageId)
+    kids.push(`${pageId} 0 R`)
+  })
+
+  const pagesId = addObject(`<< /Type /Pages /Kids [${kids.join(' ')}] /Count ${pageIds.length} >>`)
+  for (const pageId of pageIds) {
+    objects[pageId] = objects[pageId].replace('/Parent 0 0 R', `/Parent ${pagesId} 0 R`)
+  }
+  const catalogId = addObject(`<< /Type /Catalog /Pages ${pagesId} 0 R >>`)
+
+  let pdf = '%PDF-1.4\n'
+  const fileOffsets = [0]
+  for (let i = 1; i < objects.length; i += 1) {
+    fileOffsets[i] = pdf.length
+    pdf += `${i} 0 obj\n${objects[i]}\nendobj\n`
+  }
+  const xrefOffset = pdf.length
+  pdf += `xref\n0 ${objects.length}\n0000000000 65535 f \n`
+  for (let i = 1; i < objects.length; i += 1) {
+    pdf += `${String(fileOffsets[i]).padStart(10, '0')} 00000 n \n`
+  }
+  pdf += `trailer\n<< /Size ${objects.length} /Root ${catalogId} 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`
+  return pdf
+}
+
+function downloadPdf(filename, lines) {
+  const blob = new Blob([buildSimplePdf(lines)], { type: 'application/pdf' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  URL.revokeObjectURL(url)
+}
+
 function CriticalityPanel({
+  caseId,
   loadState,
   errorMessage,
   topK,
@@ -185,7 +325,15 @@ function CriticalityPanel({
           <button type="button" className="crit-panel__btn" onClick={() => onSelectPerson(removals[0].node_id)}>
             <span aria-hidden="true">◎</span> Select Most Critical Person
           </button>
-          <button type="button" className="crit-panel__btn">
+          <button
+            type="button"
+            className="crit-panel__btn"
+            onClick={() => {
+              const lines = buildRobustnessLines({ caseId, topK, criticality })
+              const filename = `${safeFilenamePart(caseId)}-robustness-report-top${topK}.pdf`
+              downloadPdf(filename, lines)
+            }}
+          >
             <span aria-hidden="true">⭳</span> Export Robustness Report (PDF)
           </button>
         </div>

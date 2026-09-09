@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import AppHeader from '../components/AppHeader'
-import { fetchCases } from '../api/casesApi'
+import CreateCaseModal from '../components/CreateCaseModal'
+import EditCaseModal from '../components/EditCaseModal'
+import CaseAccessModal from '../components/CaseAccessModal'
+import UserManagementModal from '../components/UserManagementModal'
+import { useAuth } from '../auth/AuthContext'
+import { casePermissions, visibleCaseCardActions, visibleCaseListActions } from '../auth/permissions'
+import { archiveCase, createCase, deleteCase, fetchCases, restoreCase } from '../api/casesApi'
+import { HOME_PAGE } from '../nav/navigation'
 import gridViewIcon from '../assets/cases/grid-view.svg'
 import listViewIcon from '../assets/cases/list-view.svg'
 import plusIcon from '../assets/cases/plus.svg'
@@ -18,8 +25,8 @@ const TOPOLOGIES = [topology1, topology2, topology3, topology4, topology5, topol
 const TABS = [
   { key: 'all', label: 'All Cases' },
   { key: 'active', label: 'Active' },
-  { key: 'archived', label: 'Archived' },
-  { key: 'flagged', label: 'Flagged Focus' },
+  { key: 'archived', label: 'Completed' },
+  { key: 'flagged', label: 'Important' },
 ]
 
 function formatRelativeTime(iso) {
@@ -55,11 +62,21 @@ function mapCaseToCard(apiCase, index) {
     edges: String(apiCase.edge_count ?? 0),
     updated: formatRelativeTime(apiCase.updated_at),
     lead: apiCase.lead_analyst || 'UNASSIGNED',
-    jurisdiction: apiCase.jurisdiction_tag || 'UNSPECIFIED',
   }
 }
 
-function CaseCard({ caseItem, onOpen }) {
+function CaseCard({
+  caseItem,
+  starred,
+  onToggleStar,
+  onOpen,
+  actions = [],
+  onEdit,
+  onManageAccess,
+  onArchive,
+  onRestore,
+  onDelete,
+}) {
   return (
     <article
       className={`case-card${caseItem.archived ? ' case-card--archived' : ''}`}
@@ -74,25 +91,42 @@ function CaseCard({ caseItem, onOpen }) {
       }}
     >
       <div className="case-card__body">
+        <div className="case-card__badges">
+          <span className={`case-card__status case-card__status--${caseItem.status.toLowerCase()}`}>
+            {caseItem.status}
+          </span>
+          <button
+            type="button"
+            className={`case-card__star${starred ? ' case-card__star--on' : ''}`}
+            aria-label={starred ? 'Unstar case' : 'Star case'}
+            aria-pressed={starred}
+            onClick={(event) => {
+              event.stopPropagation()
+              onToggleStar?.()
+            }}
+            onKeyDown={(event) => event.stopPropagation()}
+          >
+            <svg viewBox="0 0 12 12" aria-hidden="true">
+              <path
+                d="M6 1.15 7.38 3.95l3.1.45-2.24 2.18.53 3.08L6 8.2l-2.77 1.46.53-3.08L1.52 4.4l3.1-.45L6 1.15z"
+                fill={starred ? 'currentColor' : 'none'}
+                stroke="currentColor"
+                strokeWidth="1"
+              />
+            </svg>
+          </button>
+        </div>
         <div className="case-card__top">
           <div className="case-card__heading">
-            <div className="case-card__badges">
-              <span className={`case-card__status case-card__status--${caseItem.status.toLowerCase()}`}>
-                {caseItem.status}
-              </span>
-            </div>
             <h2 className="case-card__title">{caseItem.title}</h2>
+            <p className="case-card__docket">{caseItem.docket}</p>
           </div>
           <div className="case-card__topology">
             <img src={caseItem.topology} alt="" />
           </div>
         </div>
 
-        <p className="case-card__docket">{caseItem.docket}</p>
-
-        <p className="case-card__summary">
-          <span>{caseItem.description}</span>
-        </p>
+        <p className="case-card__summary">{caseItem.description}</p>
       </div>
 
       <div className="case-card__footer">
@@ -112,22 +146,111 @@ function CaseCard({ caseItem, onOpen }) {
         </div>
         <div className="case-card__meta">
           <span>LEAD: {caseItem.lead}</span>
-          <span>JURISDICTION: {caseItem.jurisdiction}</span>
         </div>
+        {actions.length > 0 && (
+          <div className="case-card__actions">
+            {actions.includes('editCaseMetadata') && (
+              <button
+                type="button"
+                className="case-card__edit"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onEdit?.()
+                }}
+                onKeyDown={(event) => event.stopPropagation()}
+              >
+                Edit Case
+              </button>
+            )}
+            {actions.includes('manageCaseAccess') && (
+              <button
+                type="button"
+                className="case-card__edit"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onManageAccess?.()
+                }}
+                onKeyDown={(event) => event.stopPropagation()}
+              >
+                Manage Access
+              </button>
+            )}
+            {actions.includes('archiveCase') && (
+              <button
+                type="button"
+                className="case-card__edit"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onArchive?.()
+                }}
+                onKeyDown={(event) => event.stopPropagation()}
+              >
+                Archive
+              </button>
+            )}
+            {actions.includes('restoreCase') && (
+              <button
+                type="button"
+                className="case-card__edit"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onRestore?.()
+                }}
+                onKeyDown={(event) => event.stopPropagation()}
+              >
+                Restore
+              </button>
+            )}
+            {actions.includes('deleteCase') && (
+              <button
+                type="button"
+                className="case-card__edit"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onDelete?.()
+                }}
+                onKeyDown={(event) => event.stopPropagation()}
+              >
+                Delete
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </article>
   )
 }
 
-function Cases({ onOpenCase }) {
+function Cases({
+  onOpenCase,
+  onNavigate,
+  createdCases: createdCasesProp,
+  onCreateCase,
+  caseEdits = {},
+  onUpdateCase,
+  onCaseStatusChange,
+  onCaseRemoved,
+}) {
+  const { role } = useAuth()
+  const permissions = casePermissions(role)
+  const canCreateCase = visibleCaseListActions(role).includes('createCase')
   const [sort, setSort] = useState('last_activity')
   const [activeTab, setActiveTab] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
-  const [allCases, setAllCases] = useState([])
-  const [flaggedCases, setFlaggedCases] = useState([])
+  const [fetchedCases, setFetchedCases] = useState([])
+  const [createdCasesLocal, setCreatedCasesLocal] = useState([])
   const [loadState, setLoadState] = useState('loading') // 'loading' | 'ready' | 'error'
   const [errorMessage, setErrorMessage] = useState(null)
   const [retryToken, setRetryToken] = useState(0)
+  const [viewMode, setViewMode] = useState('grid')
+  const [starredIds, setStarredIds] = useState(() => new Set())
+  const [createOpen, setCreateOpen] = useState(false)
+  const [editCase, setEditCase] = useState(null)
+  const [accessCase, setAccessCase] = useState(null)
+  const [usersOpen, setUsersOpen] = useState(false)
+  const [successMessage, setSuccessMessage] = useState(null)
+  const createdCases = permissions.createCase ? (createdCasesProp ?? createdCasesLocal) : []
+  const canManageUsers = visibleCaseListActions(role).includes('manageUsers')
 
   useEffect(() => {
     let cancelled = false
@@ -136,13 +259,9 @@ function Cases({ onOpenCase }) {
       setLoadState('loading')
       setErrorMessage(null)
       try {
-        const [all, flagged] = await Promise.all([
-          fetchCases({ sort }),
-          fetchCases({ sort, filter: 'flagged' }),
-        ])
+        const all = await fetchCases({ sort })
         if (cancelled) return
-        setAllCases(all)
-        setFlaggedCases(flagged)
+        setFetchedCases(all)
         setLoadState('ready')
       } catch (err) {
         if (cancelled) return
@@ -157,6 +276,24 @@ function Cases({ onOpenCase }) {
     }
   }, [sort, retryToken])
 
+  useEffect(() => {
+    if (!successMessage) return undefined
+    const timeoutId = window.setTimeout(() => setSuccessMessage(null), 4000)
+    return () => window.clearTimeout(timeoutId)
+  }, [successMessage])
+
+  const allCases = useMemo(() => {
+    const remoteIds = new Set(fetchedCases.map((c) => c.case_id))
+    const local = createdCases.filter((c) => !remoteIds.has(c.case_id))
+    const merged = [...local, ...fetchedCases].map((c) =>
+      caseEdits[c.case_id] ? { ...c, ...caseEdits[c.case_id] } : c
+    )
+    if (sort !== 'name') return merged
+    return [...merged].sort((a, b) =>
+      (a.name || a.case_id).localeCompare(b.name || b.case_id, undefined, { sensitivity: 'base' })
+    )
+  }, [fetchedCases, createdCases, sort, caseEdits])
+
   const activeCases = useMemo(
     () => allCases.filter((c) => (c.status || '').toLowerCase() !== 'archived'),
     [allCases]
@@ -165,11 +302,15 @@ function Cases({ onOpenCase }) {
     () => allCases.filter((c) => (c.status || '').toLowerCase() === 'archived'),
     [allCases]
   )
+  const importantCases = useMemo(
+    () => allCases.filter((c) => starredIds.has(c.case_id)),
+    [allCases, starredIds]
+  )
 
   const total = allCases.length
   const activeCount = activeCases.length
   const archivedCount = archivedCases.length
-  const flaggedCount = flaggedCases.length
+  const flaggedCount = importantCases.length
 
   const tabCases =
     activeTab === 'active'
@@ -177,7 +318,7 @@ function Cases({ onOpenCase }) {
       : activeTab === 'archived'
         ? archivedCases
         : activeTab === 'flagged'
-          ? flaggedCases
+          ? importantCases
           : allCases
 
   const trimmedQuery = searchQuery.trim().toLowerCase()
@@ -193,7 +334,11 @@ function Cases({ onOpenCase }) {
 
   return (
     <div className="cases-page">
-      <AppHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+      <AppHeader
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onBrandClick={() => onNavigate?.(HOME_PAGE)}
+      />
 
       <main className="cases-main">
         <div className="cases-toolbar">
@@ -203,28 +348,46 @@ function Cases({ onOpenCase }) {
               <span className="cases-heading__badge">
                 [ {total} TOTAL // {activeCount} ACTIVE ]
               </span>
-              <span className="cases-heading__repo">
-                <span className="cases-heading__dot" />
-                INDEXED REPOSITORY
-              </span>
             </div>
           </div>
           <div className="cases-toolbar__right">
             <div className="cases-view-switch">
-              <button type="button" className="cases-view-switch__btn cases-view-switch__btn--active">
+              <button
+                type="button"
+                className={`cases-view-switch__btn${viewMode === 'grid' ? ' cases-view-switch__btn--active' : ''}`}
+                onClick={() => setViewMode('grid')}
+              >
                 <img src={gridViewIcon} alt="Grid view" />
               </button>
-              <button type="button" className="cases-view-switch__btn">
+              <button
+                type="button"
+                className={`cases-view-switch__btn${viewMode === 'list' ? ' cases-view-switch__btn--active' : ''}`}
+                onClick={() => setViewMode('list')}
+              >
                 <img src={listViewIcon} alt="List view" />
               </button>
             </div>
-            <div className="cases-toolbar__divider" />
-            <button type="button" className="cases-new-btn">
-              <img src={plusIcon} alt="" />
-              New Case
-            </button>
+            {canManageUsers && (
+              <>
+                <div className="cases-toolbar__divider" />
+                <button type="button" className="cases-admin-btn" onClick={() => setUsersOpen(true)}>
+                  Users
+                </button>
+              </>
+            )}
+            {canCreateCase && (
+              <>
+                <div className="cases-toolbar__divider" />
+                <button type="button" className="cases-new-btn" onClick={() => setCreateOpen(true)}>
+                  <img src={plusIcon} alt="" />
+                  New Case
+                </button>
+              </>
+            )}
           </div>
         </div>
+
+        {successMessage && <p className="cases-create-success">{successMessage}</p>}
 
         <div className="cases-filters">
           <div className="cases-filters__left">
@@ -275,10 +438,65 @@ function Cases({ onOpenCase }) {
         ) : displayedCases.length === 0 ? (
           <div className="cases-state">NO CASES FOUND</div>
         ) : (
-          <div className="cases-grid">
+          <div className={`cases-grid${viewMode === 'list' ? ' cases-grid--list' : ''}`}>
             {displayedCases.map((apiCase, index) => {
               const caseItem = mapCaseToCard(apiCase, index)
-              return <CaseCard key={caseItem.id} caseItem={caseItem} onOpen={() => onOpenCase?.(caseItem)} />
+              const remote = fetchedCases.some((item) => item.case_id === apiCase.case_id)
+              const actions = visibleCaseCardActions(role, { archived: caseItem.archived, remote })
+              return (
+                <CaseCard
+                  key={caseItem.id}
+                  caseItem={caseItem}
+                  starred={starredIds.has(caseItem.id)}
+                  actions={actions}
+                  onToggleStar={() => {
+                    setStarredIds((prev) => {
+                      const next = new Set(prev)
+                      if (next.has(caseItem.id)) next.delete(caseItem.id)
+                      else next.add(caseItem.id)
+                      return next
+                    })
+                  }}
+                  onOpen={() => onOpenCase?.(caseItem)}
+                  onEdit={() => setEditCase(apiCase)}
+                  onManageAccess={() => setAccessCase(apiCase)}
+                  onArchive={async () => {
+                    try {
+                      const result = await archiveCase(apiCase.case_id)
+                      setFetchedCases((prev) =>
+                        prev.map((item) => (item.case_id === apiCase.case_id ? { ...item, status: result.status } : item))
+                      )
+                      onCaseStatusChange?.(apiCase.case_id, result.status)
+                      setSuccessMessage('Case archived.')
+                    } catch (err) {
+                      setSuccessMessage(err.message || 'Failed to archive case.')
+                    }
+                  }}
+                  onRestore={async () => {
+                    try {
+                      const result = await restoreCase(apiCase.case_id)
+                      setFetchedCases((prev) =>
+                        prev.map((item) => (item.case_id === apiCase.case_id ? { ...item, status: result.status } : item))
+                      )
+                      onCaseStatusChange?.(apiCase.case_id, result.status)
+                      setSuccessMessage('Case restored.')
+                    } catch (err) {
+                      setSuccessMessage(err.message || 'Failed to restore case.')
+                    }
+                  }}
+                  onDelete={async () => {
+                    if (!window.confirm('Delete this archived case permanently?')) return
+                    try {
+                      await deleteCase(apiCase.case_id)
+                      setFetchedCases((prev) => prev.filter((item) => item.case_id !== apiCase.case_id))
+                      onCaseRemoved?.(apiCase.case_id)
+                      setSuccessMessage('Case deleted.')
+                    } catch (err) {
+                      setSuccessMessage(err.message || 'Failed to delete case.')
+                    }
+                  }}
+                />
+              )
             })}
           </div>
         )}
@@ -300,6 +518,40 @@ function Cases({ onOpenCase }) {
           </div>
         </div>
       </main>
+
+      {permissions.createCase && createOpen && (
+        <CreateCaseModal
+          onClose={() => setCreateOpen(false)}
+          onCreate={async (draft) => {
+            const created = await createCase(draft)
+            setFetchedCases((prev) => [created, ...prev.filter((item) => item.case_id !== created.case_id)])
+            onCreateCase?.(created)
+            setCreateOpen(false)
+            setSuccessMessage('Case created successfully.')
+            if (activeTab === 'archived' || activeTab === 'flagged') setActiveTab('all')
+          }}
+        />
+      )}
+
+      {permissions.editCaseMetadata && editCase && (
+        <EditCaseModal
+          caseRecord={editCase}
+          onClose={() => setEditCase(null)}
+          onSave={async (draft) => {
+            await onUpdateCase?.(draft)
+            setEditCase(null)
+            setSuccessMessage('Case changes saved.')
+          }}
+        />
+      )}
+
+      {permissions.manageCaseAccess && accessCase && (
+        <CaseAccessModal caseRecord={accessCase} onClose={() => setAccessCase(null)} />
+      )}
+
+      {permissions.manageUsers && usersOpen && (
+        <UserManagementModal onClose={() => setUsersOpen(false)} />
+      )}
     </div>
   )
 }

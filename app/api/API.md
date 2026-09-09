@@ -23,8 +23,11 @@ All endpoints require `Authorization: Bearer <access_token>` except `POST /login
 
 | Endpoint | Access | Behavior |
 |---|---|---|
-| `POST /login` | Public | Returns bearer token. |
-| `POST /register`, `GET /me` | Admin / authenticated | Create users / view current database-backed account. |
+| `POST /login` | Public | Returns bearer token. Role comes from the stored account, not the request. |
+| `POST /register`, `GET /users`, `GET /me` | Admin / Admin / authenticated | Create users / list accounts / view current database-backed account. |
+| `GET /cases` | Authenticated | Admin sees all cases. Investigators see only assigned ACTIVE cases. |
+| `POST /cases` | Admin | Create an empty ACTIVE case. Identity is assigned by the store. |
+| `PATCH /cases/{case_id}` | Admin | Update case metadata only. |
 | `GET /cases/{case_id}/assignments` | Admin | List assigned investigators. |
 | `PUT /cases/{case_id}/assignments/{username}` | Admin | Idempotently assign an existing investigator to an active case. |
 | `DELETE /cases/{case_id}/assignments/{username}` | Admin | Remove an assignment. |

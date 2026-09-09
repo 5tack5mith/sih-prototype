@@ -28,6 +28,7 @@ def test_path_query_is_case_scoped_and_parameterized(fake_driver):
     assert result["path_found"] is False
 
 
+<<<<<<< HEAD
 def test_summary_reads_are_parameterized_and_use_schema_constants(fake_driver):
     repository = Neo4jRepository(fake_driver)
 
@@ -44,3 +45,38 @@ def test_summary_reads_are_parameterized_and_use_schema_constants(fake_driver):
     assert schema.cypher_identifier(schema.NODE_LABEL_COMMUNITY_SUMMARY) in query_text
     assert fake_driver.calls[0][1] == {"case_id": "CASE-'unsafe"}
     assert fake_driver.calls[1][1] == {"case_id": "CASE-'unsafe", "community_id": "COMM-'unsafe"}
+=======
+def test_create_case_is_parameterized_and_does_not_touch_other_cases(fake_driver):
+    def handler(query, parameters):
+        if "STARTS WITH" in query:
+            return [{"case_id": "CASE-A"}]
+        return [{
+            "case_id": parameters["case_id"],
+            "name": parameters["name"],
+            "status": parameters["status"],
+            "priority": parameters["priority"],
+            "description": parameters["description"],
+            "updated_at": parameters["updated_at"],
+            "lead_analyst": parameters["lead_analyst"],
+            "jurisdiction_tag": parameters["jurisdiction_tag"],
+        }]
+
+    fake_driver.handler = handler
+    repository = Neo4jRepository(fake_driver)
+    created = repository.create_case(
+        "Operation Silverline",
+        "II",
+        "Empty docket",
+        "CYBER-INTEL",
+        "admin",
+        "2026-09-10T00:00:00+00:00",
+    )
+    assert created["status"] == "ACTIVE"
+    assert created["node_count"] == 0
+    assert created["edge_count"] == 0
+    assert created["name"] == "Operation Silverline"
+    query_text = "\n".join(query for query, _ in fake_driver.calls)
+    assert "DETACH DELETE" not in query_text
+    assert "CASE-A" not in query_text
+    assert any(parameters.get("name") == "Operation Silverline" for _, parameters in fake_driver.calls)
+>>>>>>> origin/main

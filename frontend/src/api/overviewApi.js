@@ -1,9 +1,9 @@
-const API_BASE = '/api'
+import { apiFetch } from './client'
 
 // GET /cases/{case_id}/overview — app/api/main.py:case_overview
 // Returns null when the backend reports 404 ("Case not found").
 export async function fetchCaseOverview(caseId) {
-  const response = await fetch(`${API_BASE}/cases/${encodeURIComponent(caseId)}/overview`)
+  const response = await apiFetch(`/cases/${encodeURIComponent(caseId)}/overview`)
 
   if (response.status === 404) return null
   if (!response.ok) {
@@ -24,8 +24,8 @@ export async function fetchCaseGraph(caseId, { filter, cutoff } = {}) {
   if (cutoff !== undefined && cutoff !== null) params.set('cutoff', String(cutoff))
   const query = params.toString()
 
-  const response = await fetch(
-    `${API_BASE}/cases/${encodeURIComponent(caseId)}/graph${query ? `?${query}` : ''}`
+  const response = await apiFetch(
+    `/cases/${encodeURIComponent(caseId)}/graph${query ? `?${query}` : ''}`
   )
 
   if (!response.ok) {
@@ -42,8 +42,8 @@ export async function fetchTopNodes(caseId, { metric = 'betweenness', limit } = 
   const params = new URLSearchParams({ metric })
   if (limit !== undefined && limit !== null) params.set('limit', String(limit))
 
-  const response = await fetch(
-    `${API_BASE}/cases/${encodeURIComponent(caseId)}/nodes/top?${params.toString()}`
+  const response = await apiFetch(
+    `/cases/${encodeURIComponent(caseId)}/nodes/top?${params.toString()}`
   )
 
   if (!response.ok) {
@@ -56,8 +56,8 @@ export async function fetchTopNodes(caseId, { metric = 'betweenness', limit } = 
 // GET /cases/{case_id}/nodes/{node_id} — app/api/main.py:node_detail
 // Returns null when the backend reports 404 ("Node not found in case").
 export async function fetchNodeDetail(caseId, nodeId) {
-  const response = await fetch(
-    `${API_BASE}/cases/${encodeURIComponent(caseId)}/nodes/${encodeURIComponent(nodeId)}`
+  const response = await apiFetch(
+    `/cases/${encodeURIComponent(caseId)}/nodes/${encodeURIComponent(nodeId)}`
   )
 
   if (response.status === 404) return null
@@ -70,7 +70,7 @@ export async function fetchNodeDetail(caseId, nodeId) {
 
 // GET /cases/{case_id}/communities — app/api/main.py:communities
 export async function fetchCommunities(caseId) {
-  const response = await fetch(`${API_BASE}/cases/${encodeURIComponent(caseId)}/communities`)
+  const response = await apiFetch(`/cases/${encodeURIComponent(caseId)}/communities`)
 
   if (!response.ok) {
     throw new Error(`Failed to load communities (HTTP ${response.status})`)
@@ -82,8 +82,8 @@ export async function fetchCommunities(caseId) {
 // GET /cases/{case_id}/communities/{community_id} — app/api/main.py:community_detail
 // Returns null when the backend reports 404 ("Community not found in case").
 export async function fetchCommunityDetail(caseId, communityId) {
-  const response = await fetch(
-    `${API_BASE}/cases/${encodeURIComponent(caseId)}/communities/${encodeURIComponent(communityId)}`
+  const response = await apiFetch(
+    `/cases/${encodeURIComponent(caseId)}/communities/${encodeURIComponent(communityId)}`
   )
 
   if (response.status === 404) return null
@@ -99,7 +99,7 @@ export async function fetchCommunityDetail(caseId, communityId) {
 // case) comes back as a normal 200 with path_found: false.
 export async function fetchPath(caseId, fromNodeId, toNodeId) {
   const params = new URLSearchParams({ from_node_id: fromNodeId, to_node_id: toNodeId })
-  const response = await fetch(`${API_BASE}/cases/${encodeURIComponent(caseId)}/path?${params.toString()}`)
+  const response = await apiFetch(`/cases/${encodeURIComponent(caseId)}/path?${params.toString()}`)
 
   if (!response.ok) {
     throw new Error(`Failed to trace path (HTTP ${response.status})`)
@@ -113,7 +113,7 @@ export async function fetchPath(caseId, fromNodeId, toNodeId) {
 // CriticalityRank nodes"); top_k must be one of 3, 6, or 10.
 export async function fetchCriticality(caseId, topK = 6) {
   const params = new URLSearchParams({ top_k: String(topK) })
-  const response = await fetch(`${API_BASE}/cases/${encodeURIComponent(caseId)}/criticality?${params.toString()}`)
+  const response = await apiFetch(`/cases/${encodeURIComponent(caseId)}/criticality?${params.toString()}`)
 
   if (!response.ok) {
     throw new Error(`Failed to load criticality data (HTTP ${response.status})`)

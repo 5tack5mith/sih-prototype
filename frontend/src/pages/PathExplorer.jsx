@@ -5,7 +5,10 @@ import GraphViewport from '../components/overview/GraphViewport'
 import OverviewNetworkGraph from '../components/overview/OverviewNetworkGraph'
 import PathExplorerPanel from '../components/pathexplorer/PathExplorerPanel'
 import { fetchCaseOverview, fetchCaseGraph, fetchPath } from '../api/overviewApi'
+import { computeDegrees } from '../components/overview/graphLayout'
 import './Overview.css'
+
+const CUTOFF_VALUE = 0.75
 
 function PathExplorer({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
@@ -13,6 +16,13 @@ function PathExplorer({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [overview, setOverview] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [retryToken, setRetryToken] = useState(0)
+
+  // Subset filters — same semantics as Overview: bridgingOnly/cutoffEnabled
+  // re-fetch the graph against the API's real filter/cutoff params;
+  // isolatesVisible is a pure client-side render filter.
+  const [bridgingOnly, setBridgingOnly] = useState(false)
+  const [cutoffEnabled, setCutoffEnabled] = useState(false)
+  const [isolatesVisible, setIsolatesVisible] = useState(false)
 
   const [fromId, setFromId] = useState(null)
   const [toId, setToId] = useState(null)
@@ -36,7 +46,10 @@ function PathExplorer({ caseId, onBack, onNavigate, cases, onSelectCase }) {
       try {
         const [overviewResult, graphResult] = await Promise.all([
           fetchCaseOverview(caseId),
-          fetchCaseGraph(caseId),
+          fetchCaseGraph(caseId, {
+            filter: bridgingOnly ? 'bridging_only' : undefined,
+            cutoff: cutoffEnabled ? CUTOFF_VALUE : undefined,
+          }),
         ])
         if (cancelled) return
 
@@ -59,7 +72,16 @@ function PathExplorer({ caseId, onBack, onNavigate, cases, onSelectCase }) {
     return () => {
       cancelled = true
     }
-  }, [caseId, retryToken])
+    // bridgingOnly/cutoffEnabled intentionally re-trigger a fetch: they're
+    // real API query params, unlike isolatesVisible which is client-only.
+  }, [caseId, retryToken, bridgingOnly, cutoffEnabled])
+
+  const isolateCount = useMemo(() => {
+    const nodes = graph?.nodes ?? []
+    const edges = graph?.edges ?? []
+    const degrees = computeDegrees(nodes, edges)
+    return nodes.filter((n) => (degrees.get(String(n.node_id)) ?? 0) === 0).length
+  }, [graph])
 
   const personOptions = useMemo(() => {
     const nodes = graph?.nodes ?? []
@@ -138,6 +160,13 @@ function PathExplorer({ caseId, onBack, onNavigate, cases, onSelectCase }) {
         <Sidebar
           active="path-explorer"
           onNavigate={onNavigate}
+          isolatesVisible={isolatesVisible}
+          isolateCount={isolateCount}
+          onToggleIsolates={caseId ? () => setIsolatesVisible((v) => !v) : undefined}
+          bridgingOnly={bridgingOnly}
+          onToggleBridging={caseId ? () => setBridgingOnly((v) => !v) : undefined}
+          cutoffEnabled={cutoffEnabled}
+          onToggleCutoff={caseId ? () => setCutoffEnabled((v) => !v) : undefined}
           communityCount={communityCount}
           keyPlayerCount={keyPlayerCount}
           metrics={graph?.metrics}
@@ -160,6 +189,7 @@ function PathExplorer({ caseId, onBack, onNavigate, cases, onSelectCase }) {
             loadState={loadState}
             errorMessage={errorMessage}
             graph={graph}
+            showIsolates={isolatesVisible}
             registerControls={(api) => {
               controlsRef.current = api
             }}
