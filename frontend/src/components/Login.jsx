@@ -24,8 +24,8 @@ function Login({ onLogin }) {
     }
     setSubmitting(true)
     try {
-      const user = await login(analystId.trim(), passkey)
-      onLogin?.(user)
+      await login(analystId.trim(), passkey)
+      onLogin?.()
     } catch (err) {
       setErrorMessage(err.message || 'Login failed')
     } finally {

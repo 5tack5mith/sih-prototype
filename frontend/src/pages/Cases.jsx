@@ -138,7 +138,7 @@ function CaseCard({ caseItem, starred, onToggleStar, onOpen }) {
   )
 }
 
-function Cases({ onOpenCase, user, onLogout }) {
+function Cases({ onOpenCase }) {
   const [sort, setSort] = useState('last_activity')
   const [activeTab, setActiveTab] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -232,7 +232,7 @@ function Cases({ onOpenCase, user, onLogout }) {
 
   return (
     <div className="cases-page">
-      <AppHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} user={user} onLogout={onLogout} />
+      <AppHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
       <main className="cases-main">
         <div className="cases-toolbar">

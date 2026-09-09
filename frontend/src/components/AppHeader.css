@@ -127,14 +127,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 4px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-}
-
-.app-header__user:hover .app-header__user-name {
-  color: #f2ca50;
+  padding-left: 4px;
 }
 
 .app-header__user-text {

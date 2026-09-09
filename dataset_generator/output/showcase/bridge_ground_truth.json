@@ -1,9 +1,30 @@
 [
   {
-    "hub_case_id": "C-SHOWCASE-05",
-    "hub_account_id": "A-00157",
+    "hub_case_id": "C-SHOWCASE-04",
+    "hub_account_id": "A-00163",
+    "spoke_case_id": "C-SHOWCASE-03",
+    "spoke_account_id": "A-00106",
+    "edge_amount": 44949.21
+  },
+  {
+    "hub_case_id": "C-SHOWCASE-04",
+    "hub_account_id": "A-00163",
     "spoke_case_id": "C-SHOWCASE-02",
-    "spoke_account_id": "A-00038",
-    "edge_amount": 32596.8
+    "spoke_account_id": "A-00064",
+    "edge_amount": 46547.41
+  },
+  {
+    "hub_case_id": "C-SHOWCASE-04",
+    "hub_account_id": "A-00163",
+    "spoke_case_id": "C-SHOWCASE-01",
+    "spoke_account_id": "A-00014",
+    "edge_amount": 29428.25
+  },
+  {
+    "hub_case_id": "C-SHOWCASE-04",
+    "hub_account_id": "A-00163",
+    "spoke_case_id": "C-SHOWCASE-05",
+    "spoke_account_id": "A-00235",
+    "edge_amount": 31852.41
   }
 ]
