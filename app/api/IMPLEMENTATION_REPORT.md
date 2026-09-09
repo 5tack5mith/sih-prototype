@@ -18,7 +18,7 @@ The FastAPI application lives at `app.api.main:app`. It exposes all nine request
 
 JWT authentication is mandatory for every case and analysis endpoint. Tokens are verified against the current SQLite user record, so an account's database role is authoritative rather than a stale token claim. `AUTH_SECRET_KEY` has no fallback. The configured first admin is bootstrapped idempotently from the paired bootstrap environment variables.
 
-Assignments are SQLite-backed many-to-many records. Admins can list, assign, and unassign investigators; investigators can list and open only their assigned active cases. Inaccessible or archived cases return `404` to investigators. Admin lifecycle routes archive/restore cases and permanently purge archived cases only, dropping case GDS projections and case-scoped Neo4j data while preserving unrelated/background data. Compose persists SQLite data in the `auth_data` volume.
+Assignments are SQLite-backed many-to-many records. Admins can list, assign, and unassign investigators; investigators can list and open only their assigned active cases. Inaccessible or completed cases return `404` to investigators. Admin lifecycle routes mark cases important, mark them completed, restore them, and permanently purge completed cases only, dropping case GDS projections and case-scoped Neo4j data while preserving unrelated/background data. Compose persists SQLite data in the `auth_data` volume.
 
 ## Algorithm and schema additions
 

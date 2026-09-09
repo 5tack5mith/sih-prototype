@@ -2,7 +2,7 @@
 
 | Endpoint | Description | Request | Response model |
 |---|---|---|---|
-| `GET /cases` | Lists case metadata and scoped graph counts. | Query: `filter=active|archived|flagged`, `sort=last_activity|name` | `CaseSummary[]` |
+| `GET /cases` | Lists case metadata and scoped graph counts. | Query: `filter=active|completed|important`, `sort=last_activity|name` | `CaseSummary[]` |
 | `GET /cases/{case_id}/overview` | Returns persisted modularity and scoped graph/financial-flag counts. | Path: `case_id` | `CaseOverview` |
 | `GET /cases/{case_id}/nodes/top` | Ranks nodes by a persisted centrality score. | Query: `metric=betweenness|eigenvector|degree`, `limit=1..100` | `TopNodesResponse` |
 | `GET /cases/{case_id}/nodes/{node_id}` | Returns persisted scores, structural flags, and a one-hop ego graph. | Path: `case_id`, `node_id` | `NodeDetail` |
@@ -16,7 +16,7 @@
 
 ## Authentication and case access
 
-All endpoints require `Authorization: Bearer <access_token>` except `POST /login`. The first administrator is created at startup from `AUTH_BOOTSTRAP_ADMIN_USERNAME` and `AUTH_BOOTSTRAP_ADMIN_PASSWORD`; both variables must be set together. `AUTH_SECRET_KEY` is required. Administrators can register users, read every case (including archived cases), manage assignments, archive/restore, and purge. Investigators can read only active cases assigned to their own account. A missing, archived, or unassigned case is returned as `404` to investigators.
+All endpoints require `Authorization: Bearer <access_token>` except `POST /login`. The first administrator is created at startup from `AUTH_BOOTSTRAP_ADMIN_USERNAME` and `AUTH_BOOTSTRAP_ADMIN_PASSWORD`; both variables must be set together. `AUTH_SECRET_KEY` is required. Administrators can register users, read every case (including completed cases), manage assignments, complete/restore, and purge. Investigators can read only assigned `ACTIVE` or `IMPORTANT` cases. A missing, completed, or unassigned case is returned as `404` to investigators.
 
 | Endpoint | Access | Behavior |
 |---|---|---|
@@ -25,7 +25,9 @@ All endpoints require `Authorization: Bearer <access_token>` except `POST /login
 | `GET /cases/{case_id}/assignments` | Admin | List assigned investigators. |
 | `PUT /cases/{case_id}/assignments/{username}` | Admin | Idempotently assign an existing investigator to an active case. |
 | `DELETE /cases/{case_id}/assignments/{username}` | Admin | Remove an assignment. |
-| `POST /cases/{case_id}/archive`, `POST /cases/{case_id}/restore` | Admin | Change lifecycle status; archive retains assignments. |
-| `DELETE /cases/{case_id}` | Admin | Permanently purge an archived case only; active cases return `409`. |
+| `POST /cases/{case_id}/important` | Admin | Mark a non-completed case as `IMPORTANT`. |
+| `POST /cases/{case_id}/complete` | Admin | Complete a case by moving it to `COMPLETED`; assignments are retained. |
+| `POST /cases/{case_id}/restore` | Admin | Restore a completed case to `ACTIVE`. |
+| `DELETE /cases/{case_id}` | Admin | Permanently purge a completed case only; active cases return `409`. |
 
 Example: `curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/cases`. SQLite identity and assignment data persists in the Compose `auth_data` volume.
