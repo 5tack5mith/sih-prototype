@@ -1,5 +1,18 @@
+import json
+
+import httpx
+
 from app import schema_config as schema
-from app.case_summaries import build_case_summary_context
+from app.case_summaries import (
+    CASE_SUMMARY_SYSTEM_PROMPT,
+    build_case_summary_context,
+    case_summary_template,
+    community_summary_template,
+    generate_case_summary,
+    generate_case_summary_llm,
+    generate_community_summary,
+    generate_community_summary_llm,
+)
 
 
 def test_build_case_summary_context_uses_only_persisted_facts(fake_driver):
@@ -59,3 +72,91 @@ def test_summary_context_queries_are_parameterized_and_use_schema_constants(fake
     assert schema.cypher_identifier(schema.PROP_STRUCTURAL_ROLE) in query_text
     assert schema.cypher_identifier(schema.PROP_NUM_COMPONENTS_AFTER) in query_text
     assert schema.cypher_identifier(schema.PROP_FLAG_ID) in query_text
+
+
+SUMMARY_CONTEXT = {
+    "case_id": "CASE-A",
+    "node_count": 8,
+    "edge_count": 10,
+    "community_count": 2,
+    "top_key_players": [{
+        "name": "Person One", "id": "P1", "role": "broker",
+        "betweenness_score": 0.8, "degree_centrality": 4.0,
+    }],
+    "communities": [{
+        "community_id": "7", "size": 3, "role_composition": {"broker": 1, "member": 2},
+        "most_central_node": {"id": "P1", "name": "Person One"},
+    }],
+    "fragmentation_summary": {"removed_node_count": 2, "resulting_component_count": 3},
+}
+
+
+class StubResponse:
+    def __init__(self, payload, status_code=200):
+        self.payload = payload
+        self.status_code = status_code
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise httpx.HTTPStatusError("failure", request=None, response=None)
+
+    def json(self):
+        return self.payload
+
+
+def test_case_llm_receives_only_fixed_context_and_exact_prompt(monkeypatch):
+    captured = {}
+
+    def fake_post(url, **kwargs):
+        captured.update({"url": url, **kwargs})
+        return StubResponse({"output": [{"content": [{"type": "output_text", "text": "Verified summary."}]}]})
+
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setattr(httpx, "post", fake_post)
+
+    result = generate_case_summary(SUMMARY_CONTEXT)
+
+    assert result.text == "Verified summary."
+    assert result.source == "llm"
+    assert captured["timeout"] == 10.0
+    assert captured["json"]["model"] == "gpt-5.6-terra"
+    assert captured["json"]["input"][0]["content"] == CASE_SUMMARY_SYSTEM_PROMPT
+    user_message = captured["json"]["input"][1]["content"]
+    assert user_message.startswith("Summarize the following case data:")
+    assert json.loads(user_message.split("\n", 1)[1]) == SUMMARY_CONTEXT
+    assert "tools" not in captured["json"]
+
+
+def test_case_llm_failure_and_empty_response_use_template(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setattr(httpx, "post", lambda *_args, **_kwargs: (_ for _ in ()).throw(httpx.TimeoutException("slow")))
+    expected = case_summary_template(SUMMARY_CONTEXT)
+
+    assert generate_case_summary_llm(SUMMARY_CONTEXT) == expected
+    assert generate_case_summary(SUMMARY_CONTEXT).source == "template"
+
+    monkeypatch.setattr(httpx, "post", lambda *_args, **_kwargs: StubResponse({"output": []}))
+    assert generate_case_summary_llm(SUMMARY_CONTEXT) == expected
+
+
+def test_community_llm_uses_short_prompt_and_template_fallback(monkeypatch):
+    context = {"case_id": "CASE-A", **SUMMARY_CONTEXT["communities"][0]}
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+
+    text = generate_community_summary_llm(context)
+    result = generate_community_summary(context)
+
+    assert text == community_summary_template(context)
+    assert result.source == "template"
+    assert 40 <= len(text.split()) <= 60
+
+
+def test_templates_omit_missing_values():
+    context = {
+        "case_id": "CASE-MISSING", "node_count": 1, "edge_count": 0, "community_count": 0,
+        "top_key_players": [{"id": "P1", "role": "member"}],
+        "communities": [],
+        "fragmentation_summary": {"removed_node_count": 0},
+    }
+
+    assert "None" not in case_summary_template(context)

@@ -2,8 +2,13 @@
 from __future__ import annotations
 
 from collections import Counter
+from dataclasses import dataclass
+import json
+import os
 from contextlib import nullcontext
 from typing import Any
+
+import httpx
 
 from . import schema_config as schema
 from .database import managed_driver
@@ -204,3 +209,182 @@ def build_community_summary_context(
     if community is None:
         raise ValueError(f"community not found: {community_id}")
     return {"case_id": case_context["case_id"], **community}
+
+
+CASE_SUMMARY_SYSTEM_PROMPT = """You are a report-writing assistant for a criminal network analysis tool
+used by investigators. You will be given a JSON object containing
+already-verified structural facts about a criminal case, computed by
+graph algorithms (centrality, community detection, fragmentation
+simulation). Your ONLY job is to rewrite these facts into a clear,
+professional prose summary.
+
+Rules:
+- Use ONLY the facts provided in the JSON. Do not add any claim, name,
+  number, or relationship not present in the input.
+- Do not infer motive, guilt, criminal activity type, or intent.
+- Do not speculate about anything not explicitly in the data.
+- Do not use action-directive language (e.g. "arrest," "target,"
+  "investigate this person") — use structural/descriptive language only
+  (e.g. "occupies a broker role," "shows high betweenness centrality").
+- Refer to the fragmentation results as "structural criticality" findings,
+  not tactical recommendations.
+- Keep the summary to 150-250 words, in plain paragraphs, no headers.
+- If a field is missing or empty, simply omit it — do not guess or fill
+  gaps."""
+
+COMMUNITY_SUMMARY_SYSTEM_PROMPT = CASE_SUMMARY_SYSTEM_PROMPT.replace(
+    "Keep the summary to 150-250 words, in plain paragraphs, no headers.",
+    "Keep the summary to 40-60 words, in one plain paragraph, with no header.",
+)
+
+OPENAI_MODEL = "gpt-5.6-terra"
+OPENAI_TIMEOUT_SECONDS = 10.0
+
+
+@dataclass(frozen=True)
+class GeneratedSummary:
+    text: str
+    source: str
+
+
+def _display_node(node: dict[str, Any]) -> str:
+    node_id = str(node.get("id", ""))
+    name = node.get("name")
+    return f"{name} ({node_id})" if name else node_id
+
+
+def _role_counts_text(role_composition: dict[str, Any]) -> str:
+    return ", ".join(
+        f"{count} {role}{'' if count == 1 else 's'}"
+        for role, count in sorted(role_composition.items())
+    )
+
+
+def case_summary_template(context: dict[str, Any]) -> str:
+    """Deterministically restate only fields supplied in the fixed case context."""
+    paragraphs = [
+        f"Case {context['case_id']} contains {context.get('node_count', 0)} nodes and "
+        f"{context.get('edge_count', 0)} edges across {context.get('community_count', 0)} "
+        "precomputed communities."
+    ]
+    players = context.get("top_key_players", [])
+    if players:
+        descriptions = []
+        for player in players:
+            description = f"{_display_node(player)} is recorded as {player.get('role', 'member')}"
+            metrics = []
+            if player.get("betweenness_score") is not None:
+                metrics.append(f"betweenness {player['betweenness_score']}")
+            if player.get("degree_centrality") is not None:
+                metrics.append(f"degree centrality {player['degree_centrality']}")
+            if metrics:
+                description += " with " + " and ".join(metrics)
+            descriptions.append(description)
+        paragraphs.append("The highest stored betweenness entries are " + "; ".join(descriptions) + ".")
+    communities = context.get("communities", [])
+    if communities:
+        descriptions = []
+        for community in communities:
+            detail = (
+                f"community {community['community_id']} has {community['size']} nodes "
+                f"with {_role_counts_text(community.get('role_composition', {}))}"
+            )
+            central = community.get("most_central_node")
+            if central:
+                detail += f", and {_display_node(central)} has its highest stored betweenness"
+            descriptions.append(detail)
+        paragraphs.append("The persisted community results show " + "; ".join(descriptions) + ".")
+    fragmentation = context.get("fragmentation_summary")
+    if fragmentation:
+        details = []
+        if fragmentation.get("removed_node_count") is not None:
+            details.append(f"{fragmentation['removed_node_count']} precomputed removals")
+        if fragmentation.get("resulting_component_count") is not None:
+            details.append(f"a resulting component count of {fragmentation['resulting_component_count']}")
+        if details:
+            paragraphs.append("The structural criticality findings contain " + " and ".join(details) + ".")
+    findings = context.get("notable_structural_findings", [])
+    if findings:
+        descriptions = [
+            f"{item.get('type')} flag {item.get('flag_id')}"
+            for item in findings
+        ]
+        paragraphs.append("The stored structural flags are " + ", ".join(descriptions) + ".")
+    return "\n\n".join(paragraphs)
+
+
+def community_summary_template(context: dict[str, Any]) -> str:
+    """Return a 40-60 word deterministic description of one persisted community."""
+    central = context.get("most_central_node") or {}
+    central_text = _display_node(central) or "No named node"
+    roles = _role_counts_text(context.get("role_composition", {})) or "no stored role counts"
+    return (
+        f"Community {context['community_id']} in case {context['case_id']} contains "
+        f"{context.get('size', 0)} nodes. Its persisted structural-role composition is {roles}. "
+        f"{central_text} has the highest stored betweenness centrality within this community. "
+        "This summary describes verified structural measurements only and does not infer motive, "
+        "intent, or activity."
+    )
+
+
+def _extract_response_text(payload: Any) -> str:
+    if not isinstance(payload, dict):
+        raise ValueError("malformed LLM response")
+    direct = payload.get("output_text")
+    if isinstance(direct, str) and direct.strip():
+        return direct.strip()
+    for output in payload.get("output", []):
+        if not isinstance(output, dict):
+            continue
+        for content in output.get("content", []):
+            if isinstance(content, dict) and content.get("type") == "output_text":
+                value = content.get("text")
+                if isinstance(value, str) and value.strip():
+                    return value.strip()
+    raise ValueError("empty LLM response")
+
+
+def _request_summary(context: dict[str, Any], system_prompt: str, max_output_tokens: int) -> str:
+    api_key = os.environ["OPENAI_API_KEY"]
+    base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
+    response = httpx.post(
+        f"{base_url}/responses",
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        json={
+            "model": OPENAI_MODEL,
+            "input": [
+                {"role": "system", "content": system_prompt},
+                {
+                    "role": "user",
+                    "content": "Summarize the following case data:\n"
+                    + json.dumps(context, sort_keys=True, separators=(",", ":")),
+                },
+            ],
+            "max_output_tokens": max_output_tokens,
+        },
+        timeout=OPENAI_TIMEOUT_SECONDS,
+    )
+    response.raise_for_status()
+    return _extract_response_text(response.json())
+
+
+def generate_case_summary(context: dict[str, Any]) -> GeneratedSummary:
+    try:
+        return GeneratedSummary(_request_summary(context, CASE_SUMMARY_SYSTEM_PROMPT, 400), "llm")
+    except Exception:
+        return GeneratedSummary(case_summary_template(context), "template")
+
+
+def generate_case_summary_llm(context: dict[str, Any]) -> str:
+    return generate_case_summary(context).text
+
+
+def generate_community_summary(context: dict[str, Any]) -> GeneratedSummary:
+    try:
+        return GeneratedSummary(_request_summary(context, COMMUNITY_SUMMARY_SYSTEM_PROMPT, 150), "llm")
+    except Exception:
+        return GeneratedSummary(community_summary_template(context), "template")
+
+
+def generate_community_summary_llm(context: dict[str, Any]) -> str:
+    return generate_community_summary(context).text
