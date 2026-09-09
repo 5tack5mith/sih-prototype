@@ -28,6 +28,6 @@ def require_case_access(
         raise HTTPException(status_code=404, detail="Case not found")
     if user["role"] == "admin":
         return case
-    if (case.get("status") or "").upper() == "ARCHIVED" or not has_assignment(case_id, user["username"]):
+    if (case.get("status") or "").upper() == "COMPLETED" or not has_assignment(case_id, user["username"]):
         raise HTTPException(status_code=404, detail="Case not found")
     return case

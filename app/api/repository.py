@@ -33,7 +33,13 @@ class Neo4jRepository:
     def __init__(self, driver: Any) -> None:
         self.driver = driver
 
-    def list_cases(self, case_filter: str | None, sort: str, allowed_case_ids: list[str] | None = None) -> list[dict[str, Any]]:
+    def list_cases(
+        self,
+        case_filter: str | None,
+        sort: str,
+        allowed_case_ids: list[str] | None = None,
+        allowed_statuses: list[str] | None = None,
+    ) -> list[dict[str, Any]]:
         case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
         case_id = schema.cypher_identifier(schema.PROP_NODE_ID)
         node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
@@ -46,18 +52,12 @@ class Neo4jRepository:
         jurisdiction = schema.cypher_identifier(schema.PROP_CASE_JURISDICTION_TAG)
         case_link = schema.cypher_identifier(schema.REL_CASE_LINK)
         structural = schema.relationship_type_union(schema.STRUCTURAL_REL_TYPES)
-        circular = schema.cypher_identifier(schema.NODE_LABEL_CIRCULAR_FLOW_FLAG)
-        structuring = schema.cypher_identifier(schema.NODE_LABEL_STRUCTURING_FLAG)
         labels = schema.entity_label_predicate("entity")
         query = f"""
         MATCH (case:{case_label})
         WHERE ($allowed_case_ids IS NULL OR case.{case_id} IN $allowed_case_ids)
-          AND ($case_filter IS NULL
-           OR ($case_filter IN ['active', 'archived'] AND toLower(case.{status}) = $case_filter)
-           OR ($case_filter = 'flagged' AND EXISTS {{
-                MATCH (flag) WHERE (flag:{circular} OR flag:{structuring})
-                  AND flag.{case_prop} = case.{case_id}
-           }}))
+          AND ($allowed_statuses IS NULL OR toLower(case.{status}) IN $allowed_statuses)
+          AND ($case_filter IS NULL OR toLower(case.{status}) = $case_filter)
         CALL (case) {{
           OPTIONAL MATCH (entity) WHERE {labels} AND
             (entity.{case_prop} = case.{case_id} OR (entity)-[:{case_link}]->(case))
@@ -79,7 +79,8 @@ class Neo4jRepository:
         """
         with self.driver.session() as session:
             rows = [_as_dict(row) for row in session.run(
-                query, case_filter=case_filter, sort=sort, allowed_case_ids=allowed_case_ids
+                query, case_filter=case_filter, sort=sort,
+                allowed_case_ids=allowed_case_ids, allowed_statuses=allowed_statuses
             )]
         for row in rows:
             row["updated_at"] = _serialized(row.get("updated_at"))
@@ -108,13 +109,13 @@ class Neo4jRepository:
         with self.driver.session() as session:
             return _as_dict(session.run(query, case_id=requested_case_id, status=new_status).single())
 
-    def purge_archived_case(self, requested_case_id: str) -> bool:
-        """Delete one archived case and its scoped data without touching other cases."""
+    def purge_completed_case(self, requested_case_id: str) -> bool:
+        """Delete one completed case and its scoped data without touching other cases."""
         case = self.get_case(requested_case_id)
         if case is None:
             return False
-        if (case.get("status") or "").upper() != "ARCHIVED":
-            raise ValueError("case must be archived before purging")
+        if (case.get("status") or "").upper() != "COMPLETED":
+            raise ValueError("case must be completed before purging")
         case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
         node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
         case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
