@@ -124,11 +124,21 @@ function Communities({ caseId, onBack, onNavigate, cases, onSelectCase }) {
     if (nodeId) onNavigate?.('key-players', { selectedNodeId: nodeId })
   }
 
-  const selectedSummary = communities.find((c) => c.community_id === selectedId) || null
+  const rankedCommunities = useMemo(
+    () =>
+      communities.map((community, index) => ({
+        ...community,
+        displayRank: index + 1,
+        label: `Cluster ${index + 1}`,
+      })),
+    [communities]
+  )
+
+  const selectedSummary = rankedCommunities.find((c) => c.community_id === selectedId) || null
 
   // Sidebar badge counts, derived from data this page already loaded — no
   // extra requests just to populate the nav.
-  const communityCount = loadState === 'ready' ? communities.length : undefined
+  const communityCount = loadState === 'ready' ? rankedCommunities.length : undefined
   const keyPlayerCount = graph ? Math.min(10, graph.nodes.length) : undefined
 
   return (
@@ -180,9 +190,10 @@ function Communities({ caseId, onBack, onNavigate, cases, onSelectCase }) {
           />
         </GraphViewport>
         <CommunitiesPanel
+          caseId={caseId}
           loadState={loadState}
           errorMessage={errorMessage}
-          communities={communities}
+          communities={rankedCommunities}
           modularity={modularity}
           selectedId={selectedId}
           detail={detail}

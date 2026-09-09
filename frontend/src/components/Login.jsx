@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { login } from '../api/client'
 import logoMark from '../assets/login/logo-mark.svg'
 import statusShield from '../assets/login/status-shield.svg'
 import eyeToggle from '../assets/login/eye-toggle.svg'
@@ -10,10 +11,26 @@ function Login({ onLogin }) {
   const [passkey, setPasskey] = useState('')
   const [showPasskey, setShowPasskey] = useState(false)
   const [acknowledged, setAcknowledged] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    onLogin?.()
+    if (submitting) return
+    setErrorMessage(null)
+    if (!analystId.trim() || !passkey) {
+      setErrorMessage('Analyst ID and passkey are required.')
+      return
+    }
+    setSubmitting(true)
+    try {
+      await login(analystId.trim(), passkey)
+      onLogin?.()
+    } catch (err) {
+      setErrorMessage(err.message || 'Login failed')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -115,8 +132,9 @@ function Login({ onLogin }) {
             </label>
 
             <div className="login-actions">
-              <button type="submit" className="login-submit">
-                SIGN IN TO ENCLAVE
+              {errorMessage && <p className="login-error">{errorMessage}</p>}
+              <button type="submit" className="login-submit" disabled={submitting}>
+                {submitting ? 'AUTHENTICATING…' : 'SIGN IN TO ENCLAVE'}
                 <img className="login-submit__icon" src={arrowRight} alt="" />
               </button>
               <div className="login-actions__links">

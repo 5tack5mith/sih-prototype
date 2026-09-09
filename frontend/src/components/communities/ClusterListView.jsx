@@ -17,7 +17,8 @@ function ClusterListView({ communities, modularity, onSelect }) {
           <span className="cl-list__tag">{communities.length} TOTAL</span>
         </div>
         <p className="cl-list__subtitle">
-          {totalMembers} entities partitioned across {communities.length} detected communities
+          {totalMembers} entities in {communities.length} groups, numbered largest to smallest.
+          Matching colors are the same group.
         </p>
       </div>
 

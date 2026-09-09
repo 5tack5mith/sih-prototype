@@ -3,12 +3,73 @@
   display: flex;
   flex-direction: column;
   background: #07090e;
+  overflow: hidden;
 }
 
 .overview-page__body {
   flex: 1;
   min-height: 0;
+  min-width: 0;
   display: flex;
   margin-top: 56px;
-  overflow-x: auto;
+  overflow-x: hidden;
+}
+
+.overview-page .ov-sidebar__version,
+.overview-page .ov-sidebar__section:has(.ov-metrics-grid),
+.overview-page .ov-sidebar__section:has(.ov-sidebar__legend) {
+  display: none;
+}
+
+.overview-page .ov-sidebar {
+  width: 248px;
+  flex-shrink: 0;
+}
+
+.overview-page .ov-graph {
+  flex: 1 1 0;
+  min-width: 280px;
+}
+
+.overview-page .ov-panel,
+.overview-page .kp-panel,
+.overview-page .cp-panel,
+.overview-page .pep-panel,
+.overview-page .crit-panel {
+  width: 380px;
+  min-width: 300px;
+  max-width: 420px;
+  flex: 0 1 380px;
+}
+
+@media (max-width: 1280px) {
+  .overview-page .ov-sidebar {
+    width: 232px;
+  }
+
+  .overview-page .ov-panel,
+  .overview-page .kp-panel,
+  .overview-page .cp-panel,
+  .overview-page .pep-panel,
+  .overview-page .crit-panel {
+    width: 340px;
+    min-width: 280px;
+    flex-basis: 340px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .overview-page .ov-sidebar {
+    width: 220px;
+  }
+
+  .overview-page .ov-panel,
+  .overview-page .kp-panel,
+  .overview-page .cp-panel,
+  .overview-page .pep-panel,
+  .overview-page .crit-panel {
+    width: 300px;
+    min-width: 260px;
+    flex-basis: 300px;
+  }
 }

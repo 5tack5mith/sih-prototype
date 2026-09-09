@@ -7,6 +7,7 @@ import CriticalityToolbar from '../components/criticality/CriticalityToolbar'
 import CriticalityPanel from '../components/criticality/CriticalityPanel'
 import { fetchCaseOverview, fetchCaseGraph, fetchCriticality } from '../api/overviewApi'
 import './Overview.css'
+import './StructuralCriticality.css'
 
 function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
@@ -114,7 +115,7 @@ function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase
   const topEntity = criticality?.ranked_removals?.[0]
 
   return (
-    <div className="overview-page">
+    <div className="overview-page crit-page">
       <CaseHeader
         onBack={onBack}
         caseLabel={caseId || 'No case selected'}
@@ -167,6 +168,7 @@ function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase
           />
         </GraphViewport>
         <CriticalityPanel
+          caseId={caseId}
           loadState={loadState}
           errorMessage={errorMessage}
           topK={topK}

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import AppHeader from '../components/AppHeader'
+import CreateCaseModal from '../components/CreateCaseModal'
 import { fetchCases } from '../api/casesApi'
 import gridViewIcon from '../assets/cases/grid-view.svg'
 import listViewIcon from '../assets/cases/list-view.svg'
@@ -18,8 +19,8 @@ const TOPOLOGIES = [topology1, topology2, topology3, topology4, topology5, topol
 const TABS = [
   { key: 'all', label: 'All Cases' },
   { key: 'active', label: 'Active' },
-  { key: 'archived', label: 'Archived' },
-  { key: 'flagged', label: 'Flagged Focus' },
+  { key: 'archived', label: 'Completed' },
+  { key: 'flagged', label: 'Important' },
 ]
 
 function formatRelativeTime(iso) {
@@ -55,11 +56,10 @@ function mapCaseToCard(apiCase, index) {
     edges: String(apiCase.edge_count ?? 0),
     updated: formatRelativeTime(apiCase.updated_at),
     lead: apiCase.lead_analyst || 'UNASSIGNED',
-    jurisdiction: apiCase.jurisdiction_tag || 'UNSPECIFIED',
   }
 }
 
-function CaseCard({ caseItem, onOpen }) {
+function CaseCard({ caseItem, starred, onToggleStar, onOpen }) {
   return (
     <article
       className={`case-card${caseItem.archived ? ' case-card--archived' : ''}`}
@@ -73,6 +73,26 @@ function CaseCard({ caseItem, onOpen }) {
         }
       }}
     >
+      <button
+        type="button"
+        className={`case-card__star${starred ? ' case-card__star--on' : ''}`}
+        aria-label={starred ? 'Unstar case' : 'Star case'}
+        aria-pressed={starred}
+        onClick={(event) => {
+          event.stopPropagation()
+          onToggleStar?.()
+        }}
+        onKeyDown={(event) => event.stopPropagation()}
+      >
+        <svg viewBox="0 0 12 12" aria-hidden="true">
+          <path
+            d="M6 1.15 7.38 3.95l3.1.45-2.24 2.18.53 3.08L6 8.2l-2.77 1.46.53-3.08L1.52 4.4l3.1-.45L6 1.15z"
+            fill={starred ? 'currentColor' : 'none'}
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+        </svg>
+      </button>
       <div className="case-card__body">
         <div className="case-card__top">
           <div className="case-card__heading">
@@ -112,7 +132,6 @@ function CaseCard({ caseItem, onOpen }) {
         </div>
         <div className="case-card__meta">
           <span>LEAD: {caseItem.lead}</span>
-          <span>JURISDICTION: {caseItem.jurisdiction}</span>
         </div>
       </div>
     </article>
@@ -123,11 +142,15 @@ function Cases({ onOpenCase }) {
   const [sort, setSort] = useState('last_activity')
   const [activeTab, setActiveTab] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
-  const [allCases, setAllCases] = useState([])
-  const [flaggedCases, setFlaggedCases] = useState([])
+  const [fetchedCases, setFetchedCases] = useState([])
+  const [createdCases, setCreatedCases] = useState([])
   const [loadState, setLoadState] = useState('loading') // 'loading' | 'ready' | 'error'
   const [errorMessage, setErrorMessage] = useState(null)
   const [retryToken, setRetryToken] = useState(0)
+  const [viewMode, setViewMode] = useState('grid')
+  const [starredIds, setStarredIds] = useState(() => new Set())
+  const [createOpen, setCreateOpen] = useState(false)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
     let cancelled = false
@@ -136,13 +159,9 @@ function Cases({ onOpenCase }) {
       setLoadState('loading')
       setErrorMessage(null)
       try {
-        const [all, flagged] = await Promise.all([
-          fetchCases({ sort }),
-          fetchCases({ sort, filter: 'flagged' }),
-        ])
+        const all = await fetchCases({ sort })
         if (cancelled) return
-        setAllCases(all)
-        setFlaggedCases(flagged)
+        setFetchedCases(all)
         setLoadState('ready')
       } catch (err) {
         if (cancelled) return
@@ -157,6 +176,22 @@ function Cases({ onOpenCase }) {
     }
   }, [sort, retryToken])
 
+  useEffect(() => {
+    if (!successMessage) return undefined
+    const timeoutId = window.setTimeout(() => setSuccessMessage(null), 4000)
+    return () => window.clearTimeout(timeoutId)
+  }, [successMessage])
+
+  const allCases = useMemo(() => {
+    const remoteIds = new Set(fetchedCases.map((c) => c.case_id))
+    const local = createdCases.filter((c) => !remoteIds.has(c.case_id))
+    const merged = [...local, ...fetchedCases]
+    if (sort !== 'name') return merged
+    return [...merged].sort((a, b) =>
+      (a.name || a.case_id).localeCompare(b.name || b.case_id, undefined, { sensitivity: 'base' })
+    )
+  }, [fetchedCases, createdCases, sort])
+
   const activeCases = useMemo(
     () => allCases.filter((c) => (c.status || '').toLowerCase() !== 'archived'),
     [allCases]
@@ -165,11 +200,15 @@ function Cases({ onOpenCase }) {
     () => allCases.filter((c) => (c.status || '').toLowerCase() === 'archived'),
     [allCases]
   )
+  const importantCases = useMemo(
+    () => allCases.filter((c) => starredIds.has(c.case_id)),
+    [allCases, starredIds]
+  )
 
   const total = allCases.length
   const activeCount = activeCases.length
   const archivedCount = archivedCases.length
-  const flaggedCount = flaggedCases.length
+  const flaggedCount = importantCases.length
 
   const tabCases =
     activeTab === 'active'
@@ -177,7 +216,7 @@ function Cases({ onOpenCase }) {
       : activeTab === 'archived'
         ? archivedCases
         : activeTab === 'flagged'
-          ? flaggedCases
+          ? importantCases
           : allCases
 
   const trimmedQuery = searchQuery.trim().toLowerCase()
@@ -203,28 +242,34 @@ function Cases({ onOpenCase }) {
               <span className="cases-heading__badge">
                 [ {total} TOTAL // {activeCount} ACTIVE ]
               </span>
-              <span className="cases-heading__repo">
-                <span className="cases-heading__dot" />
-                INDEXED REPOSITORY
-              </span>
             </div>
           </div>
           <div className="cases-toolbar__right">
             <div className="cases-view-switch">
-              <button type="button" className="cases-view-switch__btn cases-view-switch__btn--active">
+              <button
+                type="button"
+                className={`cases-view-switch__btn${viewMode === 'grid' ? ' cases-view-switch__btn--active' : ''}`}
+                onClick={() => setViewMode('grid')}
+              >
                 <img src={gridViewIcon} alt="Grid view" />
               </button>
-              <button type="button" className="cases-view-switch__btn">
+              <button
+                type="button"
+                className={`cases-view-switch__btn${viewMode === 'list' ? ' cases-view-switch__btn--active' : ''}`}
+                onClick={() => setViewMode('list')}
+              >
                 <img src={listViewIcon} alt="List view" />
               </button>
             </div>
             <div className="cases-toolbar__divider" />
-            <button type="button" className="cases-new-btn">
+            <button type="button" className="cases-new-btn" onClick={() => setCreateOpen(true)}>
               <img src={plusIcon} alt="" />
               New Case
             </button>
           </div>
         </div>
+
+        {successMessage && <p className="cases-create-success">{successMessage}</p>}
 
         <div className="cases-filters">
           <div className="cases-filters__left">
@@ -275,10 +320,25 @@ function Cases({ onOpenCase }) {
         ) : displayedCases.length === 0 ? (
           <div className="cases-state">NO CASES FOUND</div>
         ) : (
-          <div className="cases-grid">
+          <div className={`cases-grid${viewMode === 'list' ? ' cases-grid--list' : ''}`}>
             {displayedCases.map((apiCase, index) => {
               const caseItem = mapCaseToCard(apiCase, index)
-              return <CaseCard key={caseItem.id} caseItem={caseItem} onOpen={() => onOpenCase?.(caseItem)} />
+              return (
+                <CaseCard
+                  key={caseItem.id}
+                  caseItem={caseItem}
+                  starred={starredIds.has(caseItem.id)}
+                  onToggleStar={() => {
+                    setStarredIds((prev) => {
+                      const next = new Set(prev)
+                      if (next.has(caseItem.id)) next.delete(caseItem.id)
+                      else next.add(caseItem.id)
+                      return next
+                    })
+                  }}
+                  onOpen={() => onOpenCase?.(caseItem)}
+                />
+              )
             })}
           </div>
         )}
@@ -300,6 +360,19 @@ function Cases({ onOpenCase }) {
           </div>
         </div>
       </main>
+
+      {createOpen && (
+        <CreateCaseModal
+          existingCaseIds={allCases.map((c) => c.case_id)}
+          onClose={() => setCreateOpen(false)}
+          onCreate={(created) => {
+            setCreatedCases((prev) => [created, ...prev])
+            setCreateOpen(false)
+            setSuccessMessage('Case created successfully.')
+            if (activeTab === 'archived' || activeTab === 'flagged') setActiveTab('all')
+          }}
+        />
+      )}
     </div>
   )
 }

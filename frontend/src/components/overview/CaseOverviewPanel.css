@@ -1,8 +1,11 @@
 .ov-panel {
-  width: 360px;
-  flex-shrink: 0;
+  width: 380px;
+  min-width: 260px;
+  max-width: 420px;
+  flex: 0 1 380px;
   display: flex;
   flex-direction: column;
+  min-height: 0;
   background: #0e131d;
   border-left: 1px solid rgba(255, 255, 255, 0.08);
   font-family: 'IBM Plex Mono', monospace;
@@ -70,7 +73,7 @@
 }
 
 .ov-panel__header {
-  padding: 12px 12px 13px;
+  padding: 16px 16px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -84,8 +87,9 @@
 .ov-panel__title {
   margin: 0;
   font-weight: 700;
-  font-size: 16px;
-  letter-spacing: -0.35px;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  line-height: 20px;
   color: #f8fafc;
 }
 
@@ -112,24 +116,25 @@
 }
 
 .ov-panel__docket {
-  margin: 4px 0 0;
+  margin: 6px 0 0;
   font-size: 12px;
-  color: #94a3b8;
+  line-height: 16px;
+  color: #8d9aab;
 }
 
 .ov-panel__stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  padding: 12px;
+  padding: 14px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .ov-stat-card {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 11px;
+  gap: 4px;
+  padding: 12px;
   background: #111722;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 4px;
@@ -153,7 +158,8 @@
 
 .ov-stat-card__value {
   font-weight: 700;
-  font-size: 22px;
+  font-size: 20px;
+  line-height: 24px;
   color: #f8fafc;
 }
 
@@ -172,11 +178,11 @@
 
 .ov-panel__players,
 .ov-panel__activity {
-  padding: 12px;
+  padding: 14px 16px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .ov-panel__section-row {
@@ -187,7 +193,7 @@
 
 .ov-panel__section-title {
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: #94a3b8;
@@ -209,14 +215,14 @@
 .ov-panel__players-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .ov-player {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 9px;
+  gap: 6px;
+  padding: 10px;
   background: #121824;
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 4px;
@@ -249,8 +255,9 @@
 }
 
 .ov-player__name-text {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
+  line-height: 18px;
   color: #cbd5e1;
   white-space: nowrap;
   overflow: hidden;
@@ -305,6 +312,7 @@
   font-size: 12px;
   color: #cbd5e1;
   flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .ov-panel__utc {
@@ -343,7 +351,7 @@
 .ov-panel__event-text {
   margin: 2px 0 0;
   font-size: 13px;
-  line-height: 15px;
+  line-height: 18px;
   color: #94a3b8;
 }
 
@@ -361,7 +369,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 13px 12px 12px;
+  padding: 12px 16px 14px;
   background: #090d14;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -376,8 +384,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 7px 11px;
+  gap: 8px;
+  min-height: 40px;
+  padding: 10px 12px;
   border-radius: 4px;
   font-weight: 600;
   font-size: 13px;
@@ -398,6 +407,11 @@
   line-height: 16px;
 }
 
+.ov-panel__btn--ghost:hover {
+  background: #18202a;
+  color: #f8fafc;
+}
+
 .ov-panel__btn--danger {
   background: rgba(76, 5, 25, 0.2);
   border: 1px solid rgba(136, 19, 55, 0.3);
@@ -409,7 +423,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 8px 12px;
+  min-height: 40px;
+  padding: 10px 12px;
   background: #d4af37;
   border: none;
   border-radius: 4px;
