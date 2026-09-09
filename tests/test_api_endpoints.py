@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 
 from app.api.dependencies import get_repository
 from app.api.main import app
+from app.auth import get_current_user
 
 
 class StubRepository:
@@ -29,6 +30,7 @@ class StubRepository:
 
 def client():
     app.dependency_overrides[get_repository] = lambda: StubRepository()
+    app.dependency_overrides[get_current_user] = lambda: {"username": "test", "role": "admin"}
     return TestClient(app)
 
 

@@ -6,6 +6,7 @@ htmlcov/
 .venv/
 venv/
 .env
+app/auth/users.db
 *.egg-info/
 
 # generated synthetic datasets (regenerate with synthetic_dataset/generator)

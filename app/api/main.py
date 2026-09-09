@@ -1,20 +1,33 @@
+from contextlib import asynccontextmanager
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException, Query
 
 from .. import schema_config as schema
+from ..auth import router as auth_router, get_current_user, init_db
 from .dependencies import get_repository
 from .models import CaseFilter, CaseGraph, CaseOverview, CriticalityResponse, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, SuggestedLink, TopNodesResponse
 from .narratives import community_narrative, criticality_narrative, path_narrative
 from .repository import Neo4jRepository
 
-app = FastAPI(title="Criminal Network Analysis API", version="1.0.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
+
+
+app = FastAPI(title="Criminal Network Analysis API", version="1.0.0", lifespan=lifespan)
 Repository = Annotated[Neo4jRepository, Depends(get_repository)]
+CurrentUser = Annotated[dict, Depends(get_current_user)]
+
+app.include_router(auth_router)
 
 
 @app.get("/cases", response_model=list[CaseSummary])
 def list_cases(
     repository: Repository,
+    user: CurrentUser,
     filter: Annotated[CaseFilter | None, Query()] = None,
     sort: Annotated[CaseSort, Query()] = "last_activity",
 ) -> list[dict]:
@@ -23,7 +36,7 @@ def list_cases(
 
 
 @app.get("/cases/{case_id}/overview", response_model=CaseOverview)
-def case_overview(case_id: str, repository: Repository) -> dict:
+def case_overview(case_id: str, repository: Repository, user: CurrentUser) -> dict:
     """Read persisted Louvain modularity plus scoped counts and Section 6 flags."""
     result = repository.get_case_overview(case_id)
     if result is None:
@@ -40,7 +53,7 @@ METRIC_PROPERTIES = {
 
 @app.get("/cases/{case_id}/nodes/top", response_model=TopNodesResponse)
 def top_nodes(
-    case_id: str, repository: Repository,
+    case_id: str, repository: Repository, user: CurrentUser,
     metric: Annotated[MetricName, Query()] = "betweenness",
     limit: Annotated[int, Query(ge=1, le=100)] = 10,
 ) -> dict:
@@ -51,7 +64,7 @@ def top_nodes(
 
 
 @app.get("/cases/{case_id}/nodes/{node_id}", response_model=NodeDetail)
-def node_detail(case_id: str, node_id: str, repository: Repository) -> dict:
+def node_detail(case_id: str, node_id: str, repository: Repository, user: CurrentUser) -> dict:
     """Read persisted node scores/role and direct structural neighbors; subtype/date are null-safe."""
     result = repository.get_node_detail(case_id, node_id)
     if result is None:
@@ -61,7 +74,7 @@ def node_detail(case_id: str, node_id: str, repository: Repository) -> dict:
 
 @app.get("/cases/{case_id}/graph", response_model=CaseGraph)
 def case_graph(
-    case_id: str, repository: Repository,
+    case_id: str, repository: Repository, user: CurrentUser,
     filter: Annotated[GraphFilter | None, Query()] = None,
     cutoff: Annotated[float | None, Query(ge=0.0)] = None,
 ) -> dict:
@@ -70,13 +83,13 @@ def case_graph(
 
 
 @app.get("/cases/{case_id}/communities", response_model=list[CommunitySummary])
-def communities(case_id: str, repository: Repository) -> list[dict]:
+def communities(case_id: str, repository: Repository, user: CurrentUser) -> list[dict]:
     """Read Louvain membership and persisted community densities; labels are generic."""
     return repository.get_communities(case_id)
 
 
 @app.get("/cases/{case_id}/communities/{community_id}", response_model=CommunityDetail)
-def community_detail(case_id: str, community_id: str, repository: Repository) -> dict:
+def community_detail(case_id: str, community_id: str, repository: Repository, user: CurrentUser) -> dict:
     """Read persisted community metrics/members and add a traceable template narrative."""
     result = repository.get_community_detail(case_id, community_id)
     if result is None:
@@ -88,7 +101,7 @@ def community_detail(case_id: str, community_id: str, repository: Repository) ->
 
 @app.get("/cases/{case_id}/path", response_model=PathResponse)
 def path(
-    case_id: str, repository: Repository,
+    case_id: str, repository: Repository, user: CurrentUser,
     from_node_id: Annotated[str, Query(min_length=1)],
     to_node_id: Annotated[str, Query(min_length=1)],
 ) -> dict:
@@ -101,7 +114,7 @@ def path(
 
 @app.get("/cases/{case_id}/criticality", response_model=CriticalityResponse)
 def criticality(
-    case_id: str, repository: Repository,
+    case_id: str, repository: Repository, user: CurrentUser,
     top_k: Annotated[int, Query()] = 6,
 ) -> dict:
     """Slice precomputed CriticalityRank nodes; this endpoint never runs simulation."""
@@ -115,6 +128,6 @@ def criticality(
 
 
 @app.get("/cases/{case_id}/nodes/{node_id}/suggested_links", response_model=list[SuggestedLink])
-def suggested_links(case_id: str, node_id: str, repository: Repository) -> list[dict]:
+def suggested_links(case_id: str, node_id: str, repository: Repository, user: CurrentUser) -> list[dict]:
     """Read persisted Jaccard SIMILAR_TO candidates; results are suggestions, not facts."""
     return repository.get_suggested_links(case_id, node_id)
