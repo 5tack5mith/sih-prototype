@@ -31,6 +31,23 @@ class CaseOverview(BaseModel):
     direct_1hop_count: int
 
 
+SummarySource = Literal["llm", "template"]
+
+
+class GeneratedCaseSummary(BaseModel):
+    case_id: str
+    summary_text: str
+    source: SummarySource
+    generated_at: str
+
+
+class GeneratedCommunitySummary(BaseModel):
+    community_id: str
+    summary_text: str
+    source: SummarySource
+    generated_at: str
+
+
 class RankedNode(BaseModel):
     node_id: str
     name: str | None = None

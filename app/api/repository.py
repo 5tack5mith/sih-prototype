@@ -557,3 +557,72 @@ class Neo4jRepository:
             return [_as_dict(row) for row in session.run(
                 query, case_id=requested_case_id, node_id=requested_node_id
             )]
+
+
+    def get_case_summary(self, requested_case_id: str) -> dict[str, Any] | None:
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        summary_text = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_TEXT)
+        source = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_SOURCE)
+        generated = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_GENERATED_AT)
+        query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})
+        WHERE case.{summary_text} IS NOT NULL
+        RETURN case.{node_id} AS case_id, case.{summary_text} AS summary_text,
+               case.{source} AS source, case.{generated} AS generated_at
+        """
+        with self.driver.session() as session:
+            result = _as_dict(session.run(query, case_id=requested_case_id).single())
+        if result is not None:
+            result["generated_at"] = _serialized(result.get("generated_at"))
+        return result
+
+    def get_community_summary(
+        self, requested_case_id: str, requested_community_id: str
+    ) -> dict[str, Any] | None:
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        summary_label = schema.cypher_identifier(schema.NODE_LABEL_COMMUNITY_SUMMARY)
+        summary_link = schema.cypher_identifier(schema.REL_HAS_COMMUNITY_SUMMARY)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+        summary_text = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_TEXT)
+        source = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_SOURCE)
+        generated = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_GENERATED_AT)
+        query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})-[:{summary_link}]->
+              (summary:{summary_label})
+        WHERE toString(summary.{community}) = $community_id
+        RETURN toString(summary.{community}) AS community_id,
+               summary.{summary_text} AS summary_text, summary.{source} AS source,
+               summary.{generated} AS generated_at
+        """
+        with self.driver.session() as session:
+            result = _as_dict(session.run(
+                query, case_id=requested_case_id, community_id=requested_community_id
+            ).single())
+        if result is not None:
+            result["generated_at"] = _serialized(result.get("generated_at"))
+        return result
+
+    def get_community_summaries(self, requested_case_id: str) -> list[dict[str, Any]]:
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        summary_label = schema.cypher_identifier(schema.NODE_LABEL_COMMUNITY_SUMMARY)
+        summary_link = schema.cypher_identifier(schema.REL_HAS_COMMUNITY_SUMMARY)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        community = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+        summary_text = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_TEXT)
+        source = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_SOURCE)
+        generated = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_GENERATED_AT)
+        query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})-[:{summary_link}]->
+              (summary:{summary_label})
+        RETURN toString(summary.{community}) AS community_id,
+               summary.{summary_text} AS summary_text, summary.{source} AS source,
+               summary.{generated} AS generated_at
+        ORDER BY community_id
+        """
+        with self.driver.session() as session:
+            rows = [_as_dict(row) for row in session.run(query, case_id=requested_case_id)]
+        for row in rows:
+            row["generated_at"] = _serialized(row.get("generated_at"))
+        return rows

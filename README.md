@@ -17,6 +17,12 @@ AUTH_BOOTSTRAP_ADMIN_USERNAME=admin
 AUTH_BOOTSTRAP_ADMIN_PASSWORD=a-strong-admin-password
 ```
 
+To enable LLM-generated summaries, also set the API key. If it is omitted, the same batch step stores deterministic template summaries.
+
+```env
+OPENAI_API_KEY=your-openai-api-key
+```
+
 2. Build and start Neo4j and the API.
 
 ```bash
@@ -26,7 +32,7 @@ docker compose up --build -d
 3. Load a dataset and generate the analytical graph and derived results.
 
 ```bash
-docker compose --profile dataset run --rm ingest-dataset
+docker compose --profile dataset run --rm --volume ./dataset_generator/output/showcase:/app/dataset_generator/output:ro ingest-dataset
 docker compose --profile dataset run --rm project-person-graph
 docker compose --profile analysis run --rm validate-scoping
 docker compose --profile analysis run --rm project-graphs
@@ -34,6 +40,7 @@ docker compose --profile analysis run --rm core-algorithms
 docker compose --profile analysis run --rm structural-roles
 docker compose --profile analysis run --rm criticality
 docker compose --profile analysis run --rm financial-patterns
+docker compose --profile analysis run --rm summary-generation
 ```
 
 4. Open the application services.

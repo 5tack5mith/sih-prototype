@@ -4,10 +4,13 @@
 |---|---|---|---|
 | `GET /cases` | Lists case metadata and scoped graph counts. | Query: `filter=active|completed|important`, `sort=last_activity|name` | `CaseSummary[]` |
 | `GET /cases/{case_id}/overview` | Returns persisted modularity and scoped graph/financial-flag counts. | Path: `case_id` | `CaseOverview` |
+| `GET /cases/{case_id}/summary` | Returns the precomputed case summary; never calls an LLM. | Path: `case_id` | `GeneratedCaseSummary` |
 | `GET /cases/{case_id}/nodes/top` | Ranks nodes by a persisted centrality score. | Query: `metric=betweenness|eigenvector|degree`, `limit=1..100` | `TopNodesResponse` |
 | `GET /cases/{case_id}/nodes/{node_id}` | Returns persisted scores, structural flags, and a one-hop ego graph. | Path: `case_id`, `node_id` | `NodeDetail` |
 | `GET /cases/{case_id}/graph` | Returns the scoped structural graph and precomputed graph metrics. | Query: `filter=bridging_only`, `cutoff>=0` | `CaseGraph` |
 | `GET /cases/{case_id}/communities` | Lists Louvain communities with persisted densities and generic labels. | Path: `case_id` | `CommunitySummary[]` |
+| `GET /cases/{case_id}/communities/summaries` | Returns all precomputed community summaries in one read. | Path: `case_id` | `GeneratedCommunitySummary[]` |
+| `GET /cases/{case_id}/communities/{community_id}/summary` | Returns one precomputed community summary; never calls an LLM. | Path: `case_id`, `community_id` | `GeneratedCommunitySummary` |
 | `GET /cases/{case_id}/communities/{community_id}` | Returns members, persisted densities, and a deterministic narrative. | Path: `case_id`, `community_id` | `CommunityDetail` |
 | `GET /cases/{case_id}/path` | Finds a scoped shortest path; strength is the mean `weight/(weight+1)`, never confidence. | Query: `from_node_id`, `to_node_id` | `PathResponse` |
 | `GET /cases/{case_id}/criticality` | Slices precomputed fragmentation ranks and provides a traceable impact template. | Query: `top_k=3|6|10` | `CriticalityResponse` |
@@ -31,3 +34,8 @@ All endpoints require `Authorization: Bearer <access_token>` except `POST /login
 | `DELETE /cases/{case_id}` | Admin | Permanently purge a completed case only; active cases return `409`. |
 
 Example: `curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/cases`. SQLite identity and assignment data persists in the Compose `auth_data` volume.
+
+
+## Precomputed Zone 2 summaries
+
+Run `docker compose --profile analysis run --rm summary-generation` after structural roles, criticality, and financial-pattern jobs. The batch process sends only the fixed verified-fact JSON context to the OpenAI Responses API. `OPENAI_API_KEY` enables LLM output; every timeout, API error, malformed response, empty response, or missing key falls back to deterministic templates. The stored `source` field is `llm` or `template`.

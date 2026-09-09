@@ -2,7 +2,7 @@
 
 ## Delivered
 
-The FastAPI application lives at `app.api.main:app`. It exposes all nine requested endpoint groups through an injectable Neo4j repository and Pydantic response contracts. All labels, relationship types, and Neo4j property names originate in `app/schema_config.py`; request values remain Cypher parameters.
+The FastAPI application lives at `app.api.main:app`. It exposes the analysis endpoint groups through an injectable Neo4j repository and Pydantic response contracts. All labels, relationship types, and Neo4j property names originate in `app/schema_config.py`; request values remain Cypher parameters.
 
 - `/cases` performs database-side filtering and sorting and returns missing metadata as `null`.
 - `/cases/{case_id}/overview` reads scoped counts, persisted Louvain modularity, and financial flag counts.
@@ -13,6 +13,7 @@ The FastAPI application lives at `app.api.main:app`. It exposes all nine request
 - Path Explorer uses scoped `shortestPath` up to 15 hops. `connection_strength` is the mean of `weight / (weight + 1)` across path edges, not confidence.
 - Criticality only slices stored ranks. The offline job stores baseline node count and global efficiency before/after each removal.
 - Suggested links read Jaccard `SIMILAR_TO` relationships and exclude existing structural links.
+- Summary endpoints read precomputed case/community prose and never invoke an LLM during a request.
 
 ## Authentication and authorization
 
@@ -24,9 +25,11 @@ Assignments are SQLite-backed many-to-many records. Admins can list, assign, and
 
 The batch layer now writes eigenvector centrality, Louvain modularity, community densities, graph density, diameter, and reciprocity. Criticality defaults to 10 ranks and persists global efficiency per step. Placeholder cases include representative metadata and entity categories; production reads remain nullable.
 
-## Deterministic language safeguards
+## Zone 2 summary safeguards
 
-No endpoint returns confidence, predicts criminality, recommends action, or invents descriptive community names. Community, path, and criticality narratives only restate response values. Link predictions are explicitly suggestions.
+The summary batch constructs a fixed JSON object solely from persisted counts, centrality scores, structural roles, Louvain aggregates, criticality ranks, and financial flags. It never supplies raw graph nodes/edges, tools, function calling, retrieval, or graph access to the LLM. The exact constrained system prompt prohibits speculation and directives. Calls use `gpt-5.6-terra` with a 10-second timeout; every failure stores a deterministic fallback and records `summary_source` as `template`. Successful output records `llm`. Case summaries live on `Case`; community summaries are case-owned derived-result nodes and are replaced on recomputation.
+
+The three summary endpoints use the same JWT and case-level RBAC dependency as existing analysis routes. They only read persisted text, source, and timestamp. No endpoint returns confidence, predicts criminality, recommends action, or invents descriptive community names. Existing community, path, and criticality narratives remain deterministic. Link predictions are explicitly suggestions.
 
 ## Schema-pending fields
 
@@ -42,6 +45,7 @@ docker compose --profile placeholder run --rm placeholder-data
 docker compose --profile analysis run --rm core-algorithms
 docker compose --profile analysis run --rm criticality
 docker compose --profile analysis run --rm financial-patterns
+docker compose --profile analysis run --rm summary-generation
 docker compose up -d api
 ```
 
