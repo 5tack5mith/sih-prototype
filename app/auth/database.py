@@ -68,6 +68,14 @@ def username_exists(username: str) -> bool:
     return get_user(username) is not None
 
 
+def list_users() -> list[dict[str, str]]:
+    with _connect() as conn:
+        rows = conn.execute(
+            "SELECT username, role FROM users ORDER BY username",
+        ).fetchall()
+    return [{"username": row[0], "role": row[1]} for row in rows]
+
+
 def list_assignments(case_id: str) -> list[dict[str, str]]:
     with _connect() as conn:
         rows = conn.execute(

@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { login } from '../api/client'
+import { useAuth } from '../auth/AuthContext'
 import logoMark from '../assets/login/logo-mark.svg'
 import statusShield from '../assets/login/status-shield.svg'
 import eyeToggle from '../assets/login/eye-toggle.svg'
 import arrowRight from '../assets/login/arrow-right.svg'
 import './Login.css'
 
-function Login({ onLogin }) {
+function Login() {
+  const { signIn } = useAuth()
   const [analystId, setAnalystId] = useState('')
   const [passkey, setPasskey] = useState('')
   const [showPasskey, setShowPasskey] = useState(false)
@@ -24,8 +25,7 @@ function Login({ onLogin }) {
     }
     setSubmitting(true)
     try {
-      await login(analystId.trim(), passkey)
-      onLogin?.()
+      await signIn(analystId.trim(), passkey)
     } catch (err) {
       setErrorMessage(err.message || 'Login failed')
     } finally {
