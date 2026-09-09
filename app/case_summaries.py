@@ -1,8 +1,10 @@
 """Build bounded Zone 2 inputs exclusively from persisted Zone 1 facts."""
 from __future__ import annotations
 
+import argparse
 from collections import Counter
 from dataclasses import dataclass
+from datetime import UTC, datetime
 import json
 import os
 from contextlib import nullcontext
@@ -11,7 +13,7 @@ from typing import Any
 import httpx
 
 from . import schema_config as schema
-from .database import managed_driver
+from .database import distinct_case_ids, managed_driver
 
 
 def _case_scope(variable: str) -> str:
@@ -388,3 +390,88 @@ def generate_community_summary(context: dict[str, Any]) -> GeneratedSummary:
 
 def generate_community_summary_llm(context: dict[str, Any]) -> str:
     return generate_community_summary(context).text
+
+
+def precompute_case_summaries(driver: Any, case_id: str) -> dict[str, Any]:
+    """Generate once from fixed contexts and replace persisted summary records."""
+    context = build_case_summary_context(case_id, driver=driver)
+    case_summary = generate_case_summary(context)
+    community_rows = []
+    generated_at = datetime.now(UTC).isoformat()
+    for community in context.get("communities", []):
+        community_context = build_community_summary_context(context, community["community_id"])
+        summary = generate_community_summary(community_context)
+        community_rows.append({
+            "community_id": community["community_id"],
+            "summary_text": summary.text,
+            "summary_source": summary.source,
+            "generated_at": generated_at,
+        })
+
+    case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+    community_label = schema.cypher_identifier(schema.NODE_LABEL_COMMUNITY_SUMMARY)
+    community_link = schema.cypher_identifier(schema.REL_HAS_COMMUNITY_SUMMARY)
+    node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+    case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+    community_id = schema.cypher_identifier(schema.PROP_COMMUNITY_ID)
+    summary_text = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_TEXT)
+    generated = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_GENERATED_AT)
+    source = schema.cypher_identifier(schema.PROP_CASE_SUMMARY_SOURCE)
+    case_query = f"""
+    MATCH (case:{case_label} {{{node_id}: $case_id}})
+    SET case.{summary_text} = $summary_text,
+        case.{generated} = $generated_at,
+        case.{source} = $summary_source
+    RETURN case.{node_id} AS case_id
+    """
+    delete_query = f"""
+    MATCH (case:{case_label} {{{node_id}: $case_id}})-[:{community_link}]->
+          (old:{community_label})
+    DETACH DELETE old
+    """
+    community_query = f"""
+    MATCH (case:{case_label} {{{node_id}: $case_id}})
+    UNWIND $rows AS row
+    CREATE (summary:{community_label})
+    SET summary.{case_prop} = $case_id,
+        summary.{community_id} = row.community_id,
+        summary.{summary_text} = row.summary_text,
+        summary.{generated} = row.generated_at,
+        summary.{source} = row.summary_source
+    CREATE (case)-[:{community_link}]->(summary)
+    """
+    with driver.session() as session:
+        stored_case = _plain(session.run(
+            case_query,
+            case_id=case_id,
+            summary_text=case_summary.text,
+            summary_source=case_summary.source,
+            generated_at=generated_at,
+        ).single())
+        if stored_case is None:
+            raise ValueError(f"case not found: {case_id}")
+        session.run(delete_query, case_id=case_id).consume()
+        session.run(community_query, case_id=case_id, rows=community_rows).consume()
+    return {
+        "case_id": case_id,
+        "case_source": case_summary.source,
+        "community_count": len(community_rows),
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Precompute bounded Zone 2 summaries")
+    parser.add_argument("case_id", nargs="?", help="One case; defaults to every discovered case")
+    args = parser.parse_args()
+    with managed_driver() as driver:
+        case_ids = [args.case_id] if args.case_id else distinct_case_ids(driver)
+        for case_id in case_ids:
+            result = precompute_case_summaries(driver, case_id)
+            print(
+                f"Summaries stored for {case_id}: {result['community_count']} communities, "
+                f"case source {result['case_source']}"
+            )
+
+
+if __name__ == "__main__":
+    main()

@@ -12,6 +12,7 @@ from app.case_summaries import (
     generate_case_summary_llm,
     generate_community_summary,
     generate_community_summary_llm,
+    precompute_case_summaries,
 )
 
 
@@ -160,3 +161,35 @@ def test_templates_omit_missing_values():
     }
 
     assert "None" not in case_summary_template(context)
+
+
+def test_precompute_persists_case_and_community_summaries(monkeypatch, fake_driver):
+    from app import case_summaries
+
+    monkeypatch.setattr(case_summaries, "build_case_summary_context", lambda case_id, driver=None: SUMMARY_CONTEXT)
+    monkeypatch.setattr(
+        case_summaries, "generate_case_summary",
+        lambda _context: case_summaries.GeneratedSummary("Case summary text", "template"),
+    )
+    monkeypatch.setattr(
+        case_summaries, "generate_community_summary",
+        lambda _context: case_summaries.GeneratedSummary("Community summary text", "llm"),
+    )
+    fake_driver.handler = lambda query, _parameters: (
+        [{"case_id": "CASE-A"}] if "AS case_id" in query else []
+    )
+
+    result = precompute_case_summaries(fake_driver, "CASE-A")
+
+    assert result == {"case_id": "CASE-A", "case_source": "template", "community_count": 1}
+    query_text = "\n".join(query for query, _ in fake_driver.calls)
+    assert schema.cypher_identifier(schema.PROP_CASE_SUMMARY_TEXT) in query_text
+    assert schema.cypher_identifier(schema.NODE_LABEL_COMMUNITY_SUMMARY) in query_text
+    assert schema.cypher_identifier(schema.REL_HAS_COMMUNITY_SUMMARY) in query_text
+    assert "Case summary text" not in query_text
+    case_parameters = next(parameters for _, parameters in fake_driver.calls if "summary_text" in parameters)
+    assert case_parameters["summary_text"] == "Case summary text"
+    assert case_parameters["summary_source"] == "template"
+    community_parameters = next(parameters for _, parameters in fake_driver.calls if "rows" in parameters)
+    assert community_parameters["rows"][0]["summary_source"] == "llm"
+    assert community_parameters["rows"][0]["summary_text"] == "Community summary text"

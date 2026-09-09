@@ -29,6 +29,7 @@ NODE_LABEL_CASE = "Case"
 NODE_LABEL_CRITICALITY_RESULT = "CriticalityRank"
 NODE_LABEL_CIRCULAR_FLOW_FLAG = "CircularFlowFlag"
 NODE_LABEL_STRUCTURING_FLAG = "StructuringFlag"
+NODE_LABEL_COMMUNITY_SUMMARY = "CommunitySummary"
 
 # Raw-graph-only node labels (never part of ENTITY_NODE_LABELS/the analytical
 # graph; reachable only via OWNS/RECRUITED_VIA for detail inspection).
@@ -55,6 +56,9 @@ PROP_CASE_MODULARITY = "modularity"
 PROP_CASE_DENSITY = "density"
 PROP_CASE_DIAMETER = "diameter"
 PROP_CASE_RECIPROCITY = "reciprocity"
+PROP_CASE_SUMMARY_TEXT = "summary_text"
+PROP_CASE_SUMMARY_GENERATED_AT = "summary_generated_at"
+PROP_CASE_SUMMARY_SOURCE = "summary_source"
 
 # Relationship types
 REL_TRANSACTION = "TRANSACTED_WITH"
@@ -104,6 +108,7 @@ REL_SIMILAR_TO_SCORE_PROP = "score"
 
 # Derived-result schema
 REL_HAS_CRITICALITY_RESULT = "HAS_CRITICALITY_RESULT"
+REL_HAS_COMMUNITY_SUMMARY = "HAS_COMMUNITY_SUMMARY"
 PROP_RESULT_RANK = "rank"
 PROP_RESULT_NODE_ID = "node_id"
 PROP_LARGEST_COMPONENT_BEFORE = "largest_component_before"
