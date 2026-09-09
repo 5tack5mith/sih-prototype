@@ -1,4 +1,4 @@
-const API_BASE = '/api'
+import { apiFetch } from './client'
 
 // GET /cases?filter=&sort= — see app/api/main.py:list_cases
 export async function fetchCases({ filter, sort = 'last_activity' } = {}) {
@@ -7,7 +7,7 @@ export async function fetchCases({ filter, sort = 'last_activity' } = {}) {
   if (sort) params.set('sort', sort)
   const query = params.toString()
 
-  const response = await fetch(`${API_BASE}/cases${query ? `?${query}` : ''}`)
+  const response = await apiFetch(`/cases${query ? `?${query}` : ''}`)
 
   if (!response.ok) {
     throw new Error(`Failed to load cases (HTTP ${response.status})`)

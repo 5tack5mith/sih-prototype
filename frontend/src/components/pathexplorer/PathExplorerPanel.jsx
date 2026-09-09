@@ -69,17 +69,6 @@ function PathExplorerPanel({
           </>
         )}
       </div>
-
-      <div className="pep-panel__footer">
-        <div className="pep-panel__footer-row">
-          <button type="button" className="pep-panel__btn pep-panel__btn--ghost">
-            <span aria-hidden="true">▤</span> EXPORT PATH DOSSIER
-          </button>
-          <button type="button" className="pep-panel__btn pep-panel__btn--danger">
-            <span aria-hidden="true">⚑</span> ADD TO SUBPOENA
-          </button>
-        </div>
-      </div>
     </aside>
   )
 }

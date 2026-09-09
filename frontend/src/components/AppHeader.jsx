@@ -10,7 +10,6 @@ function AppHeader({ searchQuery = '', onSearchChange }) {
         <div className="app-header__brand">
           <img className="app-header__logo" src={netraLogo} alt="" />
           <span className="app-header__brand-name">NETRA</span>
-          <span className="app-header__version">// v4.2</span>
         </div>
 
         <div className="app-header__search">
@@ -22,14 +21,13 @@ function AppHeader({ searchQuery = '', onSearchChange }) {
             value={searchQuery}
             onChange={(e) => onSearchChange?.(e.target.value)}
           />
-          <span className="app-header__search-kbd">⌘K</span>
         </div>
       </div>
 
       <div className="app-header__right">
         <div className="app-header__status">
           <span className="app-header__status-dot" />
-          <span>ENCLAVE ACTIVE</span>
+          <span>SYSTEM ACTIVE</span>
         </div>
         <div className="app-header__divider" />
         <div className="app-header__user">

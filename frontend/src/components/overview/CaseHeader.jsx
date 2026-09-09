@@ -75,7 +75,6 @@ function CaseHeader({ onBack, caseLabel, cases = [], onSelectCase, personNodes =
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
-        <span className="case-header__search-kbd">⌘K</span>
         {showDropdown && (
           <div className="case-header__search-dropdown">
             {!hasMatches ? (
@@ -129,11 +128,7 @@ function CaseHeader({ onBack, caseLabel, cases = [], onSelectCase, personNodes =
       <div className="case-header__right">
         <div className="case-header__status">
           <span className="case-header__status-dot" />
-          <span>ENCLAVE ACTIVE</span>
-        </div>
-        <div className="case-header__user">
-          <span className="case-header__user-name">AN-84920 · S. CHEN</span>
-          <span className="case-header__user-sec">// SEC-LEVEL 4</span>
+          <span>SYSTEM ACTIVE</span>
         </div>
         <div className="case-header__avatar">
           <img src={userAvatarIcon} alt="" />

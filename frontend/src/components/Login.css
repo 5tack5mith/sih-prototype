@@ -98,8 +98,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 1024px;
-  padding: 76px 16px 36px;
+  min-height: 100vh;
+  padding: 76px 16px 56px;
 }
 
 .login-banner {
@@ -218,7 +218,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 24px;
+  padding: 24px 24px 20px;
 }
 
 .login-card__footer {
@@ -241,7 +241,7 @@
 .login-field {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
 }
 
 .login-field__row {
@@ -380,8 +380,21 @@
   cursor: pointer;
 }
 
+.login-error {
+  margin: 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: #f07167;
+}
+
 .login-submit:hover {
   background: #f5d478;
+}
+
+.login-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 .login-submit__icon {

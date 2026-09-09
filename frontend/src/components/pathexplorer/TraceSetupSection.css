@@ -1,8 +1,8 @@
 .tss {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 12px;
+  gap: 14px;
+  padding: 16px;
   border-bottom: 1px solid #1f2833;
   font-family: 'Space Mono', monospace;
 }
@@ -61,7 +61,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 6px;
-  padding: 9px 10px;
+  min-height: 40px;
+  padding: 10px 12px;
   background: #111722;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 4px;
@@ -149,14 +150,16 @@
 .tss__trace-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 13px;
+  justify-content: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 8px 16px;
   background: #f2ca50;
   border: none;
   border-radius: 4px;
   font-family: 'Space Mono', monospace;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.3px;
   color: #3c2f00;
   cursor: pointer;
