@@ -1,8 +1,9 @@
 """
 Showcase cases: composes multiple sub-ring instances (each built from
 motifs.py's existing generator functions, completely unchanged) into one
-larger case, with a deliberate hidden link between exactly one pair of
-sub-rings, and a hard per-case degree cap.
+larger case, with deliberate hidden shared-account links connecting every
+sub-ring into one structure (not just one designated pair), and a hard
+per-case degree cap.
 
 Why this exists: every case in the original 150-case dataset is exactly one
 motif instance, so it's always a single dominant hub with a wheel of leaves
@@ -20,6 +21,7 @@ this is a standalone generator with its own output directory
 """
 
 import argparse
+import copy
 import json
 import os
 import random
@@ -93,49 +95,48 @@ def _build_one_subring(subring_id, case_selection_rng, entity_attribute_rng, siz
     return result, motif, scam_subtype
 
 
-def _find_victim_first_hop_account(nodes, edges):
-    """Finds the account that is the target of a victim-account's earliest
-    outgoing TRANSACTION edge - "the account a victim was told to pay into"
-    - a role that exists in every motif, used as the generic redirect point
-    for the hidden-link merge (see _merge_shared_account)."""
-    person_role_by_id = {n["id"]: n["ground_truth"]["role"] for n in nodes if n["type"] == "PERSON"}
-    account_owner = {n["id"]: n["linked_person_id"] for n in nodes if n["type"] == "ACCOUNT"}
-    victim_account_ids = {
-        aid for aid, pid in account_owner.items() if person_role_by_id.get(pid) == "victim"
-    }
-    outflows = [e for e in edges if e["type"] == "TRANSACTION" and e["source_id"] in victim_account_ids]
-    if not outflows:
-        return None
-    first = min(outflows, key=lambda e: e["timestamp"])
-    return first["target_id"]
-
-
-def _pick_mule_account(nodes, rng):
-    """Picks a real mule-role account (any non-null mule_layer) from nodes -
-    the "already exists, plausible in either ring" identity that becomes
-    the shared account."""
+def _pick_mule_account(nodes, used_ids, rng, prefer_victim_first_hop_edges=None):
+    """Picks a real mule-role account (any non-null mule_layer) from nodes
+    that hasn't already been used as a shared-link endpoint in this
+    sub-ring - the "already exists, plausible in this ring" identity that
+    becomes (or receives) a shared account. Generalized beyond just "the
+    victim's first hop" (the original single-link design) so a sub-ring can
+    supply or receive several distinct shared-account links without
+    reusing the same account twice."""
     candidates = [
         n for n in nodes
         if n["type"] == "ACCOUNT" and n["ground_truth"].get("mule_layer") is not None
+        and n["id"] not in used_ids
     ]
+    if not candidates:
+        return None
     return rng.choice(candidates)["id"]
 
 
-def _merge_shared_account(subring_a, subring_b, rng):
-    """The hidden-link mechanic: picks a real mule account from subring_a
-    and redirects subring_b's own victim-facing first-hop account to it -
-    reusing the account, not duplicating it as a lookalike. subring_b's
-    now-orphaned original first-hop PERSON/ACCOUNT/PHONE nodes (the
-    identity nothing else in subring_b references anymore) are removed
-    from subring_b's own node list entirely, so the merged account is the
-    only trace of that role in subring_b.
+def _merge_shared_account(subring_a, subring_b, used_a, used_b, rng):
+    """The hidden-link mechanic: picks a real, not-yet-used mule account
+    from subring_a and redirects one of subring_b's own not-yet-used mule
+    accounts to it - reusing the account, not duplicating it as a
+    lookalike. subring_b's now-orphaned original account's PERSON/ACCOUNT/
+    PHONE nodes (the identity nothing else in subring_b references
+    anymore) are removed from subring_b's own node list entirely, so the
+    merged account is the only trace of that role in subring_b.
+
+    used_a/used_b are the sets of account ids already spent as shared-link
+    endpoints in each sub-ring (mutated in place on success) - this is what
+    lets a single sub-ring participate in several distinct links (up to
+    its number of real mule accounts) without ever reusing one account for
+    two different links.
 
     Mutates subring_b's edges in place (rewrites the old account id to the
-    shared one) and returns (shared_account_id, subring_b_nodes_pruned).
+    shared one) and returns (shared_account_id, subring_b_nodes_pruned), or
+    (None, subring_b["nodes"]) if either side has no account left to give.
     """
-    shared_account_id = _pick_mule_account(subring_a["nodes"], rng)
+    shared_account_id = _pick_mule_account(subring_a["nodes"], used_a, rng)
+    if shared_account_id is None:
+        return None, subring_b["nodes"]
 
-    old_account_id = _find_victim_first_hop_account(subring_b["nodes"], subring_b["edges"])
+    old_account_id = _pick_mule_account(subring_b["nodes"], used_b, rng)
     if old_account_id is None or old_account_id == shared_account_id:
         return None, subring_b["nodes"]
 
@@ -157,7 +158,69 @@ def _merge_shared_account(subring_a, subring_b, rng):
         and not (n["type"] == "PERSON" and n["id"] == old_person_id)
         and not (n["type"] == "PHONE" and n.get("linked_person_id") == old_person_id)
     ]
+    used_a.add(shared_account_id)
+    used_b.add(old_account_id)
     return shared_account_id, pruned_nodes
+
+
+def _plan_subring_links(n, rng, max_links_per_subring=3):
+    """Builds a connected, sparse link plan over n sub-rings (by index): a
+    random spanning tree (every sub-ring reachable from every other -
+    guarantees one connected structure per case, not isolated islands)
+    plus a handful of extra edges so a few sub-rings get 2-3 connections
+    instead of a bare tree everywhere. Degree is capped at
+    max_links_per_subring per sub-ring in this PLAN graph (a different,
+    smaller-scale cap than the account-level MAX_DEGREE_FRACTION check -
+    this just keeps any one sub-ring from being asked to donate/receive
+    more shared accounts than it plausibly has). Returns a list of
+    (i, j) index pairs, i < j, no duplicates.
+
+    Deliberately not fully-connected (every pair linked) - that would
+    recreate the single-mega-hub risk this whole module exists to avoid.
+    """
+    if n < 2:
+        return []
+    order = list(range(n))
+    rng.shuffle(order)
+    degree = Counter()
+    edges = []
+    edge_set = set()
+
+    def add_edge(i, j):
+        pair = (min(i, j), max(i, j))
+        if pair in edge_set:
+            return False
+        edges.append(pair)
+        edge_set.add(pair)
+        degree[i] += 1
+        degree[j] += 1
+        return True
+
+    # Random spanning tree: each node (after the first, in shuffled order)
+    # connects to a random already-placed node - guarantees connectivity.
+    for k in range(1, n):
+        node = order[k]
+        earlier = order[:k]
+        # prefer an earlier node still under the degree cap, but fall back
+        # to any earlier node if all are already at cap (rare at n<=8)
+        under_cap = [e for e in earlier if degree[e] < max_links_per_subring]
+        partner = rng.choice(under_cap) if under_cap else rng.choice(earlier)
+        add_edge(node, partner)
+
+    # A handful of extra edges for richer (non-tree) structure, respecting
+    # the per-subring cap; bounded attempt budget, not a hard requirement.
+    extra_target = max(1, n // 2)
+    attempts = 0
+    added_extra = 0
+    while added_extra < extra_target and attempts < n * 6:
+        attempts += 1
+        i, j = rng.sample(range(n), 2)
+        if degree[i] >= max_links_per_subring or degree[j] >= max_links_per_subring:
+            continue
+        if add_edge(i, j):
+            added_extra += 1
+
+    return edges
 
 
 def _regenerate_smaller(subring_id, case_selection_rng, entity_attribute_rng, cap_fraction, case_size_estimate):
@@ -183,18 +246,20 @@ def _regenerate_smaller(subring_id, case_selection_rng, entity_attribute_rng, ca
 
 
 def compose_showcase_case(case_id, case_selection_rng, entity_attribute_rng, created_at):
-    """Builds one showcase case: 2-4 sub-rings (escape-hatch-adjusted for
-    the degree cap), one deliberate shared-account link between exactly one
-    pair, and a final cap check on the fully-composed result.
+    """Builds one showcase case: 2+ sub-rings (adaptive to the 80-250 node
+    target and escape-hatch-adjusted for the degree cap), a dense-but-
+    sparse web of shared-account links connecting every sub-ring into one
+    structure, and a final cap check (with retries) on the fully-composed
+    result.
 
-    Returns (case_result, subring_summaries, subring_link) where
-    case_result is the usual {"nodes","edges","case_metadata"} shape,
-    subring_summaries is a list of per-subring bookkeeping dicts (for
-    reporting - not persisted), and subring_link is the
-    {subring_a_id, subring_b_id, shared_account_id} record for
-    subring_ground_truth.json (or None if only one sub-ring resulted from
-    a split and there was nothing to link - not expected in practice, but
-    handled rather than assumed away).
+    Returns (case_result, subring_summaries, subring_links,
+    unrealized_pairs, (max_deg, ratio, hub_node)) where case_result is the
+    usual {"nodes","edges","case_metadata"} shape, subring_summaries is a
+    list of per-subring bookkeeping dicts (for reporting - not persisted),
+    subring_links is a list of {subring_a_id, subring_b_id,
+    shared_account_id} records for subring_ground_truth.json, and
+    unrealized_pairs lists planned links that couldn't be realized because
+    one side ran out of distinct mule accounts to give.
     """
     # Sub-ring count is adaptive, not fixed upfront: fast_pass_through is a
     # fixed ~9-node chain regardless of size_tier (by its own design - "no
@@ -205,11 +270,13 @@ def compose_showcase_case(case_id, case_selection_rng, entity_attribute_rng, cre
     # sizes average out, but the size floor is what's actually enforced.
     min_size, max_size = TARGET_CASE_SIZE_RANGE
     case_size_estimate = (min_size + max_size) // 2
-    # The shared-account merge below removes ~2-3 nodes (the pruned
-    # duplicate identity) after this loop finishes, so target slightly
-    # above the floor here to make sure the post-merge count still clears
-    # min_size, not just the pre-merge running total.
-    min_size_before_merge = min_size + 3
+    # Every shared-account link removes ~2-3 nodes (the pruned duplicate
+    # identity) from whichever sub-ring is on the receiving end. With dense
+    # linking (every sub-ring connected, not just one pair) there are
+    # roughly as many links as sub-rings, so the buffer has to scale with
+    # sub-ring count, not be a flat +3 like the single-link design - a
+    # generous fixed margin covers the realistic 4-8 sub-ring range here.
+    min_size_before_merge = min_size + 24
 
     subrings = []  # list of (result, motif, subtype)
     total_so_far = 0
@@ -239,35 +306,84 @@ def compose_showcase_case(case_id, case_selection_rng, entity_attribute_rng, cre
         if len(subrings) >= 8:  # sane upper bound, should not be reached in practice
             break
 
-    # Deliberate hidden link between exactly one pair (not all pairs).
-    subring_link = None
-    if len(subrings) >= 2:
-        a_idx, b_idx = case_selection_rng.sample(range(len(subrings)), 2)
-        subring_a_result = subrings[a_idx][0]
-        subring_b_result = subrings[b_idx][0]
-        shared_account_id, pruned_b_nodes = _merge_shared_account(
-            subring_a_result, subring_b_result, case_selection_rng)
-        if shared_account_id is not None:
-            subring_b_result["nodes"] = pruned_b_nodes
-            subring_link = {
-                "subring_a_id": subring_a_result["case_metadata"]["case_id"],
-                "subring_b_id": subring_b_result["case_metadata"]["case_id"],
-                "shared_account_id": shared_account_id,
-            }
+    # Dense-but-sparse linking: every sub-ring connects to at least one
+    # other (a random spanning tree guarantees one connected structure for
+    # the whole case, not isolated islands), with a few sub-rings getting
+    # 2-3 connections - not full pairwise linking, which would recreate a
+    # mega-hub risk. Each planned (i, j) pair attempts a real
+    # shared-account merge; a pair is skipped (not force-retried
+    # elsewhere) if one side has run out of distinct mule accounts to
+    # give - reported via which planned links didn't materialize.
+    #
+    # Degree cap is re-checked on the fully-linked result, not assumed to
+    # hold just because the single-link design was fine: denser linking
+    # concentrates more redirected edges onto whichever accounts get
+    # picked as "A" donors. Every realized link is also checked for a
+    # coincidental PERSON-name collision between the two sub-rings (two
+    # independently-generated rings can, by chance, draw the same name from
+    # the shared pool - a real surface-level tell, unrelated to the
+    # deliberate shared-account link, that would give the connection away
+    # for the wrong reason). Both checks retry the LINK PLAN (fresh deep
+    # copies of the pre-merge sub-rings, a new random plan), scoring each
+    # attempt by (name_collisions, degree_cap_violated, ratio) and keeping
+    # the best.
+    subring_person_names = [
+        {n["canonical_name"] for n in result["nodes"] if n["type"] == "PERSON"}
+        for result, _, _ in subrings
+    ]
 
-    all_nodes, all_edges = [], []
-    subring_summaries = []
-    for result, motif, subtype in subrings:
-        all_nodes.extend(result["nodes"])
-        all_edges.extend(result["edges"])
-        subring_summaries.append({
-            "subring_id": result["case_metadata"]["case_id"],
-            "motif": motif,
-            "scam_subtype": subtype,
-            "node_count": len(result["nodes"]),
-        })
+    best_attempt = None
+    best_score = None
+    for _attempt in range(6):
+        subrings_copy = copy.deepcopy(subrings)
+        used_accounts = [set() for _ in subrings_copy]
+        subring_links = []
+        planned_pairs = _plan_subring_links(len(subrings_copy), case_selection_rng)
+        unrealized_pairs = []
+        name_collisions = 0
+        for i, j in planned_pairs:
+            subring_a_result = subrings_copy[i][0]
+            subring_b_result = subrings_copy[j][0]
+            shared_account_id, pruned_b_nodes = _merge_shared_account(
+                subring_a_result, subring_b_result, used_accounts[i], used_accounts[j], case_selection_rng)
+            if shared_account_id is not None:
+                subring_b_result["nodes"] = pruned_b_nodes
+                subring_links.append({
+                    "subring_a_id": subring_a_result["case_metadata"]["case_id"],
+                    "subring_b_id": subring_b_result["case_metadata"]["case_id"],
+                    "shared_account_id": shared_account_id,
+                })
+                if subring_person_names[i] & subring_person_names[j]:
+                    name_collisions += 1
+            else:
+                unrealized_pairs.append((subrings_copy[i][0]["case_metadata"]["case_id"],
+                                          subrings_copy[j][0]["case_metadata"]["case_id"]))
 
-    max_deg, ratio, hub_node = _max_degree_ratio(all_nodes, all_edges)
+        all_nodes, all_edges = [], []
+        subring_summaries = []
+        for result, motif, subtype in subrings_copy:
+            all_nodes.extend(result["nodes"])
+            all_edges.extend(result["edges"])
+            subring_summaries.append({
+                "subring_id": result["case_metadata"]["case_id"],
+                "motif": motif,
+                "scam_subtype": subtype,
+                "node_count": len(result["nodes"]),
+            })
+
+        max_deg, ratio, hub_node = _max_degree_ratio(all_nodes, all_edges)
+        cap_violated = ratio > MAX_DEGREE_FRACTION
+        score = (name_collisions, cap_violated, ratio)
+        attempt_result = (all_nodes, all_edges, subring_summaries, subring_links,
+                           unrealized_pairs, max_deg, ratio, hub_node)
+        if best_score is None or score < best_score:
+            best_score = score
+            best_attempt = attempt_result
+        if name_collisions == 0 and not cap_violated:
+            break
+
+    all_nodes, all_edges, subring_summaries, subring_links, unrealized_pairs, max_deg, ratio, hub_node = best_attempt
+
     total_amount = sum(e["amount"] for e in all_edges if e["type"] == "TRANSACTION")
     case_metadata = {
         "case_id": case_id,
@@ -280,7 +396,7 @@ def compose_showcase_case(case_id, case_selection_rng, entity_attribute_rng, cre
         "total_amount_inr": round(total_amount, 2),
     }
     case_result = {"nodes": all_nodes, "edges": all_edges, "case_metadata": case_metadata}
-    return case_result, subring_summaries, subring_link, (max_deg, ratio, hub_node)
+    return case_result, subring_summaries, subring_links, unrealized_pairs, (max_deg, ratio, hub_node)
 
 
 def main():
@@ -299,13 +415,12 @@ def main():
     for i in range(1, args.n_cases + 1):
         case_id = f"C-SHOWCASE-{i:02d}"
         created_at = datetime(2026, 9, 1)
-        case_result, subring_summaries, subring_link, (max_deg, ratio, hub_node) = compose_showcase_case(
+        case_result, subring_summaries, subring_links, unrealized_pairs, (max_deg, ratio, hub_node) = compose_showcase_case(
             case_id, case_selection_rng, entity_attribute_rng, created_at)
         case_results.append(case_result)
-        if subring_link:
-            subring_link = {"case_id": case_id, **subring_link}
-            subring_ground_truth.append(subring_link)
-        report_rows.append((case_id, subring_summaries, subring_link, max_deg, ratio, hub_node))
+        for link in subring_links:
+            subring_ground_truth.append({"case_id": case_id, **link})
+        report_rows.append((case_id, subring_summaries, subring_links, unrealized_pairs, max_deg, ratio, hub_node))
 
     # Cross-case bridges among just these cases, re-scoped: percentage cap
     # instead of the old fixed max-14, and since there are only n_cases of

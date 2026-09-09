@@ -6,38 +6,38 @@
     "ring_size_tier": "showcase_composed",
     "created_at": "2026-09-01T00:00:00",
     "last_updated": "2026-09-01T00:00:00",
-    "node_count": 89,
-    "total_amount_inr": 7777910.54
+    "node_count": 107,
+    "total_amount_inr": 10667329.37
   },
   {
     "case_id": "C-SHOWCASE-02",
-    "scam_subtype": "digital_arrest",
+    "scam_subtype": "task_based",
     "motif": "multi_subring",
     "ring_size_tier": "showcase_composed",
     "created_at": "2026-09-01T00:00:00",
     "last_updated": "2026-09-01T00:00:00",
-    "node_count": 100,
-    "total_amount_inr": 25693565.55
+    "node_count": 92,
+    "total_amount_inr": 32474424.88
   },
   {
     "case_id": "C-SHOWCASE-03",
-    "scam_subtype": "digital_arrest",
+    "scam_subtype": "task_based",
     "motif": "multi_subring",
     "ring_size_tier": "showcase_composed",
     "created_at": "2026-09-01T00:00:00",
     "last_updated": "2026-09-01T00:00:00",
-    "node_count": 84,
-    "total_amount_inr": 26321110.4
+    "node_count": 115,
+    "total_amount_inr": 8641821.34
   },
   {
     "case_id": "C-SHOWCASE-04",
-    "scam_subtype": "digital_arrest",
+    "scam_subtype": "loan_app",
     "motif": "multi_subring",
     "ring_size_tier": "showcase_composed",
     "created_at": "2026-09-01T00:00:00",
     "last_updated": "2026-09-01T00:00:00",
-    "node_count": 114,
-    "total_amount_inr": 30065045.27
+    "node_count": 143,
+    "total_amount_inr": 1926811.28
   },
   {
     "case_id": "C-SHOWCASE-05",
@@ -46,7 +46,7 @@
     "ring_size_tier": "showcase_composed",
     "created_at": "2026-09-01T00:00:00",
     "last_updated": "2026-09-01T00:00:00",
-    "node_count": 103,
-    "total_amount_inr": 3985842.96
+    "node_count": 98,
+    "total_amount_inr": 22016309.01
   }
 ]
