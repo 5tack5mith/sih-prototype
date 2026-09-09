@@ -53,6 +53,19 @@ class StubRepository:
     def list_cases(self, case_filter, sort, allowed_case_ids=None):
         existing = [{"case_id": "CASE-A", "name": "Alpha", "status": "ACTIVE", "priority": None, "description": None, "node_count": 2, "edge_count": 1, "updated_at": None, "lead_analyst": None, "jurisdiction_tag": None}]
         return self.created_cases + existing
+        self.status = "ACTIVE"
+
+    def get_case(self, case_id):
+        return {"case_id": case_id, "status": self.status}
+    def list_cases(self, case_filter, sort, allowed_case_ids=None, allowed_statuses=None):
+        return [{"case_id": "CASE-A", "name": "Alpha", "status": self.status, "priority": None, "description": None, "node_count": 2, "edge_count": 1, "updated_at": None, "lead_analyst": None, "jurisdiction_tag": None}]
+    def set_case_status(self, case_id, status):
+        self.status = status
+        return {"case_id": case_id, "status": status}
+    def purge_completed_case(self, case_id):
+        if self.status != "COMPLETED":
+            raise ValueError("case must be completed before purging")
+        return True
     def get_case_overview(self, case_id):
         return {"case_id": case_id, "total_entities": 2, "total_relationships": 1, "community_count": 1, "modularity": 0.5, "structural_alert_count": 0, "direct_1hop_count": 1}
     def get_top_nodes(self, case_id, metric_property, limit):
@@ -89,6 +102,8 @@ class StubRepository:
 def client():
     repository = StubRepository()
     app.dependency_overrides[get_repository] = lambda: repository
+def client(repository=None):
+    app.dependency_overrides[get_repository] = lambda: repository or StubRepository()
     app.dependency_overrides[get_current_user] = lambda: {"username": "test", "role": "admin"}
     api = TestClient(app)
     api.repository = repository
@@ -176,3 +191,12 @@ def test_create_case_rejects_blank_name():
     with client() as api:
         assert api.post("/cases", json={"case_name": "   "}).status_code == 422
         assert api.post("/cases", json={}).status_code == 422
+def test_case_status_filters_and_lifecycle():
+    repository = StubRepository()
+    with client(repository) as api:
+        assert api.get("/cases?filter=important").status_code == 200
+        assert api.get("/cases?filter=completed").status_code == 200
+        assert api.get("/cases?filter=flagged").status_code == 422
+        assert api.post("/cases/CASE-A/important").json()["status"] == "IMPORTANT"
+        assert api.post("/cases/CASE-A/complete").json()["status"] == "COMPLETED"
+        assert api.delete("/cases/CASE-A").status_code == 204

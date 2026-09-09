@@ -5,10 +5,13 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
+CaseStatus = Literal["ACTIVE", "COMPLETED", "IMPORTANT"]
+
+
 class CaseSummary(BaseModel):
     case_id: str
     name: str | None = None
-    status: str | None = None
+    status: CaseStatus | None = None
     priority: str | None = None
     description: str | None = None
     node_count: int
@@ -180,7 +183,7 @@ class SuggestedLink(BaseModel):
 
 
 MetricName = Literal["betweenness", "eigenvector", "degree"]
-CaseFilter = Literal["active", "archived", "flagged"]
+CaseFilter = Literal["active", "completed", "important"]
 CaseSort = Literal["last_activity", "name"]
 GraphFilter = Literal["bridging_only"]
 
@@ -221,3 +224,4 @@ class CaseMetadataResponse(BaseModel):
     updated_at: str | None = None
     lead_analyst: str | None = None
     jurisdiction_tag: str | None = None
+    status: CaseStatus

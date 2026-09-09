@@ -1,0 +1,32 @@
+[
+  {
+    "case_id": "C-SHOWCASE-01",
+    "subring_a_id": "C-SHOWCASE-01-SR1",
+    "subring_b_id": "C-SHOWCASE-01-SR3",
+    "shared_account_id": "A-00008"
+  },
+  {
+    "case_id": "C-SHOWCASE-02",
+    "subring_a_id": "C-SHOWCASE-02-SR3",
+    "subring_b_id": "C-SHOWCASE-02-SR5",
+    "shared_account_id": "A-00060"
+  },
+  {
+    "case_id": "C-SHOWCASE-03",
+    "subring_a_id": "C-SHOWCASE-03-SR1",
+    "subring_b_id": "C-SHOWCASE-03-SR2",
+    "shared_account_id": "A-00101"
+  },
+  {
+    "case_id": "C-SHOWCASE-04",
+    "subring_a_id": "C-SHOWCASE-04-SR4",
+    "subring_b_id": "C-SHOWCASE-04-SR3",
+    "shared_account_id": "A-00151"
+  },
+  {
+    "case_id": "C-SHOWCASE-05",
+    "subring_a_id": "C-SHOWCASE-05-SR6",
+    "subring_b_id": "C-SHOWCASE-05-SR2",
+    "shared_account_id": "A-00224"
+  }
+]

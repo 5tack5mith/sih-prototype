@@ -98,6 +98,12 @@ def update_case(
     if result is None:
         raise HTTPException(status_code=404, detail="Case not found")
     return result
+    return repository.list_cases(
+        filter,
+        sort,
+        assigned_case_ids(user["username"]),
+        ["active", "important"],
+    )
 
 
 @app.get("/cases/{case_id}/overview", response_model=CaseOverview)
@@ -208,7 +214,7 @@ def get_assignments(case_id: str, _: dict = Depends(require_admin), repository: 
 @app.put("/cases/{case_id}/assignments/{username}", response_model=list[CaseAssignment])
 def assign_case(case_id: str, username: str, admin: dict = Depends(require_admin), repository: Repository = None) -> list[dict]:
     case = repository.get_case(case_id)
-    if case is None or (case.get("status") or "").upper() == "ARCHIVED":
+    if case is None or (case.get("status") or "").upper() == "COMPLETED":
         raise HTTPException(status_code=404, detail="Case not found")
     assignee = get_user(username)
     if assignee is None:
@@ -227,9 +233,20 @@ def unassign_case(case_id: str, username: str, _: dict = Depends(require_admin),
         raise HTTPException(status_code=404, detail="Assignment not found")
 
 
-@app.post("/cases/{case_id}/archive", response_model=CaseStatusResponse)
-def archive_case(case_id: str, _: dict = Depends(require_admin), repository: Repository = None) -> dict:
-    result = repository.set_case_status(case_id, "ARCHIVED")
+@app.post("/cases/{case_id}/important", response_model=CaseStatusResponse)
+def mark_case_important(case_id: str, _: dict = Depends(require_admin), repository: Repository = None) -> dict:
+    case = repository.get_case(case_id)
+    if case is None:
+        raise HTTPException(status_code=404, detail="Case not found")
+    if (case.get("status") or "").upper() == "COMPLETED":
+        raise HTTPException(status_code=409, detail="Restore the completed case before marking it important")
+    result = repository.set_case_status(case_id, "IMPORTANT")
+    return result
+
+
+@app.post("/cases/{case_id}/complete", response_model=CaseStatusResponse)
+def complete_case(case_id: str, _: dict = Depends(require_admin), repository: Repository = None) -> dict:
+    result = repository.set_case_status(case_id, "COMPLETED")
     if result is None:
         raise HTTPException(status_code=404, detail="Case not found")
     return result
@@ -246,9 +263,9 @@ def restore_case(case_id: str, _: dict = Depends(require_admin), repository: Rep
 @app.delete("/cases/{case_id}", status_code=204)
 def purge_case(case_id: str, _: dict = Depends(require_admin), repository: Repository = None) -> None:
     try:
-        deleted = repository.purge_archived_case(case_id)
+        deleted = repository.purge_completed_case(case_id)
     except ValueError:
-        raise HTTPException(status_code=409, detail="Case must be archived before purging")
+        raise HTTPException(status_code=409, detail="Case must be completed before purging")
     if not deleted:
         raise HTTPException(status_code=404, detail="Case not found")
     remove_case_assignments(case_id)
