@@ -16,7 +16,7 @@ function AppHeader({ searchQuery = '', onSearchChange, onBrandClick }) {
           onClick={onBrandClick}
         >
           <img className="app-header__logo" src={netraLogo} alt="" />
-          <span className="app-header__brand-name">NETRA</span>
+          <span className="app-header__brand-name">NEXUS</span>
         </BrandTag>
 
         <div className="app-header__search">

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import CaseHeader from '../components/overview/CaseHeader'
 import Sidebar from '../components/overview/Sidebar'
 import GraphViewport from '../components/overview/GraphViewport'
@@ -6,8 +6,11 @@ import OverviewNetworkGraph from '../components/overview/OverviewNetworkGraph'
 import CriticalityToolbar from '../components/criticality/CriticalityToolbar'
 import CriticalityPanel from '../components/criticality/CriticalityPanel'
 import { fetchCaseOverview, fetchCaseGraph, fetchCriticality } from '../api/overviewApi'
+import { computeDegrees } from '../components/overview/graphLayout'
 import './Overview.css'
 import './StructuralCriticality.css'
+
+const CUTOFF_VALUE = 0.75
 
 function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase }) {
   const [loadState, setLoadState] = useState(caseId ? 'loading' : 'no-case')
@@ -15,6 +18,13 @@ function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase
   const [overview, setOverview] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [retryToken, setRetryToken] = useState(0)
+
+  // Subset filters — same semantics as Overview: bridgingOnly/cutoffEnabled
+  // re-fetch the graph against the API's real filter/cutoff params;
+  // isolatesVisible is a pure client-side render filter.
+  const [bridgingOnly, setBridgingOnly] = useState(false)
+  const [cutoffEnabled, setCutoffEnabled] = useState(false)
+  const [isolatesVisible, setIsolatesVisible] = useState(false)
 
   const [topK, setTopK] = useState(6)
   const [criticality, setCriticality] = useState(null)
@@ -39,7 +49,10 @@ function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase
       try {
         const [overviewResult, graphResult] = await Promise.all([
           fetchCaseOverview(caseId),
-          fetchCaseGraph(caseId),
+          fetchCaseGraph(caseId, {
+            filter: bridgingOnly ? 'bridging_only' : undefined,
+            cutoff: cutoffEnabled ? CUTOFF_VALUE : undefined,
+          }),
         ])
         if (cancelled) return
 
@@ -62,7 +75,16 @@ function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase
     return () => {
       cancelled = true
     }
-  }, [caseId, retryToken])
+    // bridgingOnly/cutoffEnabled intentionally re-trigger a fetch: they're
+    // real API query params, unlike isolatesVisible which is client-only.
+  }, [caseId, retryToken, bridgingOnly, cutoffEnabled])
+
+  const isolateCount = useMemo(() => {
+    const nodes = graph?.nodes ?? []
+    const edges = graph?.edges ?? []
+    const degrees = computeDegrees(nodes, edges)
+    return nodes.filter((n) => (degrees.get(String(n.node_id)) ?? 0) === 0).length
+  }, [graph])
 
   useEffect(() => {
     if (!caseId || loadState !== 'ready') return undefined
@@ -128,6 +150,13 @@ function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase
         <Sidebar
           active="structural-criticality"
           onNavigate={onNavigate}
+          isolatesVisible={isolatesVisible}
+          isolateCount={isolateCount}
+          onToggleIsolates={caseId ? () => setIsolatesVisible((v) => !v) : undefined}
+          bridgingOnly={bridgingOnly}
+          onToggleBridging={caseId ? () => setBridgingOnly((v) => !v) : undefined}
+          cutoffEnabled={cutoffEnabled}
+          onToggleCutoff={caseId ? () => setCutoffEnabled((v) => !v) : undefined}
           communityCount={overview?.community_count ?? undefined}
           keyPlayerCount={graph ? Math.min(10, graph.nodes.length) : undefined}
           metrics={graph?.metrics}
@@ -160,6 +189,7 @@ function StructuralCriticality({ caseId, onBack, onNavigate, cases, onSelectCase
             loadState={loadState}
             errorMessage={errorMessage}
             graph={graph}
+            showIsolates={isolatesVisible}
             registerControls={(api) => {
               controlsRef.current = api
             }}

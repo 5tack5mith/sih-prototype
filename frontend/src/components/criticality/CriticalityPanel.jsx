@@ -40,7 +40,7 @@ function buildRobustnessLines({ caseId, topK, criticality }) {
   const removals = criticality.ranked_removals ?? []
   const finalState = criticality.final_state
   const lines = [
-    'NETRA ROBUSTNESS REPORT',
+    'NEXUS ROBUSTNESS REPORT',
     `Case: ${caseId || '—'}`,
     `Generated: ${new Date().toISOString()}`,
     `Top-K cut: ${topK}`,

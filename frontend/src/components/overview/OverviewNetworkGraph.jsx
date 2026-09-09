@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 import { computeGraphLayout, computeDegrees, scoreOf } from './graphLayout'
 import './OverviewNetworkGraph.css'
@@ -18,6 +18,12 @@ const STYLESHEET = [
       height: 'data(size)',
       'overlay-opacity': 0,
       'border-width': 0,
+      // Smooths every style-driven change (hub overlay, hover/selection
+      // sizing, fade-in for newly added nodes) - position changes are
+      // animated separately via cy node.animate(), which this doesn't cover.
+      'transition-property': 'background-color, width, height, opacity, border-width, border-opacity',
+      'transition-duration': 250,
+      'transition-timing-function': 'ease-out',
     },
   },
   {
@@ -55,6 +61,9 @@ const STYLESHEET = [
       'curve-style': 'haystack',
       'haystack-radius': 0,
       'target-arrow-shape': 'none',
+      'transition-property': 'width, opacity, line-color',
+      'transition-duration': 250,
+      'transition-timing-function': 'ease-out',
     },
   },
   {
@@ -106,7 +115,16 @@ function applySelection(cy, node) {
   node.connectedEdges().addClass('selected-edge')
 }
 
-function buildElements(positioned, edges) {
+// frozenPositions maps node id -> the position last actually fed to
+// Cytoscape's declarative elements diff. For a node that already existed,
+// this deliberately returns its OLD (unchanged) position rather than the
+// freshly computed target - so react-cytoscapejs's own diff/patch sees no
+// position change and never snaps it instantly. The real move to the new
+// target is instead driven by the animate-to-target effect below, via
+// cy node.animate(), which is the only thing capable of a smooth glide.
+// A node with no frozen entry yet (brand new) gets its real target position
+// immediately - there's no "old" position to jump from.
+function buildElements(positioned, edges, frozenPositions) {
   const idSet = new Set(positioned.map((n) => String(n.node_id)))
   const scores = positioned.map(scoreOf)
   const maxScore = Math.max(...scores, 0.0001)
@@ -129,6 +147,7 @@ function buildElements(positioned, edges) {
     // only the highest-centrality handful reach the 12-15px hub range —
     // a raw linear ratio produced an unreadable 5px-vs-28px spread.
     const size = 6 + Math.sqrt(ratio) * 9
+    const target = { x: node.x * POSITION_SCALE, y: node.y * POSITION_SCALE }
     return {
       data: {
         id: idStr,
@@ -138,7 +157,7 @@ function buildElements(positioned, edges) {
         hoverSize: size * 1.15,
         ...(isHub ? { hub: 'true', showLabel: 'true' } : {}),
       },
-      position: { x: node.x * POSITION_SCALE, y: node.y * POSITION_SCALE },
+      position: frozenPositions.get(idStr) ?? target,
     }
   })
 
@@ -172,8 +191,27 @@ function OverviewNetworkGraph({
   const cyRef = useRef(null)
   const [cyReady, setCyReady] = useState(null)
 
-  const nodes = graph?.nodes ?? []
-  const edges = graph?.edges ?? []
+  // Keeps the last graph actually rendered so a filter-triggered or
+  // navigation-triggered refetch (loadState briefly back to 'loading') can
+  // keep showing it instead of tearing the whole graph down to a blank
+  // "LOADING…" placeholder - that full unmount/remount (Cytoscape included)
+  // was the real source of the jump: a fresh Cytoscape instance every time,
+  // with no continuity to animate from. Only a true first load (nothing
+  // shown yet) or a hard error/no-case/not-found state should replace it.
+  const lastGraphRef = useRef(null)
+  const hasShownGraph = lastGraphRef.current !== null
+  if (graph) lastGraphRef.current = graph
+  if (loadState === 'no-case' || loadState === 'not-found') lastGraphRef.current = null
+  const effectiveGraph = graph ?? (loadState === 'loading' ? lastGraphRef.current : null)
+  const isRefreshing = loadState === 'loading' && hasShownGraph
+
+  // Frozen positions fed to Cytoscape's declarative elements diff - see
+  // buildElements' comment. Persists across renders (not state) since
+  // updating it must never itself trigger a re-render.
+  const frozenPositionsRef = useRef(new Map())
+
+  const nodes = effectiveGraph?.nodes ?? []
+  const edges = effectiveGraph?.edges ?? []
 
   const degrees = useMemo(() => computeDegrees(nodes, edges), [nodes, edges])
 
@@ -186,7 +224,10 @@ function OverviewNetworkGraph({
   // isolate visibility actually changes, never on hover/selection/play state.
   const positioned = useMemo(() => computeGraphLayout(visibleNodes, edges), [visibleNodes, edges])
 
-  const elements = useMemo(() => buildElements(positioned, edges), [positioned, edges])
+  const elements = useMemo(
+    () => buildElements(positioned, edges, frozenPositionsRef.current),
+    [positioned, edges]
+  )
 
   const handleCy = useCallback((cy) => {
     if (cyRef.current === cy) return
@@ -194,6 +235,46 @@ function OverviewNetworkGraph({
     cy.fit(undefined, 40)
     setCyReady(cy)
   }, [])
+
+  // Runs after Cytoscape has committed `elements` (still at each node's
+  // frozen/old position) but before the browser paints, so a brand-new
+  // node's fade-in starts from invisible with no flashed frame, and an
+  // existing node's glide to its real target starts from where it visibly
+  // already was - the only way to get an actual "from A to B" animation
+  // instead of an instant relocation.
+  useLayoutEffect(() => {
+    const cy = cyReady
+    if (!cy) return
+
+    const frozen = frozenPositionsRef.current
+    const currentIds = new Set()
+
+    positioned.forEach((node) => {
+      const idStr = String(node.node_id)
+      currentIds.add(idStr)
+      const target = { x: node.x * POSITION_SCALE, y: node.y * POSITION_SCALE }
+      const ele = cy.getElementById(idStr)
+      if (ele.empty()) return
+
+      if (!frozen.has(idStr)) {
+        ele.style('opacity', 0)
+        ele.animate({ style: { opacity: 1 } }, { duration: 300, easing: 'ease-out' })
+      } else {
+        const current = ele.position()
+        if (Math.abs(current.x - target.x) > 0.05 || Math.abs(current.y - target.y) > 0.05) {
+          ele.stop(true)
+          ele.animate({ position: target }, { duration: 450, easing: 'ease-out-cubic' })
+        }
+      }
+      frozen.set(idStr, target)
+    })
+
+    // Drop entries for nodes no longer present so a later re-add is treated
+    // as new (fades in) rather than reusing a stale frozen position.
+    for (const id of frozen.keys()) {
+      if (!currentIds.has(id)) frozen.delete(id)
+    }
+  }, [positioned, cyReady])
 
   // Hover / click-to-highlight, bound imperatively so it never touches the
   // `elements` prop (and therefore never triggers a layout re-application).
@@ -262,10 +343,25 @@ function OverviewNetworkGraph({
         if (!cy) return
         cy.animate({ zoom: { level: cy.zoom() * 0.75, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } } }, { duration: 150 })
       },
+      // Fits to the just-computed TARGET layout (positioned), not
+      // cy.elements()'s live bounding box - nodes are still gliding toward
+      // that target via the animate-to-target effect above when a caller
+      // (e.g. Communities re-fitting right after picking a cluster) invokes
+      // this, so the live box is a mid-flight snapshot that can be tiny or
+      // off to one side, landing the camera on empty space or one node.
       fit: () => {
         const cy = cyRef.current
-        if (!cy) return
-        cy.animate({ fit: { eles: cy.elements(), padding: 40 } }, { duration: 300 })
+        if (!cy || positioned.length === 0) return
+        let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity
+        positioned.forEach((node) => {
+          const x = node.x * POSITION_SCALE
+          const y = node.y * POSITION_SCALE
+          if (x < x1) x1 = x
+          if (x > x2) x2 = x
+          if (y < y1) y1 = y
+          if (y > y2) y2 = y
+        })
+        cy.animate({ fit: { boundingBox: { x1, y1, x2, y2 }, padding: 40 } }, { duration: 300 })
       },
       selectNodeById: (nodeId) => {
         const cy = cyRef.current
@@ -324,13 +420,18 @@ function OverviewNetworkGraph({
       },
     })
     return () => registerControls(null)
-  }, [registerControls])
+  }, [registerControls, positioned])
 
   if (loadState === 'no-case') {
     return <div className="ovng-state">SELECT A CASE TO VIEW ITS NETWORK GRAPH</div>
   }
 
-  if (loadState === 'loading') {
+  // A 'loading' state with nothing shown yet (true first load, or the graph
+  // just got cleared by a case switch) is the only time this blanks the
+  // view - once something has rendered, a 'loading' caused by a filter or
+  // background refetch keeps showing it (effectiveGraph/isRefreshing above)
+  // instead of tearing the whole Cytoscape instance down.
+  if (loadState === 'loading' && !hasShownGraph) {
     return <div className="ovng-state">LOADING NETWORK GRAPH…</div>
   }
 
@@ -367,6 +468,7 @@ function OverviewNetworkGraph({
         wheelSensitivity={0.25}
         boxSelectionEnabled={false}
       />
+      {isRefreshing && <div className="ovng-syncing">SYNCING…</div>}
     </div>
   )
 }
