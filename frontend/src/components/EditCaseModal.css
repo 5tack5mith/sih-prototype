@@ -1,0 +1,98 @@
+.edit-case-overlay {
+  z-index: 50;
+  overflow: hidden;
+  padding: 64px 16px 24px;
+}
+
+.edit-case-modal {
+  max-height: calc(100vh - 88px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.edit-case-modal__dossier {
+  margin: 8px 0 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #e2e7ed;
+}
+
+.edit-case-modal__form {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+}
+
+.edit-case-modal__body {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px 24px;
+}
+
+.edit-case-modal__footer {
+  flex-shrink: 0;
+  padding: 12px 24px 16px;
+  border-top: 1px solid #1f2833;
+  background: #11161d;
+}
+
+.edit-case-modal__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.edit-case-modal__modified {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  color: #556272;
+}
+
+.create-case-files__meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.create-case-files__meta .create-case-files__name {
+  flex: none;
+  display: block;
+}
+
+.create-case-files__size {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: #8d9aab;
+}
+
+.edit-case-toast {
+  position: fixed;
+  top: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 45;
+  margin: 0;
+  padding: 8px 12px;
+  background: #11161d;
+  border: 1px solid rgba(78, 138, 131, 0.4);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  color: #95d2ca;
+  pointer-events: none;
+}

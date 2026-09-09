@@ -14,6 +14,12 @@ export function clearToken() {
   sessionStorage.removeItem(TOKEN_KEY)
 }
 
+let unauthorizedHandler = null
+
+export function setUnauthorizedHandler(handler) {
+  unauthorizedHandler = typeof handler === 'function' ? handler : null
+}
+
 function errorDetail(data, fallback) {
   if (typeof data?.detail === 'string') return data.detail
   return fallback
@@ -26,7 +32,17 @@ export async function apiFetch(path, options = {}) {
   if (options.body && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json')
   }
-  return fetch(`${API_BASE}${path}`, { ...options, headers })
+  const response = await fetch(`${API_BASE}${path}`, { ...options, headers })
+  if (response.status === 401) {
+    unauthorizedHandler?.()
+  }
+  return response
+}
+
+export async function fetchCurrentUser() {
+  const response = await apiFetch('/me')
+  if (!response.ok) return null
+  return response.json()
 }
 
 export async function login(username, password) {

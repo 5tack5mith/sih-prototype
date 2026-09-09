@@ -196,4 +196,32 @@ class CaseAssignment(BaseModel):
 
 class CaseStatusResponse(BaseModel):
     case_id: str
+    status: str
+
+
+class CaseCreate(BaseModel):
+    model_config = {"populate_by_name": True}
+
+    name: str = Field(min_length=1, alias="case_name")
+    priority: str | None = None
+    jurisdiction_tag: str | None = Field(default=None, alias="jurisdiction")
+    description: str | None = Field(default=None, alias="summary")
+
+
+class CaseMetadataUpdate(BaseModel):
+    name: str = Field(min_length=1)
+    priority: str | None = None
+    description: str | None = None
+    jurisdiction_tag: str | None = None
+
+
+class CaseMetadataResponse(BaseModel):
+    case_id: str
+    name: str | None = None
+    status: str | None = None
+    priority: str | None = None
+    description: str | None = None
+    updated_at: str | None = None
+    lead_analyst: str | None = None
+    jurisdiction_tag: str | None = None
     status: CaseStatus

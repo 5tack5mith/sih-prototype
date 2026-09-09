@@ -21,18 +21,6 @@ const CASE_LEAD = 'AN-84920'
 const MAX_FILE_BYTES = 50 * 1024 * 1024
 const ALLOWED_EXTENSIONS = ['.csv', '.json', '.pcap', '.pdf']
 
-export function generateCaseId(existingIds) {
-  const used = new Set(existingIds)
-  const now = new Date()
-  const year = now.getFullYear()
-  const mmdd = `${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`
-  let candidate = `NX-${year}-${mmdd}`
-  if (!used.has(candidate)) return candidate
-  let n = 2
-  while (used.has(`NX-${year}-${mmdd}-${String(n).padStart(2, '0')}`)) n += 1
-  return `NX-${year}-${mmdd}-${String(n).padStart(2, '0')}`
-}
-
 function formatFileSize(bytes) {
   if (bytes < 1024) return `${bytes} B`
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
@@ -44,12 +32,13 @@ function fileExtensionAllowed(name) {
   return ALLOWED_EXTENSIONS.some((ext) => lower.endsWith(ext))
 }
 
-function CreateCaseModal({ existingCaseIds, onClose, onCreate }) {
+function CreateCaseModal({ onClose, onCreate }) {
   const fileInputId = useId()
   const fileInputRef = useRef(null)
-  const [caseId] = useState(() => generateCaseId(existingCaseIds))
   const [caseName, setCaseName] = useState('')
   const [nameError, setNameError] = useState(null)
+  const [submitError, setSubmitError] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
   const [priority, setPriority] = useState('II')
   const [jurisdiction, setJurisdiction] = useState('CYBER-INTEL')
   const [summary, setSummary] = useState('')
@@ -96,29 +85,29 @@ function CreateCaseModal({ existingCaseIds, onClose, onCreate }) {
     setFileError(error)
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
+    if (submitting) return
     const trimmedName = caseName.trim()
     if (!trimmedName) {
       setNameError('Case name is required.')
       return
     }
 
-    const now = new Date().toISOString()
-    onCreate?.({
-      case_id: caseId,
-      name: trimmedName,
-      status: 'ACTIVE',
-      priority,
-      description: summary.trim() || null,
-      node_count: 0,
-      edge_count: 0,
-      updated_at: now,
-      created_at: now,
-      lead_analyst: CASE_LEAD,
-      jurisdiction_tag: jurisdiction,
-      attachments: attachments.map(({ name, size }) => ({ name, size })),
-    })
+    setSubmitError(null)
+    setSubmitting(true)
+    try {
+      await onCreate?.({
+        name: trimmedName,
+        priority,
+        jurisdiction,
+        summary: summary.trim() || null,
+      })
+    } catch (err) {
+      setSubmitError(err.message || 'Unable to create case. Try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -181,7 +170,7 @@ function CreateCaseModal({ existingCaseIds, onClose, onCreate }) {
                   id="create-case-id"
                   className="create-case-field__input create-case-field__input--id"
                   type="text"
-                  value={caseId}
+                  value="AUTO-ASSIGNED ON CREATE"
                   readOnly
                 />
               </div>
@@ -348,9 +337,10 @@ function CreateCaseModal({ existingCaseIds, onClose, onCreate }) {
               <button type="button" className="create-case-modal__cancel" onClick={onClose}>
                 Cancel
               </button>
-              <button type="submit" className="create-case-modal__submit">
+              {submitError && <p className="create-case-field__error">{submitError}</p>}
+              <button type="submit" className="create-case-modal__submit" disabled={submitting}>
                 <img src={plusIcon} alt="" />
-                Create Case
+                {submitting ? 'Creating…' : 'Create Case'}
               </button>
             </div>
           </footer>
