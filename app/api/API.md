@@ -38,4 +38,4 @@ Example: `curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/cases`. S
 
 ## Precomputed Zone 2 summaries
 
-Run `docker compose --profile analysis run --rm summary-generation` after structural roles, criticality, and financial-pattern jobs. The batch process sends only the fixed verified-fact JSON context to the OpenAI Responses API. `OPENAI_API_KEY` enables LLM output; every timeout, API error, malformed response, empty response, or missing key falls back to deterministic templates. The stored `source` field is `llm` or `template`.
+Run `docker compose --profile analysis run --rm summary-generation` after structural roles, criticality, and financial-pattern jobs. The batch process sends only the fixed verified-fact JSON context to the OpenRouter Chat Completions API. `OPENROUTER_API_KEY` enables LLM output; every timeout, API error, malformed response, empty response, or missing key falls back to deterministic templates. The stored `source` field is `llm` or `template`.

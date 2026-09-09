@@ -239,8 +239,8 @@ COMMUNITY_SUMMARY_SYSTEM_PROMPT = CASE_SUMMARY_SYSTEM_PROMPT.replace(
     "Keep the summary to 40-60 words, in one plain paragraph, with no header.",
 )
 
-OPENAI_MODEL = "gpt-5.6-terra"
-OPENAI_TIMEOUT_SECONDS = 10.0
+OPENROUTER_MODEL = "nex-agi/nex-n2.5-mini:free"
+OPENROUTER_TIMEOUT_SECONDS = 10.0
 
 
 @dataclass(frozen=True)
@@ -332,29 +332,30 @@ def community_summary_template(context: dict[str, Any]) -> str:
 def _extract_response_text(payload: Any) -> str:
     if not isinstance(payload, dict):
         raise ValueError("malformed LLM response")
-    direct = payload.get("output_text")
-    if isinstance(direct, str) and direct.strip():
-        return direct.strip()
-    for output in payload.get("output", []):
-        if not isinstance(output, dict):
-            continue
-        for content in output.get("content", []):
-            if isinstance(content, dict) and content.get("type") == "output_text":
-                value = content.get("text")
-                if isinstance(value, str) and value.strip():
-                    return value.strip()
-    raise ValueError("empty LLM response")
+    choices = payload.get("choices")
+    if not isinstance(choices, list) or not choices:
+        raise ValueError("empty LLM response")
+    first_choice = choices[0]
+    if not isinstance(first_choice, dict):
+        raise ValueError("malformed LLM response")
+    message = first_choice.get("message")
+    if not isinstance(message, dict):
+        raise ValueError("malformed LLM response")
+    content = message.get("content")
+    if not isinstance(content, str) or not content.strip():
+        raise ValueError("empty LLM response")
+    return content.strip()
 
 
 def _request_summary(context: dict[str, Any], system_prompt: str, max_output_tokens: int) -> str:
-    api_key = os.environ["OPENAI_API_KEY"]
-    base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
+    api_key = os.environ["OPENROUTER_API_KEY"]
+    base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
     response = httpx.post(
-        f"{base_url}/responses",
+        f"{base_url}/chat/completions",
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
         json={
-            "model": OPENAI_MODEL,
-            "input": [
+            "model": OPENROUTER_MODEL,
+            "messages": [
                 {"role": "system", "content": system_prompt},
                 {
                     "role": "user",
@@ -362,9 +363,9 @@ def _request_summary(context: dict[str, Any], system_prompt: str, max_output_tok
                     + json.dumps(context, sort_keys=True, separators=(",", ":")),
                 },
             ],
-            "max_output_tokens": max_output_tokens,
+            "max_tokens": max_output_tokens,
         },
-        timeout=OPENAI_TIMEOUT_SECONDS,
+        timeout=OPENROUTER_TIMEOUT_SECONDS,
     )
     response.raise_for_status()
     return _extract_response_text(response.json())

@@ -20,7 +20,7 @@ AUTH_BOOTSTRAP_ADMIN_PASSWORD=a-strong-admin-password
 To enable LLM-generated summaries, also set the API key. If it is omitted, the same batch step stores deterministic template summaries.
 
 ```env
-OPENAI_API_KEY=your-openai-api-key
+OPENROUTER_API_KEY=your-openrouter-api-key
 ```
 
 2. Build and start Neo4j and the API.

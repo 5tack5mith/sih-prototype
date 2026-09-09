@@ -110,39 +110,40 @@ def test_case_llm_receives_only_fixed_context_and_exact_prompt(monkeypatch):
 
     def fake_post(url, **kwargs):
         captured.update({"url": url, **kwargs})
-        return StubResponse({"output": [{"content": [{"type": "output_text", "text": "Verified summary."}]}]})
+        return StubResponse({"choices": [{"message": {"content": "Verified summary."}}]})
 
-    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-key")
     monkeypatch.setattr(httpx, "post", fake_post)
 
     result = generate_case_summary(SUMMARY_CONTEXT)
 
     assert result.text == "Verified summary."
     assert result.source == "llm"
+    assert captured["url"] == "https://openrouter.ai/api/v1/chat/completions"
     assert captured["timeout"] == 10.0
-    assert captured["json"]["model"] == "gpt-5.6-terra"
-    assert captured["json"]["input"][0]["content"] == CASE_SUMMARY_SYSTEM_PROMPT
-    user_message = captured["json"]["input"][1]["content"]
+    assert captured["json"]["model"] == "nex-agi/nex-n2.5-mini:free"
+    assert captured["json"]["messages"][0]["content"] == CASE_SUMMARY_SYSTEM_PROMPT
+    user_message = captured["json"]["messages"][1]["content"]
     assert user_message.startswith("Summarize the following case data:")
     assert json.loads(user_message.split("\n", 1)[1]) == SUMMARY_CONTEXT
     assert "tools" not in captured["json"]
 
 
 def test_case_llm_failure_and_empty_response_use_template(monkeypatch):
-    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-key")
     monkeypatch.setattr(httpx, "post", lambda *_args, **_kwargs: (_ for _ in ()).throw(httpx.TimeoutException("slow")))
     expected = case_summary_template(SUMMARY_CONTEXT)
 
     assert generate_case_summary_llm(SUMMARY_CONTEXT) == expected
     assert generate_case_summary(SUMMARY_CONTEXT).source == "template"
 
-    monkeypatch.setattr(httpx, "post", lambda *_args, **_kwargs: StubResponse({"output": []}))
+    monkeypatch.setattr(httpx, "post", lambda *_args, **_kwargs: StubResponse({"choices": []}))
     assert generate_case_summary_llm(SUMMARY_CONTEXT) == expected
 
 
 def test_community_llm_uses_short_prompt_and_template_fallback(monkeypatch):
     context = {"case_id": "CASE-A", **SUMMARY_CONTEXT["communities"][0]}
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
 
     text = generate_community_summary_llm(context)
     result = generate_community_summary(context)

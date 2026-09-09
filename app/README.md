@@ -92,4 +92,4 @@ It starts Neo4j and the API as dependencies, logs in as the bootstrap admin, ver
 
 ## Zone 2 summary generation
 
-Run `summary-generation` last, after all Zone 1 jobs. It builds a fixed aggregate fact payload from persisted results, sends only that payload to the OpenAI Responses API using `gpt-5.6-terra`, and stores case and community prose in Neo4j. Set `OPENAI_API_KEY` in `.env`; when the key is absent or any request fails, deterministic templates are stored instead. API requests only read these stored values.
+Run `summary-generation` last, after all Zone 1 jobs. It builds a fixed aggregate fact payload from persisted results, sends only that payload to the OpenRouter Chat Completions API using `nex-agi/nex-n2.5-mini:free`, and stores case and community prose in Neo4j. Set `OPENROUTER_API_KEY` in `.env`; when the key is absent or any request fails, deterministic templates are stored instead. API requests only read these stored values.
