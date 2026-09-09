@@ -1,0 +1,7917 @@
+[
+  {
+    "id": "P-00001",
+    "type": "PERSON",
+    "canonical_name": "Kritika Tandon",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Maharashtra",
+      "district": "Mumbai",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.24
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00001",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00001",
+    "visible": {
+      "account_age_days": 1813,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00001",
+    "type": "PHONE",
+    "linked_person_id": "P-00001",
+    "visible": {
+      "sim_registered_days": 2539,
+      "phone_number": "7123496035"
+    }
+  },
+  {
+    "id": "P-00002",
+    "type": "PERSON",
+    "canonical_name": "Raghav Menon",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Uttar Pradesh",
+      "district": "Meerut",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.28
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00002",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00002",
+    "visible": {
+      "account_age_days": 104,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00003",
+    "type": "PERSON",
+    "canonical_name": "Swati Shetty",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Delhi",
+      "district": "South Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.03
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00003",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00003",
+    "visible": {
+      "account_age_days": 229,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00004",
+    "type": "PERSON",
+    "canonical_name": "Rajesh Kumar",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Madhya Pradesh",
+      "district": "Indore",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.03
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00004",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00004",
+    "visible": {
+      "account_age_days": 6,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00005",
+    "type": "PERSON",
+    "canonical_name": "Anita Oberoi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Bihar",
+      "district": "Bhagalpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00005",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00005",
+    "visible": {
+      "account_age_days": 93,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00006",
+    "type": "PERSON",
+    "canonical_name": "Malathi Lal",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Delhi",
+      "district": "South Delhi",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.48
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00006",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00006",
+    "visible": {
+      "account_age_days": 27,
+      "kyc_status": "minimal",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00007",
+    "type": "PERSON",
+    "canonical_name": "Simran Mahajan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Delhi",
+      "district": "Dwarka",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.66
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00007",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00007",
+    "visible": {
+      "account_age_days": 21,
+      "kyc_status": "minimal",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00008",
+    "type": "PERSON",
+    "canonical_name": "Vishal Nair",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Bihar",
+      "district": "Muzaffarpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.63
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00008",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00008",
+    "visible": {
+      "account_age_days": 30,
+      "kyc_status": "minimal",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00009",
+    "type": "PERSON",
+    "canonical_name": "Arun Chauhan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Madhya Pradesh",
+      "district": "Bhopal",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.24
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00009",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00009",
+    "visible": {
+      "account_age_days": 1,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "private",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00010",
+    "type": "PERSON",
+    "canonical_name": "Ritu Mukherjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Uttar Pradesh",
+      "district": "Ghaziabad",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.51
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00010",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00010",
+    "visible": {
+      "account_age_days": 7,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00011",
+    "type": "PERSON",
+    "canonical_name": "Ayesha Kumar",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Karnataka",
+      "district": "Bengaluru Urban",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.11
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00011",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00011",
+    "visible": {
+      "account_age_days": 1642,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00002",
+    "type": "PHONE",
+    "linked_person_id": "P-00011",
+    "visible": {
+      "sim_registered_days": 987,
+      "phone_number": "9706662285"
+    }
+  },
+  {
+    "id": "P-00012",
+    "type": "PERSON",
+    "canonical_name": "Usha Bose",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Uttar Pradesh",
+      "district": "Meerut",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.09
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00012",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00012",
+    "visible": {
+      "account_age_days": 382,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00013",
+    "type": "PERSON",
+    "canonical_name": "Rohit Bhatt",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Haryana",
+      "district": "Faridabad",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00013",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00013",
+    "visible": {
+      "account_age_days": 399,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00014",
+    "type": "PERSON",
+    "canonical_name": "Latha Bedi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Bihar",
+      "district": "Muzaffarpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.2
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00014",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00014",
+    "visible": {
+      "account_age_days": 5,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00015",
+    "type": "PERSON",
+    "canonical_name": "Kritika Kumar",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Jharkhand",
+      "district": "Dhanbad",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.14
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00015",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00015",
+    "visible": {
+      "account_age_days": 1681,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00003",
+    "type": "PHONE",
+    "linked_person_id": "P-00015",
+    "visible": {
+      "sim_registered_days": 510,
+      "phone_number": "8611277525"
+    }
+  },
+  {
+    "id": "P-00017",
+    "type": "PERSON",
+    "canonical_name": "Venkat Nayak",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Madhya Pradesh",
+      "district": "Ujjain",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00017",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00017",
+    "visible": {
+      "account_age_days": 54,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00018",
+    "type": "PERSON",
+    "canonical_name": "Krishnan Subramaniam",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Haryana",
+      "district": "Gurugram",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.27
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00018",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00018",
+    "visible": {
+      "account_age_days": 3,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00019",
+    "type": "PERSON",
+    "canonical_name": "Devendra Saxena",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Uttar Pradesh",
+      "district": "Lucknow",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.05
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00019",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00019",
+    "visible": {
+      "account_age_days": 14,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00020",
+    "type": "PERSON",
+    "canonical_name": "Amar Dubey",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Jharkhand",
+      "district": "Giridih",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.0
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00020",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00020",
+    "visible": {
+      "account_age_days": 1891,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00004",
+    "type": "PHONE",
+    "linked_person_id": "P-00020",
+    "visible": {
+      "sim_registered_days": 2153,
+      "phone_number": "9528282082"
+    }
+  },
+  {
+    "id": "P-00021",
+    "type": "PERSON",
+    "canonical_name": "Manish Konda",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Delhi",
+      "district": "South Delhi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.24
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00021",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00021",
+    "visible": {
+      "account_age_days": 350,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00022",
+    "type": "PERSON",
+    "canonical_name": "Usha Rajan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Rajasthan",
+      "district": "Bharatpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.69
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00022",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00022",
+    "visible": {
+      "account_age_days": 10,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00023",
+    "type": "PERSON",
+    "canonical_name": "Vishal Kaur",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Tamil Nadu",
+      "district": "Tiruchirappalli",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.77
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00023",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00023",
+    "visible": {
+      "account_age_days": 29,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00024",
+    "type": "PERSON",
+    "canonical_name": "Shalini Panicker",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Delhi",
+      "district": "Dwarka",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.24
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00024",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00024",
+    "visible": {
+      "account_age_days": 4,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00025",
+    "type": "PERSON",
+    "canonical_name": "Manju Mane",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.05
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00025",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00025",
+    "visible": {
+      "account_age_days": 288,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00026",
+    "type": "PERSON",
+    "canonical_name": "Girish Gupta",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Rajasthan",
+      "district": "Alwar",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.29
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00026",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00026",
+    "visible": {
+      "account_age_days": 1918,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00005",
+    "type": "PHONE",
+    "linked_person_id": "P-00026",
+    "visible": {
+      "sim_registered_days": 2426,
+      "phone_number": "9924400621"
+    }
+  },
+  {
+    "id": "P-00027",
+    "type": "PERSON",
+    "canonical_name": "Manish Shah",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Jharkhand",
+      "district": "Deoghar",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.5
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00027",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00027",
+    "visible": {
+      "account_age_days": 5,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00028",
+    "type": "PERSON",
+    "canonical_name": "Varun Kapoor",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Delhi",
+      "district": "North Delhi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.85
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00028",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00028",
+    "visible": {
+      "account_age_days": 18,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00029",
+    "type": "PERSON",
+    "canonical_name": "Amar Anand",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Uttar Pradesh",
+      "district": "Kanpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.86
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00029",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00029",
+    "visible": {
+      "account_age_days": 25,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00030",
+    "type": "PERSON",
+    "canonical_name": "Manish Mishra",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Bihar",
+      "district": "Gaya",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.25
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00030",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00030",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00031",
+    "type": "PERSON",
+    "canonical_name": "Chitra Menon",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Madhya Pradesh",
+      "district": "Ujjain",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.14
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00031",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00031",
+    "visible": {
+      "account_age_days": 267,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00032",
+    "type": "PERSON",
+    "canonical_name": "Vinod Chatterjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Jharkhand",
+      "district": "Ranchi",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.18
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00032",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00032",
+    "visible": {
+      "account_age_days": 692,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00006",
+    "type": "PHONE",
+    "linked_person_id": "P-00032",
+    "visible": {
+      "sim_registered_days": 741,
+      "phone_number": "9831533327"
+    }
+  },
+  {
+    "id": "P-00033",
+    "type": "PERSON",
+    "canonical_name": "Amar Reddy",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Haryana",
+      "district": "Faridabad",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.13
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00033",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00033",
+    "visible": {
+      "account_age_days": 200,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00034",
+    "type": "PERSON",
+    "canonical_name": "Vasanthi Verma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Karnataka",
+      "district": "Hubballi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.0
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00034",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00034",
+    "visible": {
+      "account_age_days": 86,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00035",
+    "type": "PERSON",
+    "canonical_name": "Priyanka Vasudevan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Delhi",
+      "district": "Dwarka",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.79
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00035",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00035",
+    "visible": {
+      "account_age_days": 14,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00036",
+    "type": "PERSON",
+    "canonical_name": "Manoj Gupta",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00036",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00036",
+    "visible": {
+      "account_age_days": 182,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00037",
+    "type": "PERSON",
+    "canonical_name": "Ravi Ghosh",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Tamil Nadu",
+      "district": "Coimbatore",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.24
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00037",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00037",
+    "visible": {
+      "account_age_days": 302,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00038",
+    "type": "PERSON",
+    "canonical_name": "Poonam Shukla",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Haryana",
+      "district": "Nuh",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.19
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00038",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00038",
+    "visible": {
+      "account_age_days": 1140,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00007",
+    "type": "PHONE",
+    "linked_person_id": "P-00038",
+    "visible": {
+      "sim_registered_days": 1108,
+      "phone_number": "6834926428"
+    }
+  },
+  {
+    "id": "P-00039",
+    "type": "PERSON",
+    "canonical_name": "Balaji Sharma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Maharashtra",
+      "district": "Nashik",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.28
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00039",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00039",
+    "visible": {
+      "account_age_days": 341,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00040",
+    "type": "PERSON",
+    "canonical_name": "Lata Mukherjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Haryana",
+      "district": "Gurugram",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.65
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00040",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00040",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00041",
+    "type": "PERSON",
+    "canonical_name": "Girish Pandit",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Tamil Nadu",
+      "district": "Tiruchirappalli",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.05
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00041",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00041",
+    "visible": {
+      "account_age_days": 368,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00042",
+    "type": "PERSON",
+    "canonical_name": "Rajesh Mishra",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Uttar Pradesh",
+      "district": "Lucknow",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.14
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00042",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00042",
+    "visible": {
+      "account_age_days": 210,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00043",
+    "type": "PERSON",
+    "canonical_name": "Jitendra Sharma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Haryana",
+      "district": "Rohtak",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.2
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00043",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00043",
+    "visible": {
+      "account_age_days": 1176,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00008",
+    "type": "PHONE",
+    "linked_person_id": "P-00043",
+    "visible": {
+      "sim_registered_days": 191,
+      "phone_number": "7017115551"
+    }
+  },
+  {
+    "id": "P-00044",
+    "type": "PERSON",
+    "canonical_name": "Kritika Bedi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Bihar",
+      "district": "Patna",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.17
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00044",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00044",
+    "visible": {
+      "account_age_days": 4,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00045",
+    "type": "PERSON",
+    "canonical_name": "Radha Shukla",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Delhi",
+      "district": "West Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.3
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00045",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00045",
+    "visible": {
+      "account_age_days": 251,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00046",
+    "type": "PERSON",
+    "canonical_name": "Manish Reddy",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Tamil Nadu",
+      "district": "Tiruchirappalli",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.17
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00046",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00046",
+    "visible": {
+      "account_age_days": 7,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00047",
+    "type": "PERSON",
+    "canonical_name": "Girish Ranganathan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Jharkhand",
+      "district": "Jamtara",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.19
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00047",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00047",
+    "visible": {
+      "account_age_days": 1575,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00009",
+    "type": "PHONE",
+    "linked_person_id": "P-00047",
+    "visible": {
+      "sim_registered_days": 1711,
+      "phone_number": "9732280706"
+    }
+  },
+  {
+    "id": "P-00048",
+    "type": "PERSON",
+    "canonical_name": "Vinod Mehta",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Madhya Pradesh",
+      "district": "Jabalpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.47
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00048",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00048",
+    "visible": {
+      "account_age_days": 117,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00049",
+    "type": "PERSON",
+    "canonical_name": "Varun Bhatt",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Jharkhand",
+      "district": "Deoghar",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.67
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00049",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00049",
+    "visible": {
+      "account_age_days": 13,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00050",
+    "type": "PERSON",
+    "canonical_name": "Mahesh Lakshman",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Jharkhand",
+      "district": "Dhanbad",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.63
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00050",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00050",
+    "visible": {
+      "account_age_days": 14,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00051",
+    "type": "PERSON",
+    "canonical_name": "Shanti Kannan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Haryana",
+      "district": "Gurugram",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00051",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00051",
+    "visible": {
+      "account_age_days": 343,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00052",
+    "type": "PERSON",
+    "canonical_name": "Kavya Chandran",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Madhya Pradesh",
+      "district": "Gwalior",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.03
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00052",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00052",
+    "visible": {
+      "account_age_days": 363,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00053",
+    "type": "PERSON",
+    "canonical_name": "Kritika Sharma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Rajasthan",
+      "district": "Jaipur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.06
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00053",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00053",
+    "visible": {
+      "account_age_days": 10,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00054",
+    "type": "PERSON",
+    "canonical_name": "Satish Mishra",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Karnataka",
+      "district": "Bengaluru Urban",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.85
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00054",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00054",
+    "visible": {
+      "account_age_days": 5,
+      "kyc_status": "minimal",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00055",
+    "type": "PERSON",
+    "canonical_name": "Naveen Warrier",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Haryana",
+      "district": "Rohtak",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.09
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00055",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00055",
+    "visible": {
+      "account_age_days": 3,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00056",
+    "type": "PERSON",
+    "canonical_name": "Abhishek Chauhan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Uttar Pradesh",
+      "district": "Kanpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.53
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00056",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00056",
+    "visible": {
+      "account_age_days": 12,
+      "kyc_status": "minimal",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00057",
+    "type": "PERSON",
+    "canonical_name": "Saraswati Chakraborty",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Tamil Nadu",
+      "district": "Tiruchirappalli",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.21
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00057",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00057",
+    "visible": {
+      "account_age_days": 1700,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00010",
+    "type": "PHONE",
+    "linked_person_id": "P-00057",
+    "visible": {
+      "sim_registered_days": 796,
+      "phone_number": "8572889027"
+    }
+  },
+  {
+    "id": "P-00058",
+    "type": "PERSON",
+    "canonical_name": "Simran Sharma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Bihar",
+      "district": "Patna",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.91
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00058",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00058",
+    "visible": {
+      "account_age_days": 117,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00059",
+    "type": "PERSON",
+    "canonical_name": "Kalyani Sinha",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Jharkhand",
+      "district": "Jamtara",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.03
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00059",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00059",
+    "visible": {
+      "account_age_days": 334,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00060",
+    "type": "PERSON",
+    "canonical_name": "Amar Mane",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Rajasthan",
+      "district": "Jaipur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.27
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00060",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00060",
+    "visible": {
+      "account_age_days": 6,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00061",
+    "type": "PERSON",
+    "canonical_name": "Naresh Panicker",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Delhi",
+      "district": "North Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.19
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00061",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00061",
+    "visible": {
+      "account_age_days": 138,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00062",
+    "type": "PERSON",
+    "canonical_name": "Anjali Ahuja",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Jharkhand",
+      "district": "Jamtara",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.59
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00062",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00062",
+    "visible": {
+      "account_age_days": 16,
+      "kyc_status": "minimal",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00063",
+    "type": "PERSON",
+    "canonical_name": "Ashwin Kapoor",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Delhi",
+      "district": "West Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.27
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00063",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00063",
+    "visible": {
+      "account_age_days": 55,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00064",
+    "type": "PERSON",
+    "canonical_name": "Rajan Trivedi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Maharashtra",
+      "district": "Mumbai",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00064",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00064",
+    "visible": {
+      "account_age_days": 297,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00065",
+    "type": "PERSON",
+    "canonical_name": "Rekha Chatterjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.71
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00065",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00065",
+    "visible": {
+      "account_age_days": 13,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "ORG-00001",
+    "type": "RECRUITER_PLATFORM",
+    "visible": {
+      "channel": "facebook_bot",
+      "pretext": "job_offer"
+    }
+  },
+  {
+    "id": "P-00066",
+    "type": "PERSON",
+    "canonical_name": "Vishal Kaushik",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Madhya Pradesh",
+      "district": "Bhopal",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.16
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00066",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00066",
+    "visible": {
+      "account_age_days": 67,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00011",
+    "type": "PHONE",
+    "linked_person_id": "P-00066",
+    "visible": {
+      "sim_registered_days": 793,
+      "phone_number": "8710668160"
+    }
+  },
+  {
+    "id": "P-00067",
+    "type": "PERSON",
+    "canonical_name": "Payal Dubey",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Rajasthan",
+      "district": "Alwar",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.05
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00067",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00067",
+    "visible": {
+      "account_age_days": 373,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00012",
+    "type": "PHONE",
+    "linked_person_id": "P-00067",
+    "visible": {
+      "sim_registered_days": 1094,
+      "phone_number": "6817907170"
+    }
+  },
+  {
+    "id": "P-00068",
+    "type": "PERSON",
+    "canonical_name": "Devendra Chauhan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Karnataka",
+      "district": "Hubballi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.09
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00068",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00068",
+    "visible": {
+      "account_age_days": 262,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00069",
+    "type": "PERSON",
+    "canonical_name": "Amit Yadav",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Jharkhand",
+      "district": "Jamtara",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00069",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00069",
+    "visible": {
+      "account_age_days": 271,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00070",
+    "type": "PERSON",
+    "canonical_name": "Priya Konda",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Bihar",
+      "district": "Bhagalpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.79
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00070",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00070",
+    "visible": {
+      "account_age_days": 25,
+      "kyc_status": "minimal",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00071",
+    "type": "PERSON",
+    "canonical_name": "Vidya Rana",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Maharashtra",
+      "district": "Nashik",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.1
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00071",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00071",
+    "visible": {
+      "account_age_days": 157,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00072",
+    "type": "PERSON",
+    "canonical_name": "Rahul Kumar",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.26
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00072",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00072",
+    "visible": {
+      "account_age_days": 248,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00073",
+    "type": "PERSON",
+    "canonical_name": "Nikhil Chatterjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Madhya Pradesh",
+      "district": "Jabalpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.13
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00073",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00073",
+    "visible": {
+      "account_age_days": 10,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00074",
+    "type": "PERSON",
+    "canonical_name": "Rajan Bhatt",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Jharkhand",
+      "district": "Deoghar",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.01
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00074",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00074",
+    "visible": {
+      "account_age_days": 4,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_3plus",
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "EXIT-00001",
+    "type": "CRYPTO_OFFRAMP",
+    "visible": {
+      "platform_type": "wallet_service"
+    }
+  },
+  {
+    "id": "P-00075",
+    "type": "PERSON",
+    "canonical_name": "Pankaj Vora",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Rajasthan",
+      "district": "Jodhpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00075",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00075",
+    "visible": {
+      "account_age_days": 1379,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00013",
+    "type": "PHONE",
+    "linked_person_id": "P-00075",
+    "visible": {
+      "sim_registered_days": 1442,
+      "phone_number": "6475243121"
+    }
+  },
+  {
+    "id": "P-00077",
+    "type": "PERSON",
+    "canonical_name": "Aditya Bhagat",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Uttar Pradesh",
+      "district": "Kanpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.1
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00077",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00077",
+    "visible": {
+      "account_age_days": 9,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00078",
+    "type": "PERSON",
+    "canonical_name": "Vishal Verma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Rajasthan",
+      "district": "Jaipur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.29
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00078",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00078",
+    "visible": {
+      "account_age_days": 5,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "ORG-00002",
+    "type": "RECRUITER_PLATFORM",
+    "visible": {
+      "channel": "facebook_bot",
+      "pretext": "job_offer"
+    }
+  },
+  {
+    "id": "P-00079",
+    "type": "PERSON",
+    "canonical_name": "Usha Patel",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Delhi",
+      "district": "North Delhi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.25
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00079",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00079",
+    "visible": {
+      "account_age_days": 363,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00014",
+    "type": "PHONE",
+    "linked_person_id": "P-00079",
+    "visible": {
+      "sim_registered_days": 2162,
+      "phone_number": "6488875262"
+    }
+  },
+  {
+    "id": "P-00080",
+    "type": "PERSON",
+    "canonical_name": "Manoj Verma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Karnataka",
+      "district": "Mangaluru",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.27
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00080",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00080",
+    "visible": {
+      "account_age_days": 283,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00015",
+    "type": "PHONE",
+    "linked_person_id": "P-00080",
+    "visible": {
+      "sim_registered_days": 32,
+      "phone_number": "9845234774"
+    }
+  },
+  {
+    "id": "P-00081",
+    "type": "PERSON",
+    "canonical_name": "Vivek Rathore",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Haryana",
+      "district": "Nuh",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.16
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00081",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00081",
+    "visible": {
+      "account_age_days": 81,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00082",
+    "type": "PERSON",
+    "canonical_name": "Sarita Dubey",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Rajasthan",
+      "district": "Bharatpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.08
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00082",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00082",
+    "visible": {
+      "account_age_days": 133,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00083",
+    "type": "PERSON",
+    "canonical_name": "Deepa Pandit",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Jharkhand",
+      "district": "Giridih",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.61
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00083",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00083",
+    "visible": {
+      "account_age_days": 26,
+      "kyc_status": "minimal",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00084",
+    "type": "PERSON",
+    "canonical_name": "Nisha Iyengar",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Karnataka",
+      "district": "Bengaluru Urban",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.53
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00084",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00084",
+    "visible": {
+      "account_age_days": 10,
+      "kyc_status": "minimal",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00085",
+    "type": "PERSON",
+    "canonical_name": "Bharat Varma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Tamil Nadu",
+      "district": "Salem",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.85
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00085",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00085",
+    "visible": {
+      "account_age_days": 12,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00086",
+    "type": "PERSON",
+    "canonical_name": "Sunil Sinha",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Haryana",
+      "district": "Gurugram",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.22
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00086",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00086",
+    "visible": {
+      "account_age_days": 199,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00087",
+    "type": "PERSON",
+    "canonical_name": "Bhavna Vasudevan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Tamil Nadu",
+      "district": "Tiruchirappalli",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.59
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00087",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00087",
+    "visible": {
+      "account_age_days": 11,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_3plus",
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "EXIT-00002",
+    "type": "CRYPTO_OFFRAMP",
+    "visible": {
+      "platform_type": "wallet_service"
+    }
+  },
+  {
+    "id": "P-00088",
+    "type": "PERSON",
+    "canonical_name": "Amar Patel",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Bihar",
+      "district": "Bhagalpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.09
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00088",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00088",
+    "visible": {
+      "account_age_days": 15,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00089",
+    "type": "PERSON",
+    "canonical_name": "Aarti Yadav",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Rajasthan",
+      "district": "Bharatpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00089",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00089",
+    "visible": {
+      "account_age_days": 1039,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00016",
+    "type": "PHONE",
+    "linked_person_id": "P-00089",
+    "visible": {
+      "sim_registered_days": 2433,
+      "phone_number": "9458317989"
+    }
+  },
+  {
+    "id": "P-00090",
+    "type": "PERSON",
+    "canonical_name": "Padma Chopra",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Madhya Pradesh",
+      "district": "Ujjain",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00090",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00090",
+    "visible": {
+      "account_age_days": 51,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00091",
+    "type": "PERSON",
+    "canonical_name": "Anjali Sethi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Jharkhand",
+      "district": "Jamtara",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.21
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00091",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00091",
+    "visible": {
+      "account_age_days": 284,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00092",
+    "type": "PERSON",
+    "canonical_name": "Shreya Pandit",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Karnataka",
+      "district": "Belagavi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00092",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00092",
+    "visible": {
+      "account_age_days": 310,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00093",
+    "type": "PERSON",
+    "canonical_name": "Lata Pandey",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Madhya Pradesh",
+      "district": "Jabalpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.28
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00093",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00093",
+    "visible": {
+      "account_age_days": 586,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00017",
+    "type": "PHONE",
+    "linked_person_id": "P-00093",
+    "visible": {
+      "sim_registered_days": 1604,
+      "phone_number": "9317299700"
+    }
+  },
+  {
+    "id": "P-00094",
+    "type": "PERSON",
+    "canonical_name": "Ashok Gupta",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Jharkhand",
+      "district": "Giridih",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.18
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00094",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00094",
+    "visible": {
+      "account_age_days": 80,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00095",
+    "type": "PERSON",
+    "canonical_name": "Ajay Lal",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Haryana",
+      "district": "Nuh",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.42
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00095",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00095",
+    "visible": {
+      "account_age_days": 7,
+      "kyc_status": "minimal",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00096",
+    "type": "PERSON",
+    "canonical_name": "Gaurav Mistry",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Madhya Pradesh",
+      "district": "Ujjain",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.86
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00096",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00096",
+    "visible": {
+      "account_age_days": 6,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00097",
+    "type": "PERSON",
+    "canonical_name": "Manju Shukla",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Uttar Pradesh",
+      "district": "Noida",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.21
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00097",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00097",
+    "visible": {
+      "account_age_days": 1652,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00018",
+    "type": "PHONE",
+    "linked_person_id": "P-00097",
+    "visible": {
+      "sim_registered_days": 1832,
+      "phone_number": "7503669873"
+    }
+  },
+  {
+    "id": "P-00098",
+    "type": "PERSON",
+    "canonical_name": "Mukesh Naik",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Jharkhand",
+      "district": "Deoghar",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.45
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00098",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00098",
+    "visible": {
+      "account_age_days": 19,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00099",
+    "type": "PERSON",
+    "canonical_name": "Ayesha Dubey",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Maharashtra",
+      "district": "Nagpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.55
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00099",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00099",
+    "visible": {
+      "account_age_days": 23,
+      "kyc_status": "minimal",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00100",
+    "type": "PERSON",
+    "canonical_name": "Vasanthi Mahajan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Uttar Pradesh",
+      "district": "Ghaziabad",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.04
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00100",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00100",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "public_sector",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00101",
+    "type": "PERSON",
+    "canonical_name": "Deepak Yadav",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Haryana",
+      "district": "Faridabad",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.28
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00101",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00101",
+    "visible": {
+      "account_age_days": 2,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00102",
+    "type": "PERSON",
+    "canonical_name": "Nikhil Bhagat",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Maharashtra",
+      "district": "Pune",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.12
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00102",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00102",
+    "visible": {
+      "account_age_days": 262,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00103",
+    "type": "PERSON",
+    "canonical_name": "Nikhil Sharma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Karnataka",
+      "district": "Hubballi",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00103",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00103",
+    "visible": {
+      "account_age_days": 1902,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00019",
+    "type": "PHONE",
+    "linked_person_id": "P-00103",
+    "visible": {
+      "sim_registered_days": 620,
+      "phone_number": "7150711299"
+    }
+  },
+  {
+    "id": "P-00105",
+    "type": "PERSON",
+    "canonical_name": "Priya Sinha",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Madhya Pradesh",
+      "district": "Gwalior",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.48
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00105",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00105",
+    "visible": {
+      "account_age_days": 17,
+      "kyc_status": "minimal",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00106",
+    "type": "PERSON",
+    "canonical_name": "Vikas Prasad",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Uttar Pradesh",
+      "district": "Lucknow",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.08
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00106",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00106",
+    "visible": {
+      "account_age_days": 4,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "ORG-00003",
+    "type": "RECRUITER_PLATFORM",
+    "visible": {
+      "channel": "whatsapp",
+      "pretext": "job_offer"
+    }
+  },
+  {
+    "id": "P-00107",
+    "type": "PERSON",
+    "canonical_name": "Lata Chatterjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Madhya Pradesh",
+      "district": "Bhopal",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.25
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00107",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00107",
+    "visible": {
+      "account_age_days": 138,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00020",
+    "type": "PHONE",
+    "linked_person_id": "P-00107",
+    "visible": {
+      "sim_registered_days": 2094,
+      "phone_number": "8147230307"
+    }
+  },
+  {
+    "id": "P-00108",
+    "type": "PERSON",
+    "canonical_name": "Padma Ghosh",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Uttar Pradesh",
+      "district": "Meerut",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.1
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00108",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00108",
+    "visible": {
+      "account_age_days": 1787,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00021",
+    "type": "PHONE",
+    "linked_person_id": "P-00108",
+    "visible": {
+      "sim_registered_days": 1614,
+      "phone_number": "8901072869"
+    }
+  },
+  {
+    "id": "P-00109",
+    "type": "PERSON",
+    "canonical_name": "Swati Mahato",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Maharashtra",
+      "district": "Pune",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.25
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00109",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00109",
+    "visible": {
+      "account_age_days": 10,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00110",
+    "type": "PERSON",
+    "canonical_name": "Ashok Vasudevan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Rajasthan",
+      "district": "Jaipur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.75
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00110",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00110",
+    "visible": {
+      "account_age_days": 29,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00111",
+    "type": "PERSON",
+    "canonical_name": "Ganesh Nayak",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Rajasthan",
+      "district": "Jaipur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00111",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00111",
+    "visible": {
+      "account_age_days": 222,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00112",
+    "type": "PERSON",
+    "canonical_name": "Vishal Goel",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Jharkhand",
+      "district": "Deoghar",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.58
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00112",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00112",
+    "visible": {
+      "account_age_days": 16,
+      "kyc_status": "minimal",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00113",
+    "type": "PERSON",
+    "canonical_name": "Jitendra Sinha",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Karnataka",
+      "district": "Mangaluru",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.75
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00113",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00113",
+    "visible": {
+      "account_age_days": 14,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00114",
+    "type": "PERSON",
+    "canonical_name": "Prakash Sengupta",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Delhi",
+      "district": "South Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.29
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00114",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00114",
+    "visible": {
+      "account_age_days": 10,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00115",
+    "type": "PERSON",
+    "canonical_name": "Manoj Chandran",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Haryana",
+      "district": "Nuh",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.11
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00115",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00115",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_3plus",
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "EXIT-00003",
+    "type": "CRYPTO_OFFRAMP",
+    "visible": {
+      "platform_type": "wallet_service"
+    }
+  },
+  {
+    "id": "P-00116",
+    "type": "PERSON",
+    "canonical_name": "Vikas Bose",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Uttar Pradesh",
+      "district": "Noida",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.18
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00116",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00116",
+    "visible": {
+      "account_age_days": 12,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00117",
+    "type": "PERSON",
+    "canonical_name": "Meenakshi Tandon",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Karnataka",
+      "district": "Mangaluru",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.29
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00117",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00117",
+    "visible": {
+      "account_age_days": 208,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00022",
+    "type": "PHONE",
+    "linked_person_id": "P-00117",
+    "visible": {
+      "sim_registered_days": 130,
+      "phone_number": "6279696493"
+    }
+  },
+  {
+    "id": "P-00118",
+    "type": "PERSON",
+    "canonical_name": "Vivek Mistry",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Haryana",
+      "district": "Gurugram",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.67
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00118",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00118",
+    "visible": {
+      "account_age_days": 27,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00119",
+    "type": "PERSON",
+    "canonical_name": "Ananya Ghosh",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Delhi",
+      "district": "East Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.26
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00119",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00119",
+    "visible": {
+      "account_age_days": 271,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00120",
+    "type": "PERSON",
+    "canonical_name": "Jitendra Hegde",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Uttar Pradesh",
+      "district": "Ghaziabad",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.56
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00120",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00120",
+    "visible": {
+      "account_age_days": 6,
+      "kyc_status": "minimal",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00121",
+    "type": "PERSON",
+    "canonical_name": "Radha Chandran",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Maharashtra",
+      "district": "Aurangabad",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.28
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00121",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00121",
+    "visible": {
+      "account_age_days": 255,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00023",
+    "type": "PHONE",
+    "linked_person_id": "P-00121",
+    "visible": {
+      "sim_registered_days": 1081,
+      "phone_number": "6256473845"
+    }
+  },
+  {
+    "id": "P-00122",
+    "type": "PERSON",
+    "canonical_name": "Harsh Konda",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Uttar Pradesh",
+      "district": "Varanasi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.56
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00122",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00122",
+    "visible": {
+      "account_age_days": 15,
+      "kyc_status": "minimal",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00123",
+    "type": "PERSON",
+    "canonical_name": "Vandana Dixit",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Tamil Nadu",
+      "district": "Coimbatore",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.91
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00123",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00123",
+    "visible": {
+      "account_age_days": 15,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00124",
+    "type": "PERSON",
+    "canonical_name": "Siddharth Kannan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Jharkhand",
+      "district": "Ranchi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.09
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00124",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00124",
+    "visible": {
+      "account_age_days": 47,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00125",
+    "type": "PERSON",
+    "canonical_name": "Radha Sharma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Jharkhand",
+      "district": "Ranchi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00125",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00125",
+    "visible": {
+      "account_age_days": 7,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00126",
+    "type": "PERSON",
+    "canonical_name": "Radha Sarkar",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Tamil Nadu",
+      "district": "Coimbatore",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.03
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00126",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00126",
+    "visible": {
+      "account_age_days": 896,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00024",
+    "type": "PHONE",
+    "linked_person_id": "P-00126",
+    "visible": {
+      "sim_registered_days": 1640,
+      "phone_number": "8524287410"
+    }
+  },
+  {
+    "id": "P-00127",
+    "type": "PERSON",
+    "canonical_name": "Rajan Shah",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Jharkhand",
+      "district": "Jamtara",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.21
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00127",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00127",
+    "visible": {
+      "account_age_days": 57,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00128",
+    "type": "PERSON",
+    "canonical_name": "Krishnan Trivedi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Madhya Pradesh",
+      "district": "Indore",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00128",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00128",
+    "visible": {
+      "account_age_days": 5,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00129",
+    "type": "PERSON",
+    "canonical_name": "Vandana Sarkar",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Uttar Pradesh",
+      "district": "Noida",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.13
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00129",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00129",
+    "visible": {
+      "account_age_days": 12,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00130",
+    "type": "PERSON",
+    "canonical_name": "Madhuri Saxena",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Rajasthan",
+      "district": "Alwar",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.28
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00130",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00130",
+    "visible": {
+      "account_age_days": 354,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00025",
+    "type": "PHONE",
+    "linked_person_id": "P-00130",
+    "visible": {
+      "sim_registered_days": 2902,
+      "phone_number": "9175018514"
+    }
+  },
+  {
+    "id": "P-00131",
+    "type": "PERSON",
+    "canonical_name": "Amit Suri",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Karnataka",
+      "district": "Belagavi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.19
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00131",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00131",
+    "visible": {
+      "account_age_days": 123,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00132",
+    "type": "PERSON",
+    "canonical_name": "Ashok Sethi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Rajasthan",
+      "district": "Udaipur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00132",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00132",
+    "visible": {
+      "account_age_days": 2,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00133",
+    "type": "PERSON",
+    "canonical_name": "Rohit Puri",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Uttar Pradesh",
+      "district": "Noida",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.41
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00133",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00133",
+    "visible": {
+      "account_age_days": 24,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00134",
+    "type": "PERSON",
+    "canonical_name": "Isha Ranganathan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Uttar Pradesh",
+      "district": "Kanpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.2
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00134",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00134",
+    "visible": {
+      "account_age_days": 345,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00135",
+    "type": "PERSON",
+    "canonical_name": "Archana Bose",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Delhi",
+      "district": "East Delhi",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00135",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00135",
+    "visible": {
+      "account_age_days": 89,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00136",
+    "type": "PERSON",
+    "canonical_name": "Sunita Rana",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Jharkhand",
+      "district": "Deoghar",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.06
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00136",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00136",
+    "visible": {
+      "account_age_days": 264,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00137",
+    "type": "PERSON",
+    "canonical_name": "Usha Jha",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Madhya Pradesh",
+      "district": "Indore",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.71
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00137",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00137",
+    "visible": {
+      "account_age_days": 9,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00138",
+    "type": "PERSON",
+    "canonical_name": "Isha Varma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Jharkhand",
+      "district": "Deoghar",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.27
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00138",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00138",
+    "visible": {
+      "account_age_days": 392,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00139",
+    "type": "PERSON",
+    "canonical_name": "Kavya Krishnan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Delhi",
+      "district": "East Delhi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00139",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00139",
+    "visible": {
+      "account_age_days": 220,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00140",
+    "type": "PERSON",
+    "canonical_name": "Murali Sengupta",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Haryana",
+      "district": "Gurugram",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.26
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00140",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00140",
+    "visible": {
+      "account_age_days": 67,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00141",
+    "type": "PERSON",
+    "canonical_name": "Malathi Bhagat",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Tamil Nadu",
+      "district": "Tiruchirappalli",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.64
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00141",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00141",
+    "visible": {
+      "account_age_days": 25,
+      "kyc_status": "minimal",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00142",
+    "type": "PERSON",
+    "canonical_name": "Jyoti Bedi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Uttar Pradesh",
+      "district": "Kanpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.04
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00142",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00142",
+    "visible": {
+      "account_age_days": 1878,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00026",
+    "type": "PHONE",
+    "linked_person_id": "P-00142",
+    "visible": {
+      "sim_registered_days": 2454,
+      "phone_number": "6347403224"
+    }
+  },
+  {
+    "id": "P-00144",
+    "type": "PERSON",
+    "canonical_name": "Alka Warrier",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Madhya Pradesh",
+      "district": "Jabalpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.87
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00144",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00144",
+    "visible": {
+      "account_age_days": 16,
+      "kyc_status": "minimal",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00145",
+    "type": "PERSON",
+    "canonical_name": "Arun Desai",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Madhya Pradesh",
+      "district": "Indore",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00145",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00145",
+    "visible": {
+      "account_age_days": 11,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00146",
+    "type": "PERSON",
+    "canonical_name": "Ashok Iyengar",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Maharashtra",
+      "district": "Nagpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.06
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00146",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00146",
+    "visible": {
+      "account_age_days": 1240,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00027",
+    "type": "PHONE",
+    "linked_person_id": "P-00146",
+    "visible": {
+      "sim_registered_days": 1479,
+      "phone_number": "6580086955"
+    }
+  },
+  {
+    "id": "P-00147",
+    "type": "PERSON",
+    "canonical_name": "Karan Chatterjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Rajasthan",
+      "district": "Bharatpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.47
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00147",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00147",
+    "visible": {
+      "account_age_days": 107,
+      "kyc_status": "minimal",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00148",
+    "type": "PERSON",
+    "canonical_name": "Simran Chauhan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Maharashtra",
+      "district": "Mumbai",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.08
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00148",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00148",
+    "visible": {
+      "account_age_days": 392,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00149",
+    "type": "PERSON",
+    "canonical_name": "Girish Mahato",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Delhi",
+      "district": "West Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.23
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00149",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00149",
+    "visible": {
+      "account_age_days": 0,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00150",
+    "type": "PERSON",
+    "canonical_name": "Sneha Anand",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Bihar",
+      "district": "Patna",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.47
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00150",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00150",
+    "visible": {
+      "account_age_days": 28,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00151",
+    "type": "PERSON",
+    "canonical_name": "Pooja Bedi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Maharashtra",
+      "district": "Mumbai",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.68
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00151",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00151",
+    "visible": {
+      "account_age_days": 6,
+      "kyc_status": "minimal",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00152",
+    "type": "PERSON",
+    "canonical_name": "Divya Patel",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Uttar Pradesh",
+      "district": "Lucknow",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.21
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00152",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00152",
+    "visible": {
+      "account_age_days": 72,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00153",
+    "type": "PERSON",
+    "canonical_name": "Priya Balakrishnan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Karnataka",
+      "district": "Mysuru",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.5
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00153",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00153",
+    "visible": {
+      "account_age_days": 9,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00154",
+    "type": "PERSON",
+    "canonical_name": "Swati Chauhan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Rajasthan",
+      "district": "Bharatpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.14
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00154",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00154",
+    "visible": {
+      "account_age_days": 242,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00155",
+    "type": "PERSON",
+    "canonical_name": "Jyoti Venkatesh",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Madhya Pradesh",
+      "district": "Ujjain",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00155",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00155",
+    "visible": {
+      "account_age_days": 4,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "private",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00156",
+    "type": "PERSON",
+    "canonical_name": "Suresh Pandit",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Delhi",
+      "district": "East Delhi",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.64
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00156",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00156",
+    "visible": {
+      "account_age_days": 17,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00157",
+    "type": "PERSON",
+    "canonical_name": "Varun Nair",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Uttar Pradesh",
+      "district": "Meerut",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00157",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00157",
+    "visible": {
+      "account_age_days": 250,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00158",
+    "type": "PERSON",
+    "canonical_name": "Radha Subramaniam",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Karnataka",
+      "district": "Mangaluru",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.23
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00158",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00158",
+    "visible": {
+      "account_age_days": 10,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "public_sector",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00159",
+    "type": "PERSON",
+    "canonical_name": "Gaurav Khanna",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Maharashtra",
+      "district": "Aurangabad",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00159",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00159",
+    "visible": {
+      "account_age_days": 0,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00160",
+    "type": "PERSON",
+    "canonical_name": "Naresh Vasudevan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Karnataka",
+      "district": "Belagavi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.19
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00160",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00160",
+    "visible": {
+      "account_age_days": 20,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00161",
+    "type": "PERSON",
+    "canonical_name": "Vishal Shetty",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Bihar",
+      "district": "Gaya",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.12
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00161",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00161",
+    "visible": {
+      "account_age_days": 746,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00028",
+    "type": "PHONE",
+    "linked_person_id": "P-00161",
+    "visible": {
+      "sim_registered_days": 1861,
+      "phone_number": "9081845860"
+    }
+  },
+  {
+    "id": "P-00162",
+    "type": "PERSON",
+    "canonical_name": "Sonal Krishnan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Haryana",
+      "district": "Panipat",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.17
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00162",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00162",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00163",
+    "type": "PERSON",
+    "canonical_name": "Manju Nayak",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Haryana",
+      "district": "Panipat",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.05
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00163",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00163",
+    "visible": {
+      "account_age_days": 352,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00164",
+    "type": "PERSON",
+    "canonical_name": "Mukesh Raghunathan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Jharkhand",
+      "district": "Ranchi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.25
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00164",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00164",
+    "visible": {
+      "account_age_days": 6,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "public_sector",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00165",
+    "type": "PERSON",
+    "canonical_name": "Rajan Soni",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Jharkhand",
+      "district": "Giridih",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.71
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00165",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00165",
+    "visible": {
+      "account_age_days": 11,
+      "kyc_status": "minimal",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00166",
+    "type": "PERSON",
+    "canonical_name": "Shweta Dixit",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Rajasthan",
+      "district": "Jodhpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.26
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00166",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00166",
+    "visible": {
+      "account_age_days": 1,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00167",
+    "type": "PERSON",
+    "canonical_name": "Amar Oberoi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Haryana",
+      "district": "Rohtak",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.26
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00167",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00167",
+    "visible": {
+      "account_age_days": 638,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00029",
+    "type": "PHONE",
+    "linked_person_id": "P-00167",
+    "visible": {
+      "sim_registered_days": 787,
+      "phone_number": "9803728632"
+    }
+  },
+  {
+    "id": "P-00168",
+    "type": "PERSON",
+    "canonical_name": "Raju Kohli",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Haryana",
+      "district": "Gurugram",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.1
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00168",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00168",
+    "visible": {
+      "account_age_days": 2,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00169",
+    "type": "PERSON",
+    "canonical_name": "Harsh Dubey",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Maharashtra",
+      "district": "Thane",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.72
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00169",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00169",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00170",
+    "type": "PERSON",
+    "canonical_name": "Meenakshi Rathore",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.93
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00170",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00170",
+    "visible": {
+      "account_age_days": 25,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00171",
+    "type": "PERSON",
+    "canonical_name": "Sunil Nayak",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Karnataka",
+      "district": "Hubballi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.24
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00171",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00171",
+    "visible": {
+      "account_age_days": 10,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00172",
+    "type": "PERSON",
+    "canonical_name": "Uma Mahato",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "self_employed_professional",
+      "state": "Haryana",
+      "district": "Rohtak",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.2
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00172",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00172",
+    "visible": {
+      "account_age_days": 945,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00030",
+    "type": "PHONE",
+    "linked_person_id": "P-00172",
+    "visible": {
+      "sim_registered_days": 684,
+      "phone_number": "8909638022"
+    }
+  },
+  {
+    "id": "P-00173",
+    "type": "PERSON",
+    "canonical_name": "Balaji Puri",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Tamil Nadu",
+      "district": "Chennai",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00173",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00173",
+    "visible": {
+      "account_age_days": 166,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00174",
+    "type": "PERSON",
+    "canonical_name": "Senthil Suri",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Delhi",
+      "district": "North Delhi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00174",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00174",
+    "visible": {
+      "account_age_days": 393,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00175",
+    "type": "PERSON",
+    "canonical_name": "Kavita Mahato",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Rajasthan",
+      "district": "Jaipur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.51
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00175",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00175",
+    "visible": {
+      "account_age_days": 11,
+      "kyc_status": "minimal",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00176",
+    "type": "PERSON",
+    "canonical_name": "Krishnan Mahato",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Bihar",
+      "district": "Gaya",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.0
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00176",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00176",
+    "visible": {
+      "account_age_days": 1209,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00031",
+    "type": "PHONE",
+    "linked_person_id": "P-00176",
+    "visible": {
+      "sim_registered_days": 2877,
+      "phone_number": "9616446771"
+    }
+  },
+  {
+    "id": "P-00177",
+    "type": "PERSON",
+    "canonical_name": "Farhan Mukherjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Karnataka",
+      "district": "Mysuru",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.1
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00177",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00177",
+    "visible": {
+      "account_age_days": 44,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00178",
+    "type": "PERSON",
+    "canonical_name": "Meenakshi Jain",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Madhya Pradesh",
+      "district": "Bhopal",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.17
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00178",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00178",
+    "visible": {
+      "account_age_days": 305,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00179",
+    "type": "PERSON",
+    "canonical_name": "Vivek Ranganathan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Tamil Nadu",
+      "district": "Coimbatore",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.82
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00179",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00179",
+    "visible": {
+      "account_age_days": 6,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "ORG-00004",
+    "type": "RECRUITER_PLATFORM",
+    "visible": {
+      "channel": "whatsapp",
+      "pretext": "job_offer"
+    }
+  },
+  {
+    "id": "P-00180",
+    "type": "PERSON",
+    "canonical_name": "Indira Puri",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "salaried",
+      "state": "Maharashtra",
+      "district": "Aurangabad",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.18
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00180",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00180",
+    "visible": {
+      "account_age_days": 387,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00032",
+    "type": "PHONE",
+    "linked_person_id": "P-00180",
+    "visible": {
+      "sim_registered_days": 446,
+      "phone_number": "9130831949"
+    }
+  },
+  {
+    "id": "P-00181",
+    "type": "PERSON",
+    "canonical_name": "Deepak Mahato",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Uttar Pradesh",
+      "district": "Noida",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.08
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00181",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00181",
+    "visible": {
+      "account_age_days": 1789,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00033",
+    "type": "PHONE",
+    "linked_person_id": "P-00181",
+    "visible": {
+      "sim_registered_days": 2142,
+      "phone_number": "9758046479"
+    }
+  },
+  {
+    "id": "P-00182",
+    "type": "PERSON",
+    "canonical_name": "Murali Tandon",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Rajasthan",
+      "district": "Udaipur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.78
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00182",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00182",
+    "visible": {
+      "account_age_days": 30,
+      "kyc_status": "minimal",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00183",
+    "type": "PERSON",
+    "canonical_name": "Isha Ranganathan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Bihar",
+      "district": "Bhagalpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.17
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00183",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00183",
+    "visible": {
+      "account_age_days": 385,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00184",
+    "type": "PERSON",
+    "canonical_name": "Naresh Chatterjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Bihar",
+      "district": "Bhagalpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.2
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00184",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00184",
+    "visible": {
+      "account_age_days": 48,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00185",
+    "type": "PERSON",
+    "canonical_name": "Rohit Tandon",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Jharkhand",
+      "district": "Giridih",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "telegram",
+      "economic_profile_deviation_score": 0.25
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00185",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00185",
+    "visible": {
+      "account_age_days": 243,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00186",
+    "type": "PERSON",
+    "canonical_name": "Divya Puri",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Delhi",
+      "district": "West Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.66
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00186",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00186",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00187",
+    "type": "PERSON",
+    "canonical_name": "Seema Chandran",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Haryana",
+      "district": "Faridabad",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.82
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00187",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00187",
+    "visible": {
+      "account_age_days": 14,
+      "kyc_status": "minimal",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_3plus",
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "EXIT-00004",
+    "type": "CRYPTO_OFFRAMP",
+    "visible": {
+      "platform_type": "wallet_service"
+    }
+  },
+  {
+    "id": "ORG-00005",
+    "type": "RECRUITER_PLATFORM",
+    "visible": {
+      "channel": "whatsapp",
+      "pretext": "job_offer"
+    }
+  },
+  {
+    "id": "P-00189",
+    "type": "PERSON",
+    "canonical_name": "Krishnan Iyer",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Maharashtra",
+      "district": "Thane",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.06
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00189",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00189",
+    "visible": {
+      "account_age_days": 1090,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00035",
+    "type": "PHONE",
+    "linked_person_id": "P-00189",
+    "visible": {
+      "sim_registered_days": 433,
+      "phone_number": "9399963911"
+    }
+  },
+  {
+    "id": "P-00190",
+    "type": "PERSON",
+    "canonical_name": "Isha Desai",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Haryana",
+      "district": "Gurugram",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.22
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00190",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00190",
+    "visible": {
+      "account_age_days": 1,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00191",
+    "type": "PERSON",
+    "canonical_name": "Dinesh Joshi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Rajasthan",
+      "district": "Jaipur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00191",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00191",
+    "visible": {
+      "account_age_days": 204,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00192",
+    "type": "PERSON",
+    "canonical_name": "Usha Konda",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Haryana",
+      "district": "Panipat",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.6
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00192",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00192",
+    "visible": {
+      "account_age_days": 29,
+      "kyc_status": "minimal",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00193",
+    "type": "PERSON",
+    "canonical_name": "Arun Rana",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Madhya Pradesh",
+      "district": "Jabalpur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.28
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00193",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00193",
+    "visible": {
+      "account_age_days": 7,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00194",
+    "type": "PERSON",
+    "canonical_name": "Bharat Mahajan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Jharkhand",
+      "district": "Ranchi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.22
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00194",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00194",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00195",
+    "type": "PERSON",
+    "canonical_name": "Sonal Prasad",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Madhya Pradesh",
+      "district": "Jabalpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.12
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00195",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00195",
+    "visible": {
+      "account_age_days": 385,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00196",
+    "type": "PERSON",
+    "canonical_name": "Naresh Pandey",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Maharashtra",
+      "district": "Nashik",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "whatsapp",
+      "economic_profile_deviation_score": 0.1
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00196",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00196",
+    "visible": {
+      "account_age_days": 282,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_3plus",
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "EXIT-00005",
+    "type": "CRYPTO_OFFRAMP",
+    "visible": {
+      "platform_type": "wallet_service"
+    }
+  },
+  {
+    "id": "P-00197",
+    "type": "PERSON",
+    "canonical_name": "Murali Khanna",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Jharkhand",
+      "district": "Giridih",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.03
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00197",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00197",
+    "visible": {
+      "account_age_days": 555,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00036",
+    "type": "PHONE",
+    "linked_person_id": "P-00197",
+    "visible": {
+      "sim_registered_days": 1976,
+      "phone_number": "8659262466"
+    }
+  },
+  {
+    "id": "P-00198",
+    "type": "PERSON",
+    "canonical_name": "Mohan Varma",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Bihar",
+      "district": "Bhagalpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.26
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00198",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00198",
+    "visible": {
+      "account_age_days": 182,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00199",
+    "type": "PERSON",
+    "canonical_name": "Padma Venkatesh",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Karnataka",
+      "district": "Mysuru",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.51
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00199",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00199",
+    "visible": {
+      "account_age_days": 17,
+      "kyc_status": "minimal",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00200",
+    "type": "PERSON",
+    "canonical_name": "Sunil Naidu",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Karnataka",
+      "district": "Mangaluru",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.26
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00200",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00200",
+    "visible": {
+      "account_age_days": 4,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00201",
+    "type": "PERSON",
+    "canonical_name": "Saraswati Mahato",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Haryana",
+      "district": "Rohtak",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.04
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00201",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00201",
+    "visible": {
+      "account_age_days": 1750,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00037",
+    "type": "PHONE",
+    "linked_person_id": "P-00201",
+    "visible": {
+      "sim_registered_days": 1649,
+      "phone_number": "7622324594"
+    }
+  },
+  {
+    "id": "P-00202",
+    "type": "PERSON",
+    "canonical_name": "Farhan Thakur",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Bihar",
+      "district": "Patna",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00202",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00202",
+    "visible": {
+      "account_age_days": 74,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00203",
+    "type": "PERSON",
+    "canonical_name": "Alka Reddy",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Jharkhand",
+      "district": "Ranchi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.1
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00203",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00203",
+    "visible": {
+      "account_age_days": 233,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00204",
+    "type": "PERSON",
+    "canonical_name": "Usha Dubey",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Jharkhand",
+      "district": "Giridih",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.03
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00204",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00204",
+    "visible": {
+      "account_age_days": 9,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00205",
+    "type": "PERSON",
+    "canonical_name": "Amit Mahajan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Jharkhand",
+      "district": "Jamtara",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.23
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00205",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00205",
+    "visible": {
+      "account_age_days": 464,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00038",
+    "type": "PHONE",
+    "linked_person_id": "P-00205",
+    "visible": {
+      "sim_registered_days": 2073,
+      "phone_number": "8772570748"
+    }
+  },
+  {
+    "id": "P-00206",
+    "type": "PERSON",
+    "canonical_name": "Saraswati Agarwal",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Uttar Pradesh",
+      "district": "Varanasi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.14
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00206",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00206",
+    "visible": {
+      "account_age_days": 4,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00207",
+    "type": "PERSON",
+    "canonical_name": "Priyanka Ghosh",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Maharashtra",
+      "district": "Nagpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00207",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00207",
+    "visible": {
+      "account_age_days": 308,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00208",
+    "type": "PERSON",
+    "canonical_name": "Kalyani Pandit",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Uttar Pradesh",
+      "district": "Varanasi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.12
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00208",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00208",
+    "visible": {
+      "account_age_days": 3,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00209",
+    "type": "PERSON",
+    "canonical_name": "Devendra Sinha",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Delhi",
+      "district": "West Delhi",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mastermind",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00209",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00209",
+    "visible": {
+      "account_age_days": 17,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": true
+    }
+  },
+  {
+    "id": "P-00210",
+    "type": "PERSON",
+    "canonical_name": "Murali Chatterjee",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Haryana",
+      "district": "Rohtak",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.17
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00210",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00210",
+    "visible": {
+      "account_age_days": 1070,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00039",
+    "type": "PHONE",
+    "linked_person_id": "P-00210",
+    "visible": {
+      "sim_registered_days": 2223,
+      "phone_number": "8602050695"
+    }
+  },
+  {
+    "id": "P-00211",
+    "type": "PERSON",
+    "canonical_name": "Arjun Bedi",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Haryana",
+      "district": "Faridabad",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.07
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00211",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00211",
+    "visible": {
+      "account_age_days": 3,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00212",
+    "type": "PERSON",
+    "canonical_name": "Ananya Khanna",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "retired",
+      "state": "Rajasthan",
+      "district": "Jaipur",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.02
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00212",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00212",
+    "visible": {
+      "account_age_days": 328,
+      "kyc_status": "verified",
+      "bank_tier": "payment_bank",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00213",
+    "type": "PERSON",
+    "canonical_name": "Shreya Saxena",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "instagram_bot",
+      "economic_profile_deviation_score": 0.03
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00213",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00213",
+    "visible": {
+      "account_age_days": 146,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00214",
+    "type": "PERSON",
+    "canonical_name": "Ayesha Iyer",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "student",
+      "state": "Bihar",
+      "district": "Muzaffarpur",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.63
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00214",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00214",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "minimal",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00215",
+    "type": "PERSON",
+    "canonical_name": "Shanti Kannan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "business_owner",
+      "state": "Madhya Pradesh",
+      "district": "Bhopal",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.16
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00215",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00215",
+    "visible": {
+      "account_age_days": 1552,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00040",
+    "type": "PHONE",
+    "linked_person_id": "P-00215",
+    "visible": {
+      "sim_registered_days": 2746,
+      "phone_number": "8233905235"
+    }
+  },
+  {
+    "id": "P-00216",
+    "type": "PERSON",
+    "canonical_name": "Uma Chandran",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Madhya Pradesh",
+      "district": "Indore",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.7
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00216",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00216",
+    "visible": {
+      "account_age_days": 16,
+      "kyc_status": "verified",
+      "bank_tier": "private",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00217",
+    "type": "PERSON",
+    "canonical_name": "Manoj Rathore",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "homemaker",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "district_risk_tier": "low"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.17
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00217",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00217",
+    "visible": {
+      "account_age_days": 231,
+      "kyc_status": "verified",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00218",
+    "type": "PERSON",
+    "canonical_name": "Uma Mane",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Delhi",
+      "district": "West Delhi",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.76
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00218",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00218",
+    "visible": {
+      "account_age_days": 22,
+      "kyc_status": "minimal",
+      "bank_tier": "public_sector",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00219",
+    "type": "PERSON",
+    "canonical_name": "Manju Mistry",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Rajasthan",
+      "district": "Bharatpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00219",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00219",
+    "visible": {
+      "account_age_days": 5,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00220",
+    "type": "PERSON",
+    "canonical_name": "Ashwin Srinivasan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "farmer",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "in_person",
+      "economic_profile_deviation_score": 0.18
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00220",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00220",
+    "visible": {
+      "account_age_days": 373,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00221",
+    "type": "PERSON",
+    "canonical_name": "Alka Pathak",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "government_employee",
+      "state": "Karnataka",
+      "district": "Belagavi",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "victim",
+      "mule_type": null,
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.15
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00221",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00221",
+    "visible": {
+      "account_age_days": 1998,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": null,
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "PH-00041",
+    "type": "PHONE",
+    "linked_person_id": "P-00221",
+    "visible": {
+      "sim_registered_days": 111,
+      "phone_number": "9700978088"
+    }
+  },
+  {
+    "id": "P-00222",
+    "type": "PERSON",
+    "canonical_name": "Ganesh Chauhan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Karnataka",
+      "district": "Belagavi",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.6
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00222",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00222",
+    "visible": {
+      "account_age_days": 25,
+      "kyc_status": "minimal",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_1",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00223",
+    "type": "PERSON",
+    "canonical_name": "Uma Bhatt",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "gig_worker",
+      "state": "Maharashtra",
+      "district": "Nashik",
+      "district_risk_tier": "medium"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "deceived",
+      "recruitment_channel": "facebook_bot",
+      "economic_profile_deviation_score": 0.21
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00223",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00223",
+    "visible": {
+      "account_age_days": 236,
+      "kyc_status": "verified",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00224",
+    "type": "PERSON",
+    "canonical_name": "Naresh Tandon",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "unemployed",
+      "state": "Maharashtra",
+      "district": "Nagpur",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "synthetic_kyc",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.01
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00224",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00224",
+    "visible": {
+      "account_age_days": 8,
+      "kyc_status": "fake_or_stolen",
+      "bank_tier": "public_sector",
+      "opened_via_bc": true
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  },
+  {
+    "id": "P-00225",
+    "type": "PERSON",
+    "canonical_name": "Suman Mahajan",
+    "aliases": [],
+    "visible": {
+      "stated_occupation": "daily_wage_laborer",
+      "state": "Tamil Nadu",
+      "district": "Madurai",
+      "district_risk_tier": "high"
+    },
+    "ground_truth": {
+      "role": "mule",
+      "mule_type": "complicit",
+      "recruitment_channel": null,
+      "economic_profile_deviation_score": 0.75
+    },
+    "source_docs": []
+  },
+  {
+    "id": "A-00225",
+    "type": "ACCOUNT",
+    "linked_person_id": "P-00225",
+    "visible": {
+      "account_age_days": 17,
+      "kyc_status": "minimal",
+      "bank_tier": "cooperative",
+      "opened_via_bc": false
+    },
+    "ground_truth": {
+      "mule_layer": "layer_2",
+      "is_exit_node": false
+    }
+  }
+]
