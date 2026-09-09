@@ -1,0 +1,52 @@
+[
+  {
+    "case_id": "C-SHOWCASE-01",
+    "scam_subtype": "task_based",
+    "motif": "multi_subring",
+    "ring_size_tier": "showcase_composed",
+    "created_at": "2026-09-01T00:00:00",
+    "last_updated": "2026-09-01T00:00:00",
+    "node_count": 89,
+    "total_amount_inr": 7777910.54
+  },
+  {
+    "case_id": "C-SHOWCASE-02",
+    "scam_subtype": "digital_arrest",
+    "motif": "multi_subring",
+    "ring_size_tier": "showcase_composed",
+    "created_at": "2026-09-01T00:00:00",
+    "last_updated": "2026-09-01T00:00:00",
+    "node_count": 100,
+    "total_amount_inr": 25693565.55
+  },
+  {
+    "case_id": "C-SHOWCASE-03",
+    "scam_subtype": "digital_arrest",
+    "motif": "multi_subring",
+    "ring_size_tier": "showcase_composed",
+    "created_at": "2026-09-01T00:00:00",
+    "last_updated": "2026-09-01T00:00:00",
+    "node_count": 84,
+    "total_amount_inr": 26321110.4
+  },
+  {
+    "case_id": "C-SHOWCASE-04",
+    "scam_subtype": "digital_arrest",
+    "motif": "multi_subring",
+    "ring_size_tier": "showcase_composed",
+    "created_at": "2026-09-01T00:00:00",
+    "last_updated": "2026-09-01T00:00:00",
+    "node_count": 114,
+    "total_amount_inr": 30065045.27
+  },
+  {
+    "case_id": "C-SHOWCASE-05",
+    "scam_subtype": "loan_app",
+    "motif": "multi_subring",
+    "ring_size_tier": "showcase_composed",
+    "created_at": "2026-09-01T00:00:00",
+    "last_updated": "2026-09-01T00:00:00",
+    "node_count": 103,
+    "total_amount_inr": 3985842.96
+  }
+]
