@@ -9,7 +9,7 @@ function AppHeader({ searchQuery = '', onSearchChange }) {
       <div className="app-header__left">
         <div className="app-header__brand">
           <img className="app-header__logo" src={netraLogo} alt="" />
-          <span className="app-header__brand-name">NETRA</span>
+          <span className="app-header__brand-name">NEXUS</span>
         </div>
 
         <div className="app-header__search">
