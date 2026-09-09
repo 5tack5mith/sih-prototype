@@ -183,3 +183,14 @@ MetricName = Literal["betweenness", "eigenvector", "degree"]
 CaseFilter = Literal["active", "archived", "flagged"]
 CaseSort = Literal["last_activity", "name"]
 GraphFilter = Literal["bridging_only"]
+
+
+class CaseAssignment(BaseModel):
+    username: str
+    assigned_at: str
+    assigned_by: str
+
+
+class CaseStatusResponse(BaseModel):
+    case_id: str
+    status: str

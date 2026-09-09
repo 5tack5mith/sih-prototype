@@ -71,3 +71,8 @@ not proceed until missing or unresolved data is deliberately resolved.
 `cross_case_relationship_count` is reported but does not block — the 75
 cross-case `TRANSACTED_WITH` bridges above are an expected, deliberate count,
 not an error.
+
+
+## API authentication
+
+Set `AUTH_SECRET_KEY` plus the two bootstrap-admin variables in `.env` before starting the API. Log in with `POST /login`, then pass its bearer token on API requests. Admins manage accounts, case assignments, lifecycle, and all case data. Investigators only see active cases assigned to them; access to anything else intentionally returns `404`. Auth SQLite data is persisted in the Compose `auth_data` volume. See `app/api/API.md` for assignment and purge endpoints.

@@ -6,6 +6,7 @@ from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError
 
+from .database import get_user
 from .security import decode_access_token
 
 bearer_scheme = HTTPBearer()
@@ -20,10 +21,12 @@ def get_current_user(
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid or expired token")
     username = payload.get("sub")
-    role = payload.get("role")
-    if username is None or role is None:
+    if not isinstance(username, str):
         raise HTTPException(status_code=401, detail="Malformed token")
-    return {"username": username, "role": role}
+    user = get_user(username)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+    return {"username": user["username"], "role": user["role"]}
 
 
 def require_admin(user: dict = Depends(get_current_user)) -> dict:

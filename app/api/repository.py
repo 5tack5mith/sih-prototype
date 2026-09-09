@@ -33,7 +33,7 @@ class Neo4jRepository:
     def __init__(self, driver: Any) -> None:
         self.driver = driver
 
-    def list_cases(self, case_filter: str | None, sort: str) -> list[dict[str, Any]]:
+    def list_cases(self, case_filter: str | None, sort: str, allowed_case_ids: list[str] | None = None) -> list[dict[str, Any]]:
         case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
         case_id = schema.cypher_identifier(schema.PROP_NODE_ID)
         node_name = schema.cypher_identifier(schema.PROP_NODE_NAME)
@@ -51,12 +51,13 @@ class Neo4jRepository:
         labels = schema.entity_label_predicate("entity")
         query = f"""
         MATCH (case:{case_label})
-        WHERE $case_filter IS NULL
+        WHERE ($allowed_case_ids IS NULL OR case.{case_id} IN $allowed_case_ids)
+          AND ($case_filter IS NULL
            OR ($case_filter IN ['active', 'archived'] AND toLower(case.{status}) = $case_filter)
            OR ($case_filter = 'flagged' AND EXISTS {{
                 MATCH (flag) WHERE (flag:{circular} OR flag:{structuring})
                   AND flag.{case_prop} = case.{case_id}
-           }})
+           }}))
         CALL (case) {{
           OPTIONAL MATCH (entity) WHERE {labels} AND
             (entity.{case_prop} = case.{case_id} OR (entity)-[:{case_link}]->(case))
@@ -78,11 +79,71 @@ class Neo4jRepository:
         """
         with self.driver.session() as session:
             rows = [_as_dict(row) for row in session.run(
-                query, case_filter=case_filter, sort=sort
+                query, case_filter=case_filter, sort=sort, allowed_case_ids=allowed_case_ids
             )]
         for row in rows:
             row["updated_at"] = _serialized(row.get("updated_at"))
         return rows
+
+    def get_case(self, requested_case_id: str) -> dict[str, Any] | None:
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        status = schema.cypher_identifier(schema.PROP_CASE_STATUS)
+        query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})
+        RETURN case.{node_id} AS case_id, case.{status} AS status
+        """
+        with self.driver.session() as session:
+            return _as_dict(session.run(query, case_id=requested_case_id).single())
+
+    def set_case_status(self, requested_case_id: str, new_status: str) -> dict[str, Any] | None:
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        status = schema.cypher_identifier(schema.PROP_CASE_STATUS)
+        query = f"""
+        MATCH (case:{case_label} {{{node_id}: $case_id}})
+        SET case.{status} = $status
+        RETURN case.{node_id} AS case_id, case.{status} AS status
+        """
+        with self.driver.session() as session:
+            return _as_dict(session.run(query, case_id=requested_case_id, status=new_status).single())
+
+    def purge_archived_case(self, requested_case_id: str) -> bool:
+        """Delete one archived case and its scoped data without touching other cases."""
+        case = self.get_case(requested_case_id)
+        if case is None:
+            return False
+        if (case.get("status") or "").upper() != "ARCHIVED":
+            raise ValueError("case must be archived before purging")
+        case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)
+        node_id = schema.cypher_identifier(schema.PROP_NODE_ID)
+        case_prop = schema.cypher_identifier(schema.PROP_CASE_ID)
+        case_link = schema.cypher_identifier(schema.REL_CASE_LINK)
+        projections = [schema.projection_name(requested_case_id), schema.projection_name(requested_case_id, directed=True)]
+        drop_query = """
+        CALL gds.graph.exists($projection_name) YIELD exists
+        WITH exists WHERE exists
+        CALL gds.graph.drop($projection_name, false) YIELD graphName
+        RETURN graphName
+        """
+        delete_relationships = f"""
+        MATCH ()-[relationship]->()
+        WHERE relationship.{case_prop} = $case_id
+        DELETE relationship
+        """
+        delete_nodes = f"""
+        MATCH (node)
+        WHERE node.{case_prop} = $case_id
+           OR EXISTS {{ MATCH (node)-[:{case_link}]->(:{case_label} {{{node_id}: $case_id}}) }}
+           OR (node:{case_label} AND node.{node_id} = $case_id)
+        DETACH DELETE node
+        """
+        with self.driver.session() as session:
+            for projection in projections:
+                session.run(drop_query, projection_name=projection).consume()
+            session.run(delete_relationships, case_id=requested_case_id).consume()
+            session.run(delete_nodes, case_id=requested_case_id).consume()
+        return True
 
     def get_case_overview(self, requested_case_id: str) -> dict[str, Any] | None:
         case_label = schema.cypher_identifier(schema.NODE_LABEL_CASE)

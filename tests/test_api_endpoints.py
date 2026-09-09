@@ -6,7 +6,9 @@ from app.auth import get_current_user
 
 
 class StubRepository:
-    def list_cases(self, case_filter, sort):
+    def get_case(self, case_id):
+        return {"case_id": case_id, "status": "ACTIVE"}
+    def list_cases(self, case_filter, sort, allowed_case_ids=None):
         return [{"case_id": "CASE-A", "name": "Alpha", "status": "ACTIVE", "priority": None, "description": None, "node_count": 2, "edge_count": 1, "updated_at": None, "lead_analyst": None, "jurisdiction_tag": None}]
     def get_case_overview(self, case_id):
         return {"case_id": case_id, "total_entities": 2, "total_relationships": 1, "community_count": 1, "modularity": 0.5, "structural_alert_count": 0, "direct_1hop_count": 1}

@@ -14,6 +14,12 @@ The FastAPI application lives at `app.api.main:app`. It exposes all nine request
 - Criticality only slices stored ranks. The offline job stores baseline node count and global efficiency before/after each removal.
 - Suggested links read Jaccard `SIMILAR_TO` relationships and exclude existing structural links.
 
+## Authentication and authorization
+
+JWT authentication is mandatory for every case and analysis endpoint. Tokens are verified against the current SQLite user record, so an account's database role is authoritative rather than a stale token claim. `AUTH_SECRET_KEY` has no fallback. The configured first admin is bootstrapped idempotently from the paired bootstrap environment variables.
+
+Assignments are SQLite-backed many-to-many records. Admins can list, assign, and unassign investigators; investigators can list and open only their assigned active cases. Inaccessible or archived cases return `404` to investigators. Admin lifecycle routes archive/restore cases and permanently purge archived cases only, dropping case GDS projections and case-scoped Neo4j data while preserving unrelated/background data. Compose persists SQLite data in the `auth_data` volume.
+
 ## Algorithm and schema additions
 
 The batch layer now writes eigenvector centrality, Louvain modularity, community densities, graph density, diameter, and reciprocity. Criticality defaults to 10 ranks and persists global efficiency per step. Placeholder cases include representative metadata and entity categories; production reads remain nullable.
