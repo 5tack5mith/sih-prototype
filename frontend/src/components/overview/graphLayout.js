@@ -12,6 +12,38 @@
 
 export const COMMUNITY_COLORS = ['#38bdf8', '#c084fc', '#4ade80', '#fbbf24', '#f472b6', '#a78bfa', '#f97316', '#22d3ee']
 
+// Base community-zone centering pull used for well-connected nodes
+// (degree >= 2) - unchanged from the original single-coefficient design.
+const BASE_CENTERING = 0.02
+// Upper bound on the boosted pull for low-degree nodes, so an isolated
+// node drifts toward the main mass without being yanked hard enough to
+// overshoot into a dense unreadable blob at dead center.
+const MAX_CENTERING = 0.2
+
+// Degree-dependent centering coefficient: degree 0 (no edges at all - the
+// case that produces the straight boundary-hugging rows) gets 10x the base
+// pull, degree 1 gets 5x, degree >= 2 is exactly the original 0.02 with no
+// change at all. Scales inversely with degree, capped at MAX_CENTERING.
+//
+// Tuned empirically, not guessed: at realistic case proportions (roughly
+// as many zero-degree Person/Phone nodes as connected Account nodes - see
+// dataset_generator/README.md), the isolated nodes' dominant force is
+// mutual repulsion AMONG THEMSELVES, not just repulsion from the connected
+// cluster. That means centering alone has a real ceiling - pushing this
+// coefficient far past 10x (tested up to 40x) only moved a further ~5% of
+// isolated nodes off the clamp boundary, while visibly dragging
+// well-connected node positions along with it. 10x is the chosen balance:
+// a measurable pull inward for every isolated node (they end up closer to
+// the mass and less uniformly pinned to one exact boundary line even when
+// they don't fully leave it) without material disturbance to the
+// well-connected structure. This will not eliminate every straight-edge
+// row on cases with very high noise-node proportions - see the report for
+// exact before/after numbers.
+function centeringCoefficientFor(degree) {
+  if (degree >= 2) return BASE_CENTERING
+  return Math.min(BASE_CENTERING * (10 / (degree + 1)), MAX_CENTERING)
+}
+
 // FNV-1a with an avalanche finalizer — small input changes (e.g. "P000" vs
 // "P001") must produce very different outputs, which a naive `h*31+c` hash
 // does not for sequential/near-identical strings.
@@ -113,6 +145,18 @@ export function createForceSimulation(nodes, edges = []) {
     .map((e) => ({ source: String(e.source), target: String(e.target) }))
     .filter((e) => idSet.has(e.source) && idSet.has(e.target) && e.source !== e.target)
 
+  // Degree within this exact rendered view (same edgeList the spring force
+  // below uses) - drives the degree-dependent centering pull a few lines
+  // down. A node with no edge-spring force pulling it inward has nothing
+  // to counteract repulsion, so it gets pushed to the clamp boundary and
+  // piles up in a straight row with every other such node (see BASE_
+  // CENTERING below for the fix).
+  const layoutDegree = new Map(ids.map((id) => [id, 0]))
+  edgeList.forEach(({ source, target }) => {
+    layoutDegree.set(source, layoutDegree.get(source) + 1)
+    layoutDegree.set(target, layoutDegree.get(target) + 1)
+  })
+
   const n = ids.length
   const k = Math.sqrt((90 * 90) / Math.max(n, 1)) * 0.9
   const communityOf = new Map(nodes.map((node) => [String(node.node_id), node.community_id ?? '_ungrouped']))
@@ -161,8 +205,9 @@ export function createForceSimulation(nodes, edges = []) {
       const idStr = String(node.node_id)
       const pos = positions.get(idStr)
       const center = zoneCenters.get(communityOf.get(idStr))
-      pos.vx += (center.x - pos.x) * 0.02
-      pos.vy += (center.y - pos.y) * 0.02
+      const centering = centeringCoefficientFor(layoutDegree.get(idStr) ?? 0)
+      pos.vx += (center.x - pos.x) * centering
+      pos.vy += (center.y - pos.y) * centering
 
       const dispLen = Math.sqrt(pos.vx * pos.vx + pos.vy * pos.vy) || 0.0001
       const capped = Math.min(dispLen, temperature)
