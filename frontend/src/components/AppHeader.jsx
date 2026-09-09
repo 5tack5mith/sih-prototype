@@ -3,7 +3,9 @@ import searchIcon from '../assets/cases/search.svg'
 import userIcon from '../assets/cases/user.svg'
 import './AppHeader.css'
 
-function AppHeader({ searchQuery = '', onSearchChange }) {
+function AppHeader({ searchQuery = '', onSearchChange, user, onLogout }) {
+  const displayName = user?.username || 'UNKNOWN'
+  const displayRole = user?.role ? user.role.toUpperCase() : 'ANALYST'
   return (
     <header className="app-header">
       <div className="app-header__left">
@@ -30,15 +32,15 @@ function AppHeader({ searchQuery = '', onSearchChange }) {
           <span>SYSTEM ACTIVE</span>
         </div>
         <div className="app-header__divider" />
-        <div className="app-header__user">
+        <button type="button" className="app-header__user" onClick={onLogout} title="Sign out">
           <div className="app-header__user-text">
-            <span className="app-header__user-name">AN-84920 · S. CHEN</span>
-            <span className="app-header__user-role">SEC-LEVEL 4 // LEAD ANALYST</span>
+            <span className="app-header__user-name">{displayName}</span>
+            <span className="app-header__user-role">{displayRole}</span>
           </div>
           <div className="app-header__avatar">
             <img src={userIcon} alt="" />
           </div>
-        </div>
+        </button>
       </div>
     </header>
   )

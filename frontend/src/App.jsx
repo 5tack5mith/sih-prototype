@@ -7,6 +7,7 @@ import Communities from './pages/Communities'
 import PathExplorer from './pages/PathExplorer'
 import StructuralCriticality from './pages/StructuralCriticality'
 import { fetchCases } from './api/casesApi'
+import { getToken, getUser, endSession } from './api/client'
 import './App.css'
 
 const CASE_PAGES = {
@@ -18,7 +19,12 @@ const CASE_PAGES = {
 }
 
 function App() {
-  const [page, setPage] = useState('login')
+  // A token already in sessionStorage means this tab logged in earlier —
+  // trust it until a request comes back 401 (handled by the
+  // auth:unauthorized listener below) rather than re-showing login on
+  // every reload within the same tab.
+  const [page, setPage] = useState(() => (getToken() ? 'cases' : 'login'))
+  const [user, setUser] = useState(() => (getToken() ? getUser() : null))
   const [selectedCase, setSelectedCase] = useState(null)
   // All cases, loaded once for the CaseHeader case-ID/name search — shared
   // across every page so switching tabs never re-fetches it. Cases.jsx's
@@ -60,6 +66,21 @@ function App() {
     setPage('overview')
   }
 
+  // endSession() clears the session and fires 'auth:unauthorized', handled
+  // below — used both for an explicit logout click and (from client.js)
+  // any 401 response, so session expiry is caught from wherever the user
+  // happens to be, not just the logout button.
+  useEffect(() => {
+    const onUnauthorized = () => {
+      setUser(null)
+      setCases([])
+      setSelectedCase(null)
+      setPage('login')
+    }
+    window.addEventListener('auth:unauthorized', onUnauthorized)
+    return () => window.removeEventListener('auth:unauthorized', onUnauthorized)
+  }, [])
+
   const CasePage = CASE_PAGES[page]
   if (CasePage) {
     return (
@@ -75,10 +96,17 @@ function App() {
   }
 
   if (page === 'cases') {
-    return <Cases onOpenCase={handleOpenCase} />
+    return <Cases onOpenCase={handleOpenCase} user={user} onLogout={endSession} />
   }
 
-  return <Login onLogin={() => setPage('cases')} />
+  return (
+    <Login
+      onLogin={(loggedInUser) => {
+        setUser(loggedInUser)
+        setPage('cases')
+      }}
+    />
+  )
 }
 
 export default App
