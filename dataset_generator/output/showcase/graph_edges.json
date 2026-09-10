@@ -6,2421 +6,2412 @@
     "amount": 46406.12,
     "timestamp": "2026-04-06T00:00:00",
     "channel": "neft_imps",
-    "computed_weight": 0.007837
+    "computed_weight": 0.009098
   },
   {
     "source_id": "A-00002",
     "target_id": "A-00003",
     "type": "TRANSACTION",
-    "amount": 5726.96,
-    "timestamp": "2026-04-06T05:53:43.628109",
-    "channel": "upi",
-    "computed_weight": 0.005258
+    "amount": 5083.02,
+    "timestamp": "2026-04-06T08:36:51.352176",
+    "channel": "neft_imps",
+    "computed_weight": 0.005185
   },
   {
     "source_id": "A-00002",
     "target_id": "A-00004",
     "type": "TRANSACTION",
-    "amount": 5243.04,
-    "timestamp": "2026-04-06T08:26:33.807415",
-    "channel": "neft_imps",
-    "computed_weight": 0.006567
+    "amount": 4904.59,
+    "timestamp": "2026-04-06T06:33:21.414970",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.006516
   },
   {
     "source_id": "A-00002",
     "target_id": "A-00005",
     "type": "TRANSACTION",
-    "amount": 5699.71,
-    "timestamp": "2026-04-06T09:18:56.689691",
+    "amount": 4699.99,
+    "timestamp": "2026-04-06T06:17:48.456694",
     "channel": "neft_imps",
-    "computed_weight": 0.006631
+    "computed_weight": 0.005138
   },
   {
     "source_id": "A-00002",
     "target_id": "A-00006",
     "type": "TRANSACTION",
-    "amount": 5199.26,
-    "timestamp": "2026-04-06T03:51:11.660973",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.00656
+    "amount": 4736.8,
+    "timestamp": "2026-04-06T02:45:15.152417",
+    "channel": "neft_imps",
+    "computed_weight": 0.006489
   },
   {
     "source_id": "A-00002",
     "target_id": "A-00007",
     "type": "TRANSACTION",
-    "amount": 5439.09,
-    "timestamp": "2026-04-06T10:05:14.226431",
+    "amount": 4818.58,
+    "timestamp": "2026-04-06T02:18:42.335350",
     "channel": "atm_withdrawal",
-    "computed_weight": 0.005226
+    "computed_weight": 0.003251
   },
   {
     "source_id": "A-00002",
     "target_id": "A-00008",
     "type": "TRANSACTION",
-    "amount": 5177.37,
-    "timestamp": "2026-04-06T04:42:22.235312",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.003279
+    "amount": 4529.23,
+    "timestamp": "2026-04-06T05:01:15.864934",
+    "channel": "upi",
+    "computed_weight": 0.006455
   },
   {
     "source_id": "A-00002",
     "target_id": "A-00009",
     "type": "TRANSACTION",
-    "amount": 5280.19,
-    "timestamp": "2026-04-06T11:10:20.628588",
-    "channel": "neft_imps",
-    "computed_weight": 0.006572
+    "amount": 5154.78,
+    "timestamp": "2026-04-06T08:10:27.533312",
+    "channel": "upi",
+    "computed_weight": 0.005194
   },
   {
     "source_id": "A-00002",
     "target_id": "A-00010",
     "type": "TRANSACTION",
-    "amount": 5192.8,
-    "timestamp": "2026-04-06T04:39:04.363393",
+    "amount": 4156.25,
+    "timestamp": "2026-04-06T07:33:27.710350",
     "channel": "atm_withdrawal",
-    "computed_weight": 0.00328
+    "computed_weight": 0.006389
   },
   {
-    "source_id": "A-00011",
-    "target_id": "A-00012",
+    "source_id": "A-00002",
+    "target_id": "A-00011",
     "type": "TRANSACTION",
-    "amount": 2664541.35,
-    "timestamp": "2026-08-26T00:00:00",
-    "channel": "neft_imps",
-    "computed_weight": 10.364368
+    "amount": 4754.44,
+    "timestamp": "2026-04-06T03:33:35.500036",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.006492
   },
   {
     "source_id": "A-00012",
-    "target_id": "A-00013",
+    "target_id": "A-00002",
     "type": "TRANSACTION",
-    "amount": 2348792.89,
-    "timestamp": "2026-08-26T00:14:29.272071",
-    "channel": "neft_imps",
-    "computed_weight": 6.815856
+    "amount": 68922.81,
+    "timestamp": "2026-04-23T00:00:00",
+    "channel": "upi",
+    "computed_weight": 0.022071
   },
   {
-    "source_id": "A-00013",
+    "source_id": "A-00002",
     "target_id": "A-00014",
     "type": "TRANSACTION",
-    "amount": 2424860.72,
-    "timestamp": "2026-08-26T00:51:34.325176",
-    "channel": "atm_withdrawal",
-    "computed_weight": 13.661329
-  },
-  {
-    "source_id": "A-00015",
-    "target_id": "A-00008",
-    "type": "TRANSACTION",
-    "amount": 8846.99,
-    "timestamp": "2026-07-09T00:00:00",
+    "amount": 61146.08,
+    "timestamp": "2026-04-23T01:33:58.788660",
     "channel": "neft_imps",
-    "computed_weight": 0.364373
+    "computed_weight": 0.009885
   },
   {
-    "source_id": "A-00008",
-    "target_id": "A-00017",
+    "source_id": "A-00014",
+    "target_id": "A-00015",
     "type": "TRANSACTION",
-    "amount": 8623.75,
-    "timestamp": "2026-07-09T01:54:18.846480",
+    "amount": 65060.48,
+    "timestamp": "2026-04-23T02:51:57.977780",
     "channel": "upi",
-    "computed_weight": 0.763956
+    "computed_weight": 0.019882
   },
   {
     "source_id": "A-00017",
     "target_id": "A-00018",
     "type": "TRANSACTION",
-    "amount": 7323.02,
-    "timestamp": "2026-07-09T02:35:45.811960",
+    "amount": 1678078.25,
+    "timestamp": "2026-07-11T16:00:34.702229",
     "channel": "upi",
-    "computed_weight": 0.870924
+    "computed_weight": 0.667686
+  },
+  {
+    "source_id": "A-00018",
+    "target_id": "A-00019",
+    "type": "TRANSACTION",
+    "amount": 348764.64,
+    "timestamp": "2026-07-12T06:16:44.087415",
+    "channel": "upi",
+    "computed_weight": 0.624984
+  },
+  {
+    "source_id": "A-00018",
+    "target_id": "A-00020",
+    "type": "TRANSACTION",
+    "amount": 343887.52,
+    "timestamp": "2026-07-11T23:09:46.641499",
+    "channel": "neft_imps",
+    "computed_weight": 1.187695
+  },
+  {
+    "source_id": "A-00018",
+    "target_id": "A-00021",
+    "type": "TRANSACTION",
+    "amount": 365575.46,
+    "timestamp": "2026-07-12T01:33:01.873537",
+    "channel": "upi",
+    "computed_weight": 1.254579
+  },
+  {
+    "source_id": "A-00018",
+    "target_id": "A-00005",
+    "type": "TRANSACTION",
+    "amount": 355844.96,
+    "timestamp": "2026-07-12T02:44:01.480678",
+    "channel": "upi",
+    "computed_weight": 0.992136
+  },
+  {
+    "source_id": "A-00019",
+    "target_id": "A-00016",
+    "type": "TRANSACTION",
+    "amount": 352067.97,
+    "timestamp": "2026-07-13T04:30:49.014708",
+    "channel": "upi",
+    "computed_weight": 0.657513
   },
   {
     "source_id": "A-00020",
-    "target_id": "A-00021",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 13962.69,
-    "timestamp": "2026-03-03T13:51:09.446574",
-    "channel": "upi",
-    "computed_weight": 0.000668
-  },
-  {
-    "source_id": "A-00021",
-    "target_id": "A-00022",
-    "type": "TRANSACTION",
-    "amount": 3404.37,
-    "timestamp": "2026-03-03T17:39:39.618720",
-    "channel": "upi",
-    "computed_weight": 0.001139
-  },
-  {
-    "source_id": "A-00021",
-    "target_id": "A-00023",
-    "type": "TRANSACTION",
-    "amount": 3130.12,
-    "timestamp": "2026-03-04T01:06:09.080345",
+    "amount": 323022.42,
+    "timestamp": "2026-07-12T20:55:42.402589",
     "channel": "neft_imps",
-    "computed_weight": 0.001185
+    "computed_weight": 0.984625
   },
   {
     "source_id": "A-00021",
-    "target_id": "A-00024",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 3335.04,
-    "timestamp": "2026-03-03T17:40:31.101478",
-    "channel": "neft_imps",
-    "computed_weight": 0.001136
-  },
-  {
-    "source_id": "A-00021",
-    "target_id": "A-00025",
-    "type": "TRANSACTION",
-    "amount": 2819.48,
-    "timestamp": "2026-03-04T03:09:44.487258",
-    "channel": "neft_imps",
-    "computed_weight": 0.000927
-  },
-  {
-    "source_id": "A-00022",
-    "target_id": "A-00019",
-    "type": "TRANSACTION",
-    "amount": 3052.28,
-    "timestamp": "2026-03-04T23:58:18.567343",
+    "amount": 359180.31,
+    "timestamp": "2026-07-13T10:41:49.037334",
     "channel": "upi",
-    "computed_weight": 0.001181
+    "computed_weight": 1.317086
+  },
+  {
+    "source_id": "A-00005",
+    "target_id": "A-00016",
+    "type": "TRANSACTION",
+    "amount": 340911.72,
+    "timestamp": "2026-07-13T01:21:50.046449",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.655855
   },
   {
     "source_id": "A-00023",
-    "target_id": "A-00019",
+    "target_id": "A-00024",
     "type": "TRANSACTION",
-    "amount": 2758.37,
-    "timestamp": "2026-03-05T00:33:31.214250",
-    "channel": "upi",
-    "computed_weight": 0.000972
+    "amount": 391475.37,
+    "timestamp": "2026-07-11T13:46:07.931091",
+    "channel": "neft_imps",
+    "computed_weight": 1.39289
   },
   {
     "source_id": "A-00024",
-    "target_id": "A-00019",
+    "target_id": "A-00025",
     "type": "TRANSACTION",
-    "amount": 2732.24,
-    "timestamp": "2026-03-05T13:25:59.149459",
+    "amount": 117943.54,
+    "timestamp": "2026-07-11T21:06:24.736220",
     "channel": "neft_imps",
-    "computed_weight": 0.000971
+    "computed_weight": 1.263124
+  },
+  {
+    "source_id": "A-00024",
+    "target_id": "A-00026",
+    "type": "TRANSACTION",
+    "amount": 110018.47,
+    "timestamp": "2026-07-12T00:57:45.695490",
+    "channel": "upi",
+    "computed_weight": 1.136966
+  },
+  {
+    "source_id": "A-00024",
+    "target_id": "A-00027",
+    "type": "TRANSACTION",
+    "amount": 105994.65,
+    "timestamp": "2026-07-11T23:14:40.010923",
+    "channel": "neft_imps",
+    "computed_weight": 0.539022
   },
   {
     "source_id": "A-00025",
-    "target_id": "A-00019",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 2988.61,
-    "timestamp": "2026-03-05T08:32:23.781679",
-    "channel": "upi",
-    "computed_weight": 0.001239
+    "amount": 99518.58,
+    "timestamp": "2026-07-12T17:10:17.987000",
+    "channel": "neft_imps",
+    "computed_weight": 1.127142
   },
   {
     "source_id": "A-00026",
-    "target_id": "A-00027",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 19793.17,
-    "timestamp": "2026-03-03T03:20:42.233568",
-    "channel": "upi",
-    "computed_weight": 0.001609
-  },
-  {
-    "source_id": "A-00027",
-    "target_id": "A-00028",
-    "type": "TRANSACTION",
-    "amount": 4917.22,
-    "timestamp": "2026-03-03T16:00:48.889477",
+    "amount": 117545.71,
+    "timestamp": "2026-07-12T23:39:15.111266",
     "channel": "neft_imps",
-    "computed_weight": 0.001382
+    "computed_weight": 0.906161
   },
   {
     "source_id": "A-00027",
-    "target_id": "A-00029",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 4331.29,
-    "timestamp": "2026-03-03T16:30:29.061501",
-    "channel": "neft_imps",
-    "computed_weight": 0.001362
-  },
-  {
-    "source_id": "A-00027",
-    "target_id": "A-00030",
-    "type": "TRANSACTION",
-    "amount": 4870.92,
-    "timestamp": "2026-03-03T11:13:54.392576",
-    "channel": "neft_imps",
-    "computed_weight": 0.001189
-  },
-  {
-    "source_id": "A-00027",
-    "target_id": "A-00031",
-    "type": "TRANSACTION",
-    "amount": 4124.26,
-    "timestamp": "2026-03-03T17:59:29.636534",
-    "channel": "upi",
-    "computed_weight": 0.000924
+    "amount": 107656.66,
+    "timestamp": "2026-07-13T00:42:00.453501",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.94545
   },
   {
     "source_id": "A-00028",
-    "target_id": "A-00019",
+    "target_id": "A-00029",
     "type": "TRANSACTION",
-    "amount": 4175.2,
-    "timestamp": "2026-03-04T04:24:32.036353",
+    "amount": 1256804.16,
+    "timestamp": "2026-07-11T14:54:20.592965",
     "channel": "neft_imps",
-    "computed_weight": 0.001425
+    "computed_weight": 1.519052
   },
   {
     "source_id": "A-00029",
-    "target_id": "A-00019",
+    "target_id": "A-00030",
     "type": "TRANSACTION",
-    "amount": 3851.54,
-    "timestamp": "2026-03-04T20:00:04.611101",
+    "amount": 295094.04,
+    "timestamp": "2026-07-11T18:25:12.531931",
     "channel": "upi",
-    "computed_weight": 0.001411
+    "computed_weight": 1.36232
+  },
+  {
+    "source_id": "A-00029",
+    "target_id": "A-00031",
+    "type": "TRANSACTION",
+    "amount": 282089.07,
+    "timestamp": "2026-07-12T04:28:52.095799",
+    "channel": "upi",
+    "computed_weight": 1.427042
+  },
+  {
+    "source_id": "A-00029",
+    "target_id": "A-00032",
+    "type": "TRANSACTION",
+    "amount": 291149.05,
+    "timestamp": "2026-07-11T22:01:24.048434",
+    "channel": "neft_imps",
+    "computed_weight": 1.172184
+  },
+  {
+    "source_id": "A-00029",
+    "target_id": "A-00014",
+    "type": "TRANSACTION",
+    "amount": 295196.84,
+    "timestamp": "2026-07-11T22:31:54.317605",
+    "channel": "upi",
+    "computed_weight": 0.586735
   },
   {
     "source_id": "A-00030",
-    "target_id": "A-00019",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 4118.85,
-    "timestamp": "2026-03-04T10:11:25.531177",
-    "channel": "neft_imps",
-    "computed_weight": 0.000971
+    "amount": 283275.74,
+    "timestamp": "2026-07-13T04:14:09.916798",
+    "channel": "atm_withdrawal",
+    "computed_weight": 1.292641
   },
   {
     "source_id": "A-00031",
-    "target_id": "A-00019",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 4082.38,
-    "timestamp": "2026-03-04T14:16:34.755978",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.00097
+    "amount": 288427.03,
+    "timestamp": "2026-07-12T21:48:25.191442",
+    "channel": "neft_imps",
+    "computed_weight": 1.429569
   },
   {
     "source_id": "A-00032",
-    "target_id": "A-00033",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 24882.37,
-    "timestamp": "2026-03-03T18:20:59.051975",
+    "amount": 264321.9,
+    "timestamp": "2026-07-13T02:16:06.150188",
     "channel": "neft_imps",
-    "computed_weight": 0.001646
+    "computed_weight": 1.018743
   },
   {
-    "source_id": "A-00033",
-    "target_id": "A-00034",
+    "source_id": "A-00014",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 5111.05,
-    "timestamp": "2026-03-03T22:13:30.058913",
-    "channel": "upi",
-    "computed_weight": 0.001389
-  },
-  {
-    "source_id": "A-00033",
-    "target_id": "A-00035",
-    "type": "TRANSACTION",
-    "amount": 6005.13,
-    "timestamp": "2026-03-03T21:36:56.143039",
+    "amount": 236572.92,
+    "timestamp": "2026-07-13T10:09:50.767131",
     "channel": "neft_imps",
-    "computed_weight": 0.000609
-  },
-  {
-    "source_id": "A-00033",
-    "target_id": "A-00036",
-    "type": "TRANSACTION",
-    "amount": 4994.0,
-    "timestamp": "2026-03-04T09:54:11.095564",
-    "channel": "neft_imps",
-    "computed_weight": 0.000627
-  },
-  {
-    "source_id": "A-00033",
-    "target_id": "A-00037",
-    "type": "TRANSACTION",
-    "amount": 5413.52,
-    "timestamp": "2026-03-04T08:08:48.049871",
-    "channel": "neft_imps",
-    "computed_weight": 0.001266
+    "computed_weight": 0.637045
   },
   {
     "source_id": "A-00034",
-    "target_id": "A-00019",
+    "target_id": "A-00035",
     "type": "TRANSACTION",
-    "amount": 5268.16,
-    "timestamp": "2026-03-05T16:27:30.957882",
-    "channel": "neft_imps",
-    "computed_weight": 0.00154
+    "amount": 153885.89,
+    "timestamp": "2026-07-11T02:20:28.221891",
+    "channel": "upi",
+    "computed_weight": 0.55639
   },
   {
     "source_id": "A-00035",
-    "target_id": "A-00019",
+    "target_id": "A-00036",
     "type": "TRANSACTION",
-    "amount": 5864.0,
-    "timestamp": "2026-03-05T09:11:42.372603",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.001064
+    "amount": 64498.34,
+    "timestamp": "2026-07-11T16:13:16.326560",
+    "channel": "neft_imps",
+    "computed_weight": 1.197841
+  },
+  {
+    "source_id": "A-00035",
+    "target_id": "A-00037",
+    "type": "TRANSACTION",
+    "amount": 67257.78,
+    "timestamp": "2026-07-11T16:23:49.003735",
+    "channel": "neft_imps",
+    "computed_weight": 0.517834
   },
   {
     "source_id": "A-00036",
-    "target_id": "A-00019",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 5406.6,
-    "timestamp": "2026-03-04T19:16:58.110999",
-    "channel": "upi",
-    "computed_weight": 0.001266
+    "amount": 58773.28,
+    "timestamp": "2026-07-12T02:53:07.166291",
+    "channel": "neft_imps",
+    "computed_weight": 0.852361
   },
   {
     "source_id": "A-00037",
-    "target_id": "A-00019",
+    "target_id": "A-00016",
     "type": "TRANSACTION",
-    "amount": 5710.32,
-    "timestamp": "2026-03-05T01:15:03.650452",
+    "amount": 59107.7,
+    "timestamp": "2026-07-12T02:49:21.630296",
     "channel": "neft_imps",
-    "computed_weight": 0.001555
-  },
-  {
-    "source_id": "A-00038",
-    "target_id": "A-00039",
-    "type": "TRANSACTION",
-    "amount": 23935.48,
-    "timestamp": "2026-03-03T17:49:05.353163",
-    "channel": "upi",
-    "computed_weight": 0.000706
+    "computed_weight": 0.538058
   },
   {
     "source_id": "A-00039",
     "target_id": "A-00040",
     "type": "TRANSACTION",
-    "amount": 7507.24,
-    "timestamp": "2026-03-04T07:12:51.550118",
+    "amount": 10398.84,
+    "timestamp": "2026-08-02T21:14:35.008510",
     "channel": "neft_imps",
-    "computed_weight": 0.001314
-  },
-  {
-    "source_id": "A-00039",
-    "target_id": "A-00041",
-    "type": "TRANSACTION",
-    "amount": 7277.74,
-    "timestamp": "2026-03-03T19:55:57.817120",
-    "channel": "neft_imps",
-    "computed_weight": 0.000987
-  },
-  {
-    "source_id": "A-00039",
-    "target_id": "A-00042",
-    "type": "TRANSACTION",
-    "amount": 6934.86,
-    "timestamp": "2026-03-04T00:35:58.855625",
-    "channel": "upi",
-    "computed_weight": 0.001032
+    "computed_weight": 2.051583
   },
   {
     "source_id": "A-00040",
-    "target_id": "A-00019",
+    "target_id": "A-00041",
     "type": "TRANSACTION",
-    "amount": 6575.28,
-    "timestamp": "2026-03-05T14:29:06.693467",
+    "amount": 4170.29,
+    "timestamp": "2026-08-03T02:23:06.466578",
     "channel": "neft_imps",
-    "computed_weight": 0.00068
+    "computed_weight": 1.943713
+  },
+  {
+    "source_id": "A-00040",
+    "target_id": "A-00042",
+    "type": "TRANSACTION",
+    "amount": 5046.05,
+    "timestamp": "2026-08-03T08:49:57.397093",
+    "channel": "neft_imps",
+    "computed_weight": 2.508781
   },
   {
     "source_id": "A-00041",
-    "target_id": "A-00019",
+    "target_id": "A-00038",
     "type": "TRANSACTION",
-    "amount": 6094.41,
-    "timestamp": "2026-03-04T18:21:44.297563",
-    "channel": "neft_imps",
-    "computed_weight": 0.001017
+    "amount": 4322.04,
+    "timestamp": "2026-08-04T18:42:18.099103",
+    "channel": "upi",
+    "computed_weight": 3.006318
   },
   {
     "source_id": "A-00042",
-    "target_id": "A-00019",
+    "target_id": "A-00038",
     "type": "TRANSACTION",
-    "amount": 6129.09,
-    "timestamp": "2026-03-04T18:17:58.761568",
+    "amount": 4741.7,
+    "timestamp": "2026-08-04T06:13:43.915624",
     "channel": "neft_imps",
-    "computed_weight": 0.000642
+    "computed_weight": 1.309083
   },
   {
     "source_id": "A-00043",
     "target_id": "A-00044",
     "type": "TRANSACTION",
-    "amount": 1693097.22,
-    "timestamp": "2026-02-21T00:00:00",
+    "amount": 25892.22,
+    "timestamp": "2026-08-02T07:42:21.845716",
     "channel": "upi",
-    "computed_weight": 0.00058
+    "computed_weight": 3.301941
   },
   {
     "source_id": "A-00044",
     "target_id": "A-00045",
     "type": "TRANSACTION",
-    "amount": 1567203.25,
-    "timestamp": "2026-02-21T00:31:10.864629",
+    "amount": 8398.76,
+    "timestamp": "2026-08-02T20:40:20.690457",
     "channel": "upi",
-    "computed_weight": 0.001212
+    "computed_weight": 2.936105
+  },
+  {
+    "source_id": "A-00044",
+    "target_id": "A-00046",
+    "type": "TRANSACTION",
+    "amount": 7518.77,
+    "timestamp": "2026-08-02T23:05:19.692322",
+    "channel": "upi",
+    "computed_weight": 2.498045
+  },
+  {
+    "source_id": "A-00044",
+    "target_id": "A-00047",
+    "type": "TRANSACTION",
+    "amount": 7249.43,
+    "timestamp": "2026-08-02T19:06:53.515044",
+    "channel": "upi",
+    "computed_weight": 2.888286
   },
   {
     "source_id": "A-00045",
-    "target_id": "A-00046",
+    "target_id": "A-00038",
     "type": "TRANSACTION",
-    "amount": 1370354.05,
-    "timestamp": "2026-02-21T02:30:14.959005",
+    "amount": 7311.89,
+    "timestamp": "2026-08-04T00:46:26.062563",
+    "channel": "atm_withdrawal",
+    "computed_weight": 2.181016
+  },
+  {
+    "source_id": "A-00046",
+    "target_id": "A-00038",
+    "type": "TRANSACTION",
+    "amount": 7043.43,
+    "timestamp": "2026-08-03T08:47:54.958864",
     "channel": "upi",
-    "computed_weight": 0.001394
+    "computed_weight": 1.303453
   },
   {
     "source_id": "A-00047",
-    "target_id": "A-00048",
+    "target_id": "A-00038",
     "type": "TRANSACTION",
-    "amount": 1500782.01,
-    "timestamp": "2026-02-24T00:00:00",
-    "channel": "neft_imps",
-    "computed_weight": 0.00155
+    "amount": 8111.53,
+    "timestamp": "2026-08-03T16:01:23.767214",
+    "channel": "atm_withdrawal",
+    "computed_weight": 3.074755
   },
   {
     "source_id": "A-00048",
     "target_id": "A-00049",
     "type": "TRANSACTION",
-    "amount": 167738.93,
-    "timestamp": "2026-02-24T02:18:39.565395",
-    "channel": "neft_imps",
-    "computed_weight": 0.000941
+    "amount": 47694.87,
+    "timestamp": "2026-08-02T04:19:59.174973",
+    "channel": "upi",
+    "computed_weight": 3.015116
   },
   {
-    "source_id": "A-00048",
+    "source_id": "A-00049",
     "target_id": "A-00050",
     "type": "TRANSACTION",
-    "amount": 182180.38,
-    "timestamp": "2026-02-24T04:36:52.051866",
+    "amount": 19174.74,
+    "timestamp": "2026-08-02T15:14:56.343780",
     "channel": "upi",
-    "computed_weight": 0.000598
+    "computed_weight": 3.204346
   },
   {
-    "source_id": "A-00048",
+    "source_id": "A-00049",
     "target_id": "A-00051",
     "type": "TRANSACTION",
-    "amount": 168812.3,
-    "timestamp": "2026-02-24T08:40:47.229387",
-    "channel": "neft_imps",
-    "computed_weight": 0.001188
+    "amount": 21299.68,
+    "timestamp": "2026-08-02T18:12:45.500952",
+    "channel": "upi",
+    "computed_weight": 2.210618
   },
   {
-    "source_id": "A-00048",
-    "target_id": "A-00052",
+    "source_id": "A-00050",
+    "target_id": "A-00038",
     "type": "TRANSACTION",
-    "amount": 186232.94,
-    "timestamp": "2026-02-24T05:29:15.308366",
-    "channel": "neft_imps",
-    "computed_weight": 0.001198
+    "amount": 22366.25,
+    "timestamp": "2026-08-03T16:52:29.351766",
+    "channel": "upi",
+    "computed_weight": 3.421229
   },
   {
-    "source_id": "A-00048",
+    "source_id": "A-00051",
+    "target_id": "A-00038",
+    "type": "TRANSACTION",
+    "amount": 20558.09,
+    "timestamp": "2026-08-03T09:48:27.394184",
+    "channel": "atm_withdrawal",
+    "computed_weight": 2.315695
+  },
+  {
+    "source_id": "A-00052",
     "target_id": "A-00053",
     "type": "TRANSACTION",
-    "amount": 177715.78,
-    "timestamp": "2026-02-24T09:04:25.767330",
+    "amount": 16802.71,
+    "timestamp": "2025-12-05T00:00:00",
     "channel": "upi",
-    "computed_weight": 0.001193
+    "computed_weight": 1.3e-05
   },
   {
-    "source_id": "A-00048",
+    "source_id": "A-00053",
     "target_id": "A-00054",
     "type": "TRANSACTION",
-    "amount": 156806.01,
-    "timestamp": "2026-02-24T06:24:43.697637",
+    "amount": 15828.1,
+    "timestamp": "2025-12-05T00:47:41.412321",
     "channel": "upi",
-    "computed_weight": 0.001371
+    "computed_weight": 8e-06
   },
   {
-    "source_id": "A-00048",
+    "source_id": "A-00054",
     "target_id": "A-00055",
     "type": "TRANSACTION",
-    "amount": 165739.17,
-    "timestamp": "2026-02-24T10:17:44.945586",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.001377
+    "amount": 14755.74,
+    "timestamp": "2025-12-05T01:01:02.179314",
+    "channel": "neft_imps",
+    "computed_weight": 8e-06
   },
   {
-    "source_id": "A-00048",
-    "target_id": "A-00056",
+    "source_id": "A-00056",
+    "target_id": "A-00046",
     "type": "TRANSACTION",
-    "amount": 163428.0,
-    "timestamp": "2026-02-24T11:30:54.022334",
-    "channel": "upi",
-    "computed_weight": 0.001185
+    "amount": 1121885.83,
+    "timestamp": "2026-06-26T00:00:00",
+    "channel": "neft_imps",
+    "computed_weight": 0.583166
   },
   {
-    "source_id": "A-00057",
+    "source_id": "A-00046",
     "target_id": "A-00058",
     "type": "TRANSACTION",
-    "amount": 3366843.52,
-    "timestamp": "2026-03-01T00:00:00",
-    "channel": "neft_imps",
-    "computed_weight": 0.002104
+    "amount": 1026792.81,
+    "timestamp": "2026-06-26T00:46:06.220137",
+    "channel": "upi",
+    "computed_weight": 0.482754
   },
   {
     "source_id": "A-00058",
     "target_id": "A-00059",
     "type": "TRANSACTION",
-    "amount": 407917.56,
-    "timestamp": "2026-03-01T04:38:05.109596",
-    "channel": "upi",
-    "computed_weight": 0.001637
-  },
-  {
-    "source_id": "A-00058",
-    "target_id": "A-00060",
-    "type": "TRANSACTION",
-    "amount": 409124.73,
-    "timestamp": "2026-03-01T11:29:15.893083",
-    "channel": "upi",
-    "computed_weight": 0.001638
-  },
-  {
-    "source_id": "A-00058",
-    "target_id": "A-00061",
-    "type": "TRANSACTION",
-    "amount": 398455.16,
-    "timestamp": "2026-03-01T09:08:37.026614",
-    "channel": "neft_imps",
-    "computed_weight": 0.001634
-  },
-  {
-    "source_id": "A-00058",
-    "target_id": "A-00062",
-    "type": "TRANSACTION",
-    "amount": 386734.43,
-    "timestamp": "2026-03-01T08:00:19.204063",
+    "amount": 1036052.37,
+    "timestamp": "2026-06-26T02:42:13.266436",
     "channel": "atm_withdrawal",
-    "computed_weight": 0.000815
-  },
-  {
-    "source_id": "A-00058",
-    "target_id": "A-00063",
-    "type": "TRANSACTION",
-    "amount": 479593.41,
-    "timestamp": "2026-03-01T01:41:09.398434",
-    "channel": "upi",
-    "computed_weight": 0.001925
-  },
-  {
-    "source_id": "A-00058",
-    "target_id": "A-00064",
-    "type": "TRANSACTION",
-    "amount": 448305.19,
-    "timestamp": "2026-03-01T03:07:41.621806",
-    "channel": "upi",
-    "computed_weight": 0.001915
-  },
-  {
-    "source_id": "A-00058",
-    "target_id": "A-00065",
-    "type": "TRANSACTION",
-    "amount": 459069.51,
-    "timestamp": "2026-03-01T02:07:50.966119",
-    "channel": "neft_imps",
-    "computed_weight": 0.001918
+    "computed_weight": 0.304781
   },
   {
     "source_id": "ORG-00001",
-    "target_id": "P-00066",
+    "target_id": "P-00060",
     "type": "RECRUITED_VIA",
-    "timestamp": "2026-01-07T00:00:00"
+    "timestamp": "2026-07-15T00:00:00"
   },
   {
-    "source_id": "A-00067",
+    "source_id": "A-00061",
+    "target_id": "A-00060",
+    "type": "TRANSACTION",
+    "amount": 31732.93,
+    "timestamp": "2026-08-02T00:00:00",
+    "channel": "neft_imps",
+    "computed_weight": 1.379792
+  },
+  {
+    "source_id": "A-00060",
+    "target_id": "A-00062",
+    "type": "TRANSACTION",
+    "amount": 5036.6,
+    "timestamp": "2026-08-03T07:24:43.376590",
+    "channel": "neft_imps",
+    "computed_weight": 1.254115
+  },
+  {
+    "source_id": "A-00060",
+    "target_id": "A-00044",
+    "type": "TRANSACTION",
+    "amount": 4894.57,
+    "timestamp": "2026-08-03T01:13:55.853458",
+    "channel": "upi",
+    "computed_weight": 1.249906
+  },
+  {
+    "source_id": "A-00060",
+    "target_id": "A-00064",
+    "type": "TRANSACTION",
+    "amount": 4756.4,
+    "timestamp": "2026-08-02T21:00:51.468940",
+    "channel": "upi",
+    "computed_weight": 1.18494
+  },
+  {
+    "source_id": "A-00060",
+    "target_id": "A-00065",
+    "type": "TRANSACTION",
+    "amount": 5013.97,
+    "timestamp": "2026-08-03T08:20:39.115261",
+    "channel": "neft_imps",
+    "computed_weight": 2.506905
+  },
+  {
+    "source_id": "A-00060",
     "target_id": "A-00066",
     "type": "TRANSACTION",
-    "amount": 675830.76,
-    "timestamp": "2026-01-26T00:00:00",
+    "amount": 4825.44,
+    "timestamp": "2026-08-02T09:36:47.933815",
     "channel": "upi",
-    "computed_weight": 0.000343
+    "computed_weight": 1.881283
+  },
+  {
+    "source_id": "A-00060",
+    "target_id": "A-00067",
+    "type": "TRANSACTION",
+    "amount": 5125.31,
+    "timestamp": "2026-08-03T00:20:01.836836",
+    "channel": "neft_imps",
+    "computed_weight": 1.256683
+  },
+  {
+    "source_id": "A-00062",
+    "target_id": "A-00068",
+    "type": "TRANSACTION",
+    "amount": 4257.28,
+    "timestamp": "2026-08-04T13:09:13.695974",
+    "channel": "neft_imps",
+    "computed_weight": 1.292416
+  },
+  {
+    "source_id": "A-00044",
+    "target_id": "A-00068",
+    "type": "TRANSACTION",
+    "amount": 4581.68,
+    "timestamp": "2026-08-04T16:46:47.106346",
+    "channel": "neft_imps",
+    "computed_weight": 2.066432
+  },
+  {
+    "source_id": "A-00064",
+    "target_id": "A-00068",
+    "type": "TRANSACTION",
+    "amount": 4801.77,
+    "timestamp": "2026-08-04T15:08:52.154250",
+    "channel": "upi",
+    "computed_weight": 3.044117
+  },
+  {
+    "source_id": "A-00065",
+    "target_id": "A-00068",
+    "type": "TRANSACTION",
+    "amount": 4673.4,
+    "timestamp": "2026-08-03T20:27:29.527344",
+    "channel": "upi",
+    "computed_weight": 2.886397
   },
   {
     "source_id": "A-00066",
     "target_id": "A-00068",
     "type": "TRANSACTION",
-    "amount": 107562.99,
-    "timestamp": "2026-01-26T21:11:13.899312",
-    "channel": "upi",
-    "computed_weight": 0.000134
+    "amount": 4262.51,
+    "timestamp": "2026-08-03T12:04:59.404352",
+    "channel": "neft_imps",
+    "computed_weight": 1.948813
   },
   {
-    "source_id": "A-00066",
-    "target_id": "A-00069",
+    "source_id": "A-00067",
+    "target_id": "A-00068",
     "type": "TRANSACTION",
-    "amount": 90237.18,
-    "timestamp": "2026-01-26T15:19:49.539069",
+    "amount": 4287.4,
+    "timestamp": "2026-08-03T15:40:39.453756",
     "channel": "upi",
-    "computed_weight": 0.000209
-  },
-  {
-    "source_id": "A-00066",
-    "target_id": "A-00070",
-    "type": "TRANSACTION",
-    "amount": 109072.97,
-    "timestamp": "2026-01-27T11:43:09.763260",
-    "channel": "upi",
-    "computed_weight": 0.000224
-  },
-  {
-    "source_id": "A-00066",
-    "target_id": "A-00071",
-    "type": "TRANSACTION",
-    "amount": 109917.65,
-    "timestamp": "2026-01-26T16:45:45.939376",
-    "channel": "upi",
-    "computed_weight": 0.000269
-  },
-  {
-    "source_id": "A-00066",
-    "target_id": "A-00072",
-    "type": "TRANSACTION",
-    "amount": 101415.9,
-    "timestamp": "2026-01-27T04:53:47.646510",
-    "channel": "upi",
-    "computed_weight": 0.000222
-  },
-  {
-    "source_id": "A-00066",
-    "target_id": "A-00073",
-    "type": "TRANSACTION",
-    "amount": 99508.98,
-    "timestamp": "2026-01-27T04:38:19.767199",
-    "channel": "upi",
-    "computed_weight": 0.00028
+    "computed_weight": 1.230421
   },
   {
     "source_id": "A-00068",
-    "target_id": "A-00074",
-    "type": "TRANSACTION",
-    "amount": 95734.87,
-    "timestamp": "2026-01-28T11:02:51.274520",
-    "channel": "neft_imps",
-    "computed_weight": 0.000233
-  },
-  {
-    "source_id": "A-00069",
-    "target_id": "A-00074",
-    "type": "TRANSACTION",
-    "amount": 101648.86,
-    "timestamp": "2026-01-28T10:17:03.692596",
-    "channel": "neft_imps",
-    "computed_weight": 0.000295
-  },
-  {
-    "source_id": "A-00070",
-    "target_id": "A-00074",
-    "type": "TRANSACTION",
-    "amount": 106593.57,
-    "timestamp": "2026-01-28T05:47:07.352586",
-    "channel": "upi",
-    "computed_weight": 0.000296
-  },
-  {
-    "source_id": "A-00071",
-    "target_id": "A-00074",
-    "type": "TRANSACTION",
-    "amount": 100235.06,
-    "timestamp": "2026-01-27T13:49:26.710262",
-    "channel": "neft_imps",
-    "computed_weight": 0.00014
-  },
-  {
-    "source_id": "A-00072",
-    "target_id": "A-00074",
-    "type": "TRANSACTION",
-    "amount": 98609.98,
-    "timestamp": "2026-01-28T11:04:43.024150",
-    "channel": "upi",
-    "computed_weight": 0.000147
-  },
-  {
-    "source_id": "A-00073",
-    "target_id": "A-00074",
-    "type": "TRANSACTION",
-    "amount": 94708.23,
-    "timestamp": "2026-01-28T04:27:41.472367",
-    "channel": "upi",
-    "computed_weight": 0.000293
-  },
-  {
-    "source_id": "A-00074",
     "target_id": "EXIT-00001",
     "type": "TRANSACTION",
-    "amount": 556995.25,
-    "timestamp": "2026-01-29T03:30:08.578157",
+    "amount": 22804.12,
+    "timestamp": "2026-08-05T01:07:02.813922",
     "channel": "crypto_convert",
-    "computed_weight": 0.000282
-  },
-  {
-    "source_id": "A-00075",
-    "target_id": "A-00060",
-    "type": "TRANSACTION",
-    "amount": 2129021.57,
-    "timestamp": "2025-12-09T00:00:00",
-    "channel": "upi",
-    "computed_weight": 1.5e-05
-  },
-  {
-    "source_id": "A-00060",
-    "target_id": "A-00077",
-    "type": "TRANSACTION",
-    "amount": 1843003.91,
-    "timestamp": "2025-12-09T00:50:53.917336",
-    "channel": "upi",
-    "computed_weight": 2.4e-05
-  },
-  {
-    "source_id": "A-00077",
-    "target_id": "A-00078",
-    "type": "TRANSACTION",
-    "amount": 1778337.48,
-    "timestamp": "2025-12-09T01:46:45.828046",
-    "channel": "upi",
-    "computed_weight": 3e-05
+    "computed_weight": 2.585959
   },
   {
     "source_id": "ORG-00002",
-    "target_id": "P-00079",
+    "target_id": "P-00069",
     "type": "RECRUITED_VIA",
-    "timestamp": "2026-06-30T00:00:00"
+    "timestamp": "2026-08-12T00:00:00"
+  },
+  {
+    "source_id": "A-00070",
+    "target_id": "A-00069",
+    "type": "TRANSACTION",
+    "amount": 25537.9,
+    "timestamp": "2026-08-28T00:00:00",
+    "channel": "upi",
+    "computed_weight": 11.50928
+  },
+  {
+    "source_id": "A-00069",
+    "target_id": "A-00071",
+    "type": "TRANSACTION",
+    "amount": 3813.34,
+    "timestamp": "2026-08-28T06:09:10.855234",
+    "channel": "neft_imps",
+    "computed_weight": 6.711401
+  },
+  {
+    "source_id": "A-00069",
+    "target_id": "A-00072",
+    "type": "TRANSACTION",
+    "amount": 3428.66,
+    "timestamp": "2026-08-28T21:08:47.234252",
+    "channel": "neft_imps",
+    "computed_weight": 8.359639
+  },
+  {
+    "source_id": "A-00069",
+    "target_id": "A-00073",
+    "type": "TRANSACTION",
+    "amount": 3750.1,
+    "timestamp": "2026-08-28T09:10:16.833875",
+    "channel": "neft_imps",
+    "computed_weight": 8.451672
+  },
+  {
+    "source_id": "A-00069",
+    "target_id": "A-00067",
+    "type": "TRANSACTION",
+    "amount": 3655.66,
+    "timestamp": "2026-08-29T06:08:29.520651",
+    "channel": "neft_imps",
+    "computed_weight": 8.85746
+  },
+  {
+    "source_id": "A-00069",
+    "target_id": "A-00047",
+    "type": "TRANSACTION",
+    "amount": 4235.14,
+    "timestamp": "2026-08-29T10:42:30.157661",
+    "channel": "upi",
+    "computed_weight": 7.145264
+  },
+  {
+    "source_id": "A-00069",
+    "target_id": "A-00058",
+    "type": "TRANSACTION",
+    "amount": 4239.39,
+    "timestamp": "2026-08-29T00:53:29.573276",
+    "channel": "neft_imps",
+    "computed_weight": 9.017402
+  },
+  {
+    "source_id": "A-00071",
+    "target_id": "A-00077",
+    "type": "TRANSACTION",
+    "amount": 3771.89,
+    "timestamp": "2026-08-29T22:27:01.871523",
+    "channel": "neft_imps",
+    "computed_weight": 8.891251
+  },
+  {
+    "source_id": "A-00072",
+    "target_id": "A-00077",
+    "type": "TRANSACTION",
+    "amount": 3773.53,
+    "timestamp": "2026-08-30T07:06:41.300322",
+    "channel": "neft_imps",
+    "computed_weight": 10.85224
+  },
+  {
+    "source_id": "A-00073",
+    "target_id": "A-00077",
+    "type": "TRANSACTION",
+    "amount": 3577.68,
+    "timestamp": "2026-08-30T11:06:02.311424",
+    "channel": "upi",
+    "computed_weight": 4.643559
+  },
+  {
+    "source_id": "A-00067",
+    "target_id": "A-00077",
+    "type": "TRANSACTION",
+    "amount": 3449.8,
+    "timestamp": "2026-08-29T17:45:39.588700",
+    "channel": "neft_imps",
+    "computed_weight": 10.210543
+  },
+  {
+    "source_id": "A-00047",
+    "target_id": "A-00077",
+    "type": "TRANSACTION",
+    "amount": 3828.92,
+    "timestamp": "2026-08-30T14:24:12.947288",
+    "channel": "upi",
+    "computed_weight": 9.364149
+  },
+  {
+    "source_id": "A-00058",
+    "target_id": "A-00077",
+    "type": "TRANSACTION",
+    "amount": 3198.68,
+    "timestamp": "2026-08-30T11:21:47.701505",
+    "channel": "upi",
+    "computed_weight": 7.259149
+  },
+  {
+    "source_id": "A-00077",
+    "target_id": "EXIT-00002",
+    "type": "TRANSACTION",
+    "amount": 19923.34,
+    "timestamp": "2026-08-31T04:25:38.459150",
+    "channel": "crypto_convert",
+    "computed_weight": 11.812205
+  },
+  {
+    "source_id": "ORG-00003",
+    "target_id": "P-00078",
+    "type": "RECRUITED_VIA",
+    "timestamp": "2026-07-18T00:00:00"
+  },
+  {
+    "source_id": "A-00079",
+    "target_id": "A-00078",
+    "type": "TRANSACTION",
+    "amount": 33920.52,
+    "timestamp": "2026-07-29T00:00:00",
+    "channel": "neft_imps",
+    "computed_weight": 1.136944
+  },
+  {
+    "source_id": "A-00078",
+    "target_id": "A-00080",
+    "type": "TRANSACTION",
+    "amount": 5608.55,
+    "timestamp": "2026-07-29T10:10:08.001466",
+    "channel": "upi",
+    "computed_weight": 1.567575
+  },
+  {
+    "source_id": "A-00078",
+    "target_id": "A-00081",
+    "type": "TRANSACTION",
+    "amount": 4667.33,
+    "timestamp": "2026-07-29T17:04:48.735591",
+    "channel": "neft_imps",
+    "computed_weight": 1.534214
+  },
+  {
+    "source_id": "A-00078",
+    "target_id": "A-00082",
+    "type": "TRANSACTION",
+    "amount": 5391.88,
+    "timestamp": "2026-07-30T00:48:15.453747",
+    "channel": "upi",
+    "computed_weight": 2.403178
+  },
+  {
+    "source_id": "A-00078",
+    "target_id": "A-00083",
+    "type": "TRANSACTION",
+    "amount": 4783.8,
+    "timestamp": "2026-07-29T16:55:35.208904",
+    "channel": "upi",
+    "computed_weight": 0.970805
+  },
+  {
+    "source_id": "A-00078",
+    "target_id": "A-00084",
+    "type": "TRANSACTION",
+    "amount": 4553.67,
+    "timestamp": "2026-07-30T10:51:23.092102",
+    "channel": "upi",
+    "computed_weight": 2.355924
+  },
+  {
+    "source_id": "A-00078",
+    "target_id": "A-00085",
+    "type": "TRANSACTION",
+    "amount": 5151.29,
+    "timestamp": "2026-07-30T07:04:56.764889",
+    "channel": "upi",
+    "computed_weight": 2.390412
   },
   {
     "source_id": "A-00080",
-    "target_id": "A-00079",
-    "type": "TRANSACTION",
-    "amount": 986618.08,
-    "timestamp": "2026-07-03T00:00:00",
-    "channel": "upi",
-    "computed_weight": 0.649771
-  },
-  {
-    "source_id": "A-00079",
-    "target_id": "A-00081",
-    "type": "TRANSACTION",
-    "amount": 161293.48,
-    "timestamp": "2026-07-03T21:20:00.526523",
-    "channel": "neft_imps",
-    "computed_weight": 0.748854
-  },
-  {
-    "source_id": "A-00079",
-    "target_id": "A-00082",
-    "type": "TRANSACTION",
-    "amount": 157515.15,
-    "timestamp": "2026-07-04T04:37:23.461875",
-    "channel": "upi",
-    "computed_weight": 0.912161
-  },
-  {
-    "source_id": "A-00079",
-    "target_id": "A-00083",
-    "type": "TRANSACTION",
-    "amount": 132517.2,
-    "timestamp": "2026-07-04T00:51:45.552239",
-    "channel": "neft_imps",
-    "computed_weight": 0.387174
-  },
-  {
-    "source_id": "A-00079",
-    "target_id": "A-00084",
-    "type": "TRANSACTION",
-    "amount": 134908.72,
-    "timestamp": "2026-07-03T21:58:48.714062",
-    "channel": "neft_imps",
-    "computed_weight": 0.368849
-  },
-  {
-    "source_id": "A-00079",
-    "target_id": "A-00085",
-    "type": "TRANSACTION",
-    "amount": 138618.04,
-    "timestamp": "2026-07-03T08:14:06.654095",
-    "channel": "neft_imps",
-    "computed_weight": 0.739393
-  },
-  {
-    "source_id": "A-00079",
     "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 137440.03,
-    "timestamp": "2026-07-03T14:53:51.576770",
-    "channel": "neft_imps",
-    "computed_weight": 0.857789
+    "amount": 4718.42,
+    "timestamp": "2026-07-31T18:46:36.873814",
+    "channel": "upi",
+    "computed_weight": 1.697753
   },
   {
     "source_id": "A-00081",
-    "target_id": "A-00087",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 148473.88,
-    "timestamp": "2026-07-05T07:52:01.904078",
-    "channel": "neft_imps",
-    "computed_weight": 0.954192
+    "amount": 4988.02,
+    "timestamp": "2026-07-30T20:02:36.846825",
+    "channel": "upi",
+    "computed_weight": 2.381404
   },
   {
     "source_id": "A-00082",
-    "target_id": "A-00087",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 149315.9,
-    "timestamp": "2026-07-05T09:28:20.788450",
+    "amount": 4457.76,
+    "timestamp": "2026-07-30T19:48:45.389468",
     "channel": "upi",
-    "computed_weight": 0.411143
+    "computed_weight": 2.34997
   },
   {
     "source_id": "A-00083",
-    "target_id": "A-00087",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 154477.57,
-    "timestamp": "2026-07-05T05:15:59.639177",
+    "amount": 4913.1,
+    "timestamp": "2026-07-31T12:21:59.189022",
     "channel": "upi",
-    "computed_weight": 0.653505
+    "computed_weight": 1.705868
   },
   {
     "source_id": "A-00084",
-    "target_id": "A-00087",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 131414.57,
-    "timestamp": "2026-07-04T17:35:34.588949",
-    "channel": "neft_imps",
-    "computed_weight": 0.386899
+    "amount": 5339.76,
+    "timestamp": "2026-07-31T05:00:46.034351",
+    "channel": "upi",
+    "computed_weight": 2.523536
   },
   {
     "source_id": "A-00085",
-    "target_id": "A-00087",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 132622.94,
-    "timestamp": "2026-07-04T20:36:28.978349",
+    "amount": 4792.28,
+    "timestamp": "2026-07-30T13:42:47.405874",
     "channel": "neft_imps",
-    "computed_weight": 0.3872
+    "computed_weight": 1.020793
   },
   {
     "source_id": "A-00086",
-    "target_id": "A-00087",
+    "target_id": "EXIT-00003",
     "type": "TRANSACTION",
-    "amount": 145904.94,
-    "timestamp": "2026-07-05T19:22:49.843829",
-    "channel": "upi",
-    "computed_weight": 0.820691
+    "amount": 24467.47,
+    "timestamp": "2026-08-01T01:59:45.437298",
+    "channel": "crypto_convert",
+    "computed_weight": 2.132059
   },
   {
     "source_id": "A-00087",
-    "target_id": "EXIT-00002",
+    "target_id": "A-00084",
     "type": "TRANSACTION",
-    "amount": 927876.29,
-    "timestamp": "2026-07-06T03:01:36.115320",
-    "channel": "crypto_convert",
-    "computed_weight": 1.157478
+    "amount": 47315.75,
+    "timestamp": "2026-07-05T00:00:00",
+    "channel": "neft_imps",
+    "computed_weight": 0.560072
+  },
+  {
+    "source_id": "A-00084",
+    "target_id": "A-00089",
+    "type": "TRANSACTION",
+    "amount": 40854.32,
+    "timestamp": "2026-07-05T01:02:25.466459",
+    "channel": "neft_imps",
+    "computed_weight": 0.366417
   },
   {
     "source_id": "A-00089",
     "target_id": "A-00090",
     "type": "TRANSACTION",
-    "amount": 2469934.02,
-    "timestamp": "2026-04-06T09:24:31.809486",
+    "amount": 43455.71,
+    "timestamp": "2026-07-05T01:47:30.312467",
     "channel": "upi",
-    "computed_weight": 0.005643
+    "computed_weight": 0.85574
   },
   {
-    "source_id": "A-00090",
-    "target_id": "A-00091",
-    "type": "TRANSACTION",
-    "amount": 1143509.87,
-    "timestamp": "2026-04-06T15:08:18.696879",
-    "channel": "upi",
-    "computed_weight": 0.010696
-  },
-  {
-    "source_id": "A-00090",
-    "target_id": "A-00092",
-    "type": "TRANSACTION",
-    "amount": 1059673.87,
-    "timestamp": "2026-04-06T23:33:16.267369",
-    "channel": "upi",
-    "computed_weight": 0.010637
-  },
-  {
-    "source_id": "A-00091",
-    "target_id": "A-00088",
-    "type": "TRANSACTION",
-    "amount": 1057347.69,
-    "timestamp": "2026-04-08T05:35:04.028913",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.009315
+    "source_id": "ORG-00004",
+    "target_id": "P-00091",
+    "type": "RECRUITED_VIA",
+    "timestamp": "2026-03-19T00:00:00"
   },
   {
     "source_id": "A-00092",
-    "target_id": "A-00088",
+    "target_id": "A-00091",
     "type": "TRANSACTION",
-    "amount": 1109423.55,
-    "timestamp": "2026-04-08T07:24:57.844909",
+    "amount": 1845085.38,
+    "timestamp": "2026-04-04T00:00:00",
+    "channel": "upi",
+    "computed_weight": 0.009522
+  },
+  {
+    "source_id": "A-00091",
+    "target_id": "A-00093",
+    "type": "TRANSACTION",
+    "amount": 274914.91,
+    "timestamp": "2026-04-05T04:40:11.204944",
     "channel": "neft_imps",
-    "computed_weight": 0.013693
+    "computed_weight": 0.009134
+  },
+  {
+    "source_id": "A-00091",
+    "target_id": "A-00094",
+    "type": "TRANSACTION",
+    "amount": 301729.91,
+    "timestamp": "2026-04-05T11:46:33.922703",
+    "channel": "upi",
+    "computed_weight": 0.004601
+  },
+  {
+    "source_id": "A-00091",
+    "target_id": "A-00095",
+    "type": "TRANSACTION",
+    "amount": 253208.96,
+    "timestamp": "2026-04-05T04:01:08.800042",
+    "channel": "neft_imps",
+    "computed_weight": 0.010535
+  },
+  {
+    "source_id": "A-00091",
+    "target_id": "A-00096",
+    "type": "TRANSACTION",
+    "amount": 280755.11,
+    "timestamp": "2026-04-05T05:54:56.570687",
+    "channel": "upi",
+    "computed_weight": 0.004575
+  },
+  {
+    "source_id": "A-00091",
+    "target_id": "A-00097",
+    "type": "TRANSACTION",
+    "amount": 257536.27,
+    "timestamp": "2026-04-04T18:47:00.008216",
+    "channel": "neft_imps",
+    "computed_weight": 0.00685
+  },
+  {
+    "source_id": "A-00091",
+    "target_id": "A-00098",
+    "type": "TRANSACTION",
+    "amount": 265783.98,
+    "timestamp": "2026-04-05T08:22:42.998093",
+    "channel": "neft_imps",
+    "computed_weight": 0.004555
   },
   {
     "source_id": "A-00093",
-    "target_id": "A-00094",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 1622127.03,
-    "timestamp": "2026-04-06T14:16:04.263266",
-    "channel": "upi",
-    "computed_weight": 0.008689
-  },
-  {
-    "source_id": "A-00094",
-    "target_id": "A-00095",
-    "type": "TRANSACTION",
-    "amount": 768166.15,
-    "timestamp": "2026-04-07T05:05:11.062704",
+    "amount": 237799.67,
+    "timestamp": "2026-04-05T14:00:29.489369",
     "channel": "neft_imps",
-    "computed_weight": 0.008657
+    "computed_weight": 0.007155
   },
   {
     "source_id": "A-00094",
-    "target_id": "A-00096",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 749749.44,
-    "timestamp": "2026-04-06T22:54:36.581118",
-    "channel": "upi",
-    "computed_weight": 0.00822
+    "amount": 274937.81,
+    "timestamp": "2026-04-06T21:44:29.961094",
+    "channel": "neft_imps",
+    "computed_weight": 0.009603
   },
   {
     "source_id": "A-00095",
-    "target_id": "A-00088",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 660301.56,
-    "timestamp": "2026-04-08T06:43:08.867187",
+    "amount": 254741.11,
+    "timestamp": "2026-04-05T20:18:02.559286",
     "channel": "neft_imps",
-    "computed_weight": 0.008999
+    "computed_weight": 0.009079
   },
   {
     "source_id": "A-00096",
-    "target_id": "A-00088",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 727611.7,
-    "timestamp": "2026-04-07T19:29:32.476615",
+    "amount": 255777.82,
+    "timestamp": "2026-04-06T02:19:47.208600",
     "channel": "upi",
-    "computed_weight": 0.012631
+    "computed_weight": 0.009547
   },
   {
     "source_id": "A-00097",
-    "target_id": "A-00098",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 438437.43,
-    "timestamp": "2026-04-06T14:09:23.195067",
-    "channel": "neft_imps",
-    "computed_weight": 0.009961
-  },
-  {
-    "source_id": "A-00098",
-    "target_id": "A-00099",
-    "type": "TRANSACTION",
-    "amount": 99758.57,
-    "timestamp": "2026-04-06T19:17:48.712533",
-    "channel": "neft_imps",
-    "computed_weight": 0.006994
-  },
-  {
-    "source_id": "A-00098",
-    "target_id": "A-00100",
-    "type": "TRANSACTION",
-    "amount": 98838.35,
-    "timestamp": "2026-04-06T18:46:45.114263",
-    "channel": "neft_imps",
-    "computed_weight": 0.010238
-  },
-  {
-    "source_id": "A-00098",
-    "target_id": "A-00101",
-    "type": "TRANSACTION",
-    "amount": 103356.72,
-    "timestamp": "2026-04-07T05:11:51.043338",
-    "channel": "neft_imps",
-    "computed_weight": 0.009307
-  },
-  {
-    "source_id": "A-00098",
-    "target_id": "A-00102",
-    "type": "TRANSACTION",
-    "amount": 103964.36,
-    "timestamp": "2026-04-07T03:22:28.735935",
+    "amount": 284307.69,
+    "timestamp": "2026-04-05T13:27:05.259598",
     "channel": "upi",
-    "computed_weight": 0.007379
+    "computed_weight": 0.009159
   },
   {
-    "source_id": "A-00099",
-    "target_id": "A-00088",
+    "source_id": "A-00098",
+    "target_id": "A-00086",
     "type": "TRANSACTION",
-    "amount": 103835.83,
-    "timestamp": "2026-04-08T11:41:58.604063",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.007757
+    "amount": 246638.65,
+    "timestamp": "2026-04-06T09:14:21.530550",
+    "channel": "upi",
+    "computed_weight": 0.00476
+  },
+  {
+    "source_id": "A-00086",
+    "target_id": "EXIT-00004",
+    "type": "TRANSACTION",
+    "amount": 1329799.98,
+    "timestamp": "2026-04-07T02:33:26.436606",
+    "channel": "crypto_convert",
+    "computed_weight": 0.005683
   },
   {
     "source_id": "A-00100",
-    "target_id": "A-00088",
-    "type": "TRANSACTION",
-    "amount": 103825.07,
-    "timestamp": "2026-04-08T06:22:37.350737",
-    "channel": "upi",
-    "computed_weight": 0.009788
-  },
-  {
-    "source_id": "A-00101",
-    "target_id": "A-00088",
-    "type": "TRANSACTION",
-    "amount": 82968.8,
-    "timestamp": "2026-04-08T10:31:14.911599",
-    "channel": "neft_imps",
-    "computed_weight": 0.009598
-  },
-  {
-    "source_id": "A-00102",
-    "target_id": "A-00088",
-    "type": "TRANSACTION",
-    "amount": 95014.86,
-    "timestamp": "2026-04-07T18:39:06.495713",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.010726
-  },
-  {
-    "source_id": "A-00103",
     "target_id": "A-00101",
     "type": "TRANSACTION",
-    "amount": 23953.27,
-    "timestamp": "2026-06-15T00:00:00",
-    "channel": "neft_imps",
-    "computed_weight": 0.282754
+    "amount": 3686803.07,
+    "timestamp": "2026-03-18T00:00:00",
+    "channel": "upi",
+    "computed_weight": 0.00338
   },
   {
     "source_id": "A-00101",
-    "target_id": "A-00105",
+    "target_id": "A-00089",
     "type": "TRANSACTION",
-    "amount": 23355.5,
-    "timestamp": "2026-06-15T00:12:14.357977",
+    "amount": 3500439.08,
+    "timestamp": "2026-03-18T00:45:57.223765",
     "channel": "upi",
-    "computed_weight": 0.202397
+    "computed_weight": 0.005187
+  },
+  {
+    "source_id": "A-00089",
+    "target_id": "A-00103",
+    "type": "TRANSACTION",
+    "amount": 3195940.51,
+    "timestamp": "2026-03-18T02:25:36.168182",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.002221
+  },
+  {
+    "source_id": "ORG-00005",
+    "target_id": "P-00104",
+    "type": "RECRUITED_VIA",
+    "timestamp": "2026-05-25T00:00:00"
   },
   {
     "source_id": "A-00105",
+    "target_id": "A-00104",
+    "type": "TRANSACTION",
+    "amount": 1322299.9,
+    "timestamp": "2026-06-01T00:00:00",
+    "channel": "upi",
+    "computed_weight": 0.169051
+  },
+  {
+    "source_id": "A-00104",
     "target_id": "A-00106",
     "type": "TRANSACTION",
-    "amount": 20809.38,
-    "timestamp": "2026-06-15T01:16:06.545452",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.293103
+    "amount": 184619.88,
+    "timestamp": "2026-06-02T09:31:49.407958",
+    "channel": "neft_imps",
+    "computed_weight": 0.080367
   },
   {
-    "source_id": "ORG-00003",
-    "target_id": "P-00107",
-    "type": "RECRUITED_VIA",
-    "timestamp": "2025-11-06T00:00:00"
-  },
-  {
-    "source_id": "A-00108",
+    "source_id": "A-00104",
     "target_id": "A-00107",
     "type": "TRANSACTION",
-    "amount": 2745932.53,
-    "timestamp": "2025-11-23T00:00:00",
+    "amount": 194300.0,
+    "timestamp": "2026-06-01T10:42:42.260360",
     "channel": "neft_imps",
-    "computed_weight": 7e-06
+    "computed_weight": 0.178253
   },
   {
-    "source_id": "A-00107",
+    "source_id": "A-00104",
+    "target_id": "A-00108",
+    "type": "TRANSACTION",
+    "amount": 176715.5,
+    "timestamp": "2026-06-01T11:52:59.333771",
+    "channel": "neft_imps",
+    "computed_weight": 0.176864
+  },
+  {
+    "source_id": "A-00104",
     "target_id": "A-00109",
     "type": "TRANSACTION",
-    "amount": 376294.1,
-    "timestamp": "2025-11-24T00:04:41.525505",
-    "channel": "upi",
-    "computed_weight": 1e-05
+    "amount": 180892.94,
+    "timestamp": "2026-06-01T06:28:32.436285",
+    "channel": "neft_imps",
+    "computed_weight": 0.076319
   },
   {
-    "source_id": "A-00107",
+    "source_id": "A-00104",
     "target_id": "A-00110",
     "type": "TRANSACTION",
-    "amount": 407913.4,
-    "timestamp": "2025-11-23T17:52:34.019733",
+    "amount": 211537.66,
+    "timestamp": "2026-06-01T19:51:45.872388",
     "channel": "upi",
-    "computed_weight": 1e-05
+    "computed_weight": 0.077305
   },
   {
-    "source_id": "A-00107",
-    "target_id": "A-00111",
+    "source_id": "A-00104",
+    "target_id": "A-00101",
     "type": "TRANSACTION",
-    "amount": 388799.92,
-    "timestamp": "2025-11-24T06:03:59.942248",
+    "amount": 191979.82,
+    "timestamp": "2026-06-01T19:58:25.747650",
     "channel": "neft_imps",
-    "computed_weight": 1.5e-05
+    "computed_weight": 0.076694
+  },
+  {
+    "source_id": "A-00106",
+    "target_id": "A-00112",
+    "type": "TRANSACTION",
+    "amount": 187684.79,
+    "timestamp": "2026-06-03T20:24:36.681488",
+    "channel": "neft_imps",
+    "computed_weight": 0.169204
   },
   {
     "source_id": "A-00107",
     "target_id": "A-00112",
     "type": "TRANSACTION",
-    "amount": 410827.51,
-    "timestamp": "2025-11-23T07:25:39.504895",
+    "amount": 181637.14,
+    "timestamp": "2026-06-02T17:18:18.846989",
     "channel": "neft_imps",
-    "computed_weight": 6e-06
+    "computed_weight": 0.127207
   },
   {
-    "source_id": "A-00107",
-    "target_id": "A-00113",
+    "source_id": "A-00108",
+    "target_id": "A-00112",
     "type": "TRANSACTION",
-    "amount": 383021.7,
-    "timestamp": "2025-11-23T18:30:57.710811",
-    "channel": "neft_imps",
-    "computed_weight": 6e-06
-  },
-  {
-    "source_id": "A-00107",
-    "target_id": "A-00114",
-    "type": "TRANSACTION",
-    "amount": 446672.84,
-    "timestamp": "2025-11-24T05:47:22.442222",
-    "channel": "neft_imps",
-    "computed_weight": 1.3e-05
+    "amount": 197448.88,
+    "timestamp": "2026-06-03T05:51:51.358851",
+    "channel": "upi",
+    "computed_weight": 0.134651
   },
   {
     "source_id": "A-00109",
-    "target_id": "A-00115",
+    "target_id": "A-00112",
     "type": "TRANSACTION",
-    "amount": 391092.0,
-    "timestamp": "2025-11-25T19:54:07.512533",
+    "amount": 207146.79,
+    "timestamp": "2026-06-02T20:15:39.926750",
     "channel": "neft_imps",
-    "computed_weight": 1.6e-05
+    "computed_weight": 0.162259
   },
   {
     "source_id": "A-00110",
-    "target_id": "A-00115",
+    "target_id": "A-00112",
     "type": "TRANSACTION",
-    "amount": 365355.74,
-    "timestamp": "2025-11-25T21:02:49.720731",
-    "channel": "neft_imps",
-    "computed_weight": 1.1e-05
+    "amount": 204402.74,
+    "timestamp": "2026-06-03T16:31:06.897500",
+    "channel": "upi",
+    "computed_weight": 0.135033
   },
   {
-    "source_id": "A-00111",
-    "target_id": "A-00115",
+    "source_id": "A-00101",
+    "target_id": "A-00112",
     "type": "TRANSACTION",
-    "amount": 391317.44,
-    "timestamp": "2025-11-24T15:43:18.857484",
-    "channel": "neft_imps",
-    "computed_weight": 6e-06
+    "amount": 204737.32,
+    "timestamp": "2026-06-03T14:05:51.508048",
+    "channel": "upi",
+    "computed_weight": 0.170415
   },
   {
     "source_id": "A-00112",
-    "target_id": "A-00115",
+    "target_id": "EXIT-00005",
     "type": "TRANSACTION",
-    "amount": 363802.81,
-    "timestamp": "2025-11-25T16:25:14.615113",
-    "channel": "neft_imps",
-    "computed_weight": 7e-06
-  },
-  {
-    "source_id": "A-00113",
-    "target_id": "A-00115",
-    "type": "TRANSACTION",
-    "amount": 353643.95,
-    "timestamp": "2025-11-25T14:10:18.886222",
-    "channel": "neft_imps",
-    "computed_weight": 7e-06
+    "amount": 1168708.28,
+    "timestamp": "2026-06-04T01:33:40.449405",
+    "channel": "crypto_convert",
+    "computed_weight": 0.102335
   },
   {
     "source_id": "A-00114",
     "target_id": "A-00115",
     "type": "TRANSACTION",
-    "amount": 344082.14,
-    "timestamp": "2025-11-25T15:36:52.805772",
-    "channel": "upi",
-    "computed_weight": 1.3e-05
+    "amount": 40408.88,
+    "timestamp": "2026-07-23T21:15:11.138781",
+    "channel": "neft_imps",
+    "computed_weight": 2.090453
   },
   {
     "source_id": "A-00115",
-    "target_id": "EXIT-00003",
+    "target_id": "A-00116",
     "type": "TRANSACTION",
-    "amount": 2344900.23,
-    "timestamp": "2025-11-26T05:58:44.860808",
-    "channel": "crypto_convert",
-    "computed_weight": 1.6e-05
+    "amount": 8242.23,
+    "timestamp": "2026-07-24T10:45:25.699483",
+    "channel": "upi",
+    "computed_weight": 0.804609
+  },
+  {
+    "source_id": "A-00115",
+    "target_id": "A-00117",
+    "type": "TRANSACTION",
+    "amount": 8287.92,
+    "timestamp": "2026-07-24T02:24:05.997494",
+    "channel": "neft_imps",
+    "computed_weight": 0.805103
+  },
+  {
+    "source_id": "A-00115",
+    "target_id": "A-00118",
+    "type": "TRANSACTION",
+    "amount": 8615.81,
+    "timestamp": "2026-07-24T04:44:32.314488",
+    "channel": "upi",
+    "computed_weight": 1.87743
+  },
+  {
+    "source_id": "A-00115",
+    "target_id": "A-00119",
+    "type": "TRANSACTION",
+    "amount": 10080.46,
+    "timestamp": "2026-07-24T02:26:49.852780",
+    "channel": "upi",
+    "computed_weight": 0.822574
+  },
+  {
+    "source_id": "A-00116",
+    "target_id": "A-00113",
+    "type": "TRANSACTION",
+    "amount": 8754.88,
+    "timestamp": "2026-07-25T01:18:30.646347",
+    "channel": "upi",
+    "computed_weight": 1.977175
   },
   {
     "source_id": "A-00117",
-    "target_id": "A-00118",
+    "target_id": "A-00113",
     "type": "TRANSACTION",
-    "amount": 381026.15,
-    "timestamp": "2026-01-06T21:44:34.114924",
+    "amount": 8821.39,
+    "timestamp": "2026-07-25T01:11:40.076204",
     "channel": "upi",
-    "computed_weight": 5.5e-05
+    "computed_weight": 1.350757
   },
   {
     "source_id": "A-00118",
-    "target_id": "A-00119",
+    "target_id": "A-00113",
     "type": "TRANSACTION",
-    "amount": 180376.65,
-    "timestamp": "2026-01-07T00:44:37.414767",
-    "channel": "upi",
-    "computed_weight": 0.000126
-  },
-  {
-    "source_id": "A-00118",
-    "target_id": "A-00120",
-    "type": "TRANSACTION",
-    "amount": 173316.67,
-    "timestamp": "2026-01-07T11:32:47.630976",
+    "amount": 8706.77,
+    "timestamp": "2026-07-25T08:20:04.273653",
     "channel": "neft_imps",
-    "computed_weight": 0.000125
+    "computed_weight": 1.348813
   },
   {
     "source_id": "A-00119",
-    "target_id": "A-00116",
+    "target_id": "A-00113",
     "type": "TRANSACTION",
-    "amount": 164816.97,
-    "timestamp": "2026-01-08T14:00:59.389943",
+    "amount": 9378.2,
+    "timestamp": "2026-07-25T19:12:58.847654",
     "channel": "atm_withdrawal",
-    "computed_weight": 9e-05
+    "computed_weight": 1.715949
   },
   {
     "source_id": "A-00120",
-    "target_id": "A-00116",
+    "target_id": "A-00121",
     "type": "TRANSACTION",
-    "amount": 174913.14,
-    "timestamp": "2026-01-08T16:01:48.993483",
-    "channel": "upi",
-    "computed_weight": 0.000114
+    "amount": 43780.47,
+    "timestamp": "2026-07-23T19:03:57.604548",
+    "channel": "neft_imps",
+    "computed_weight": 2.106247
   },
   {
     "source_id": "A-00121",
     "target_id": "A-00122",
     "type": "TRANSACTION",
-    "amount": 1050338.35,
-    "timestamp": "2026-01-06T04:29:50.312142",
+    "amount": 8995.03,
+    "timestamp": "2026-07-24T01:27:45.596533",
     "channel": "neft_imps",
-    "computed_weight": 9.4e-05
+    "computed_weight": 1.624817
   },
   {
-    "source_id": "A-00122",
+    "source_id": "A-00121",
     "target_id": "A-00123",
     "type": "TRANSACTION",
-    "amount": 319624.68,
-    "timestamp": "2026-01-06T10:59:53.448369",
+    "amount": 10253.62,
+    "timestamp": "2026-07-24T11:01:59.515546",
     "channel": "neft_imps",
-    "computed_weight": 5.4e-05
+    "computed_weight": 1.913487
   },
   {
-    "source_id": "A-00122",
+    "source_id": "A-00121",
     "target_id": "A-00124",
     "type": "TRANSACTION",
-    "amount": 283996.3,
-    "timestamp": "2026-01-06T07:37:27.570666",
+    "amount": 8782.32,
+    "timestamp": "2026-07-24T03:34:09.694758",
     "channel": "upi",
-    "computed_weight": 0.000107
+    "computed_weight": 1.620546
+  },
+  {
+    "source_id": "A-00121",
+    "target_id": "A-00125",
+    "type": "TRANSACTION",
+    "amount": 9835.76,
+    "timestamp": "2026-07-24T09:32:52.556291",
+    "channel": "neft_imps",
+    "computed_weight": 0.820382
   },
   {
     "source_id": "A-00122",
-    "target_id": "A-00125",
+    "target_id": "A-00113",
     "type": "TRANSACTION",
-    "amount": 305832.95,
-    "timestamp": "2026-01-06T16:52:38.085454",
-    "channel": "neft_imps",
-    "computed_weight": 8.5e-05
+    "amount": 9190.87,
+    "timestamp": "2026-07-25T09:38:47.987147",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.856082
   },
   {
     "source_id": "A-00123",
-    "target_id": "A-00116",
+    "target_id": "A-00113",
     "type": "TRANSACTION",
-    "amount": 292348.11,
-    "timestamp": "2026-01-07T12:10:16.487393",
-    "channel": "neft_imps",
-    "computed_weight": 0.000113
+    "amount": 8515.71,
+    "timestamp": "2026-07-25T10:32:50.734100",
+    "channel": "upi",
+    "computed_weight": 1.971142
   },
   {
     "source_id": "A-00124",
-    "target_id": "A-00116",
+    "target_id": "A-00113",
     "type": "TRANSACTION",
-    "amount": 291209.56,
-    "timestamp": "2026-01-07T14:03:01.784542",
+    "amount": 8750.98,
+    "timestamp": "2026-07-24T19:17:09.493351",
     "channel": "upi",
-    "computed_weight": 0.000113
+    "computed_weight": 1.283747
   },
   {
     "source_id": "A-00125",
-    "target_id": "A-00116",
+    "target_id": "A-00113",
     "type": "TRANSACTION",
-    "amount": 323691.54,
-    "timestamp": "2026-01-07T05:27:53.818541",
-    "channel": "upi",
-    "computed_weight": 0.000114
+    "amount": 9676.61,
+    "timestamp": "2026-07-25T03:23:22.864723",
+    "channel": "neft_imps",
+    "computed_weight": 0.860913
   },
   {
-    "source_id": "A-00126",
-    "target_id": "A-00127",
-    "type": "TRANSACTION",
-    "amount": 786641.61,
-    "timestamp": "2026-03-28T00:00:00",
-    "channel": "neft_imps",
-    "computed_weight": 0.005003
+    "source_id": "ORG-00006",
+    "target_id": "P-00126",
+    "type": "RECRUITED_VIA",
+    "timestamp": "2026-02-18T00:00:00"
   },
   {
     "source_id": "A-00127",
+    "target_id": "A-00126",
+    "type": "TRANSACTION",
+    "amount": 2848365.78,
+    "timestamp": "2026-03-08T00:00:00",
+    "channel": "neft_imps",
+    "computed_weight": 0.002015
+  },
+  {
+    "source_id": "A-00126",
     "target_id": "A-00128",
     "type": "TRANSACTION",
-    "amount": 732728.82,
-    "timestamp": "2026-03-28T01:16:35.872999",
+    "amount": 391708.54,
+    "timestamp": "2026-03-08T15:28:18.189362",
+    "channel": "neft_imps",
+    "computed_weight": 0.001158
+  },
+  {
+    "source_id": "A-00126",
+    "target_id": "A-00129",
+    "type": "TRANSACTION",
+    "amount": 424512.31,
+    "timestamp": "2026-03-09T00:57:15.177577",
+    "channel": "neft_imps",
+    "computed_weight": 0.00245
+  },
+  {
+    "source_id": "A-00126",
+    "target_id": "A-00130",
+    "type": "TRANSACTION",
+    "amount": 400103.33,
+    "timestamp": "2026-03-09T05:24:05.864326",
     "channel": "upi",
-    "computed_weight": 0.005232
+    "computed_weight": 0.001933
+  },
+  {
+    "source_id": "A-00126",
+    "target_id": "A-00131",
+    "type": "TRANSACTION",
+    "amount": 424389.5,
+    "timestamp": "2026-03-09T02:34:29.114944",
+    "channel": "upi",
+    "computed_weight": 0.002844
+  },
+  {
+    "source_id": "A-00126",
+    "target_id": "A-00132",
+    "type": "TRANSACTION",
+    "amount": 465226.97,
+    "timestamp": "2026-03-09T00:51:58.401020",
+    "channel": "upi",
+    "computed_weight": 0.002467
+  },
+  {
+    "source_id": "A-00126",
+    "target_id": "A-00133",
+    "type": "TRANSACTION",
+    "amount": 465997.46,
+    "timestamp": "2026-03-08T18:11:30.942885",
+    "channel": "neft_imps",
+    "computed_weight": 0.001174
   },
   {
     "source_id": "A-00128",
-    "target_id": "A-00129",
+    "target_id": "A-00134",
     "type": "TRANSACTION",
-    "amount": 706596.12,
-    "timestamp": "2026-03-28T02:49:09.083880",
+    "amount": 428757.75,
+    "timestamp": "2026-03-09T14:29:34.167306",
+    "channel": "neft_imps",
+    "computed_weight": 0.001226
+  },
+  {
+    "source_id": "A-00129",
+    "target_id": "A-00134",
+    "type": "TRANSACTION",
+    "amount": 374969.27,
+    "timestamp": "2026-03-09T14:51:52.654999",
     "channel": "upi",
-    "computed_weight": 0.007644
+    "computed_weight": 0.002427
   },
   {
     "source_id": "A-00130",
-    "target_id": "A-00131",
+    "target_id": "A-00134",
     "type": "TRANSACTION",
-    "amount": 10746.56,
-    "timestamp": "2026-03-22T00:00:00",
+    "amount": 447527.92,
+    "timestamp": "2026-03-09T22:50:55.372157",
     "channel": "neft_imps",
-    "computed_weight": 0.002534
-  },
-  {
-    "source_id": "A-00131",
-    "target_id": "A-00132",
-    "type": "TRANSACTION",
-    "amount": 1049.62,
-    "timestamp": "2026-03-22T07:27:05.715654",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.00126
-  },
-  {
-    "source_id": "A-00131",
-    "target_id": "A-00133",
-    "type": "TRANSACTION",
-    "amount": 1065.36,
-    "timestamp": "2026-03-22T07:10:25.147365",
-    "channel": "upi",
-    "computed_weight": 0.002525
+    "computed_weight": 0.002856
   },
   {
     "source_id": "A-00131",
     "target_id": "A-00134",
     "type": "TRANSACTION",
-    "amount": 893.99,
-    "timestamp": "2026-03-22T01:09:34.041008",
-    "channel": "upi",
-    "computed_weight": 0.001951
-  },
-  {
-    "source_id": "A-00131",
-    "target_id": "A-00135",
-    "type": "TRANSACTION",
-    "amount": 982.65,
-    "timestamp": "2026-03-22T06:36:41.420525",
+    "amount": 377397.83,
+    "timestamp": "2026-03-09T17:45:41.713507",
     "channel": "neft_imps",
-    "computed_weight": 0.001978
+    "computed_weight": 0.001924
   },
   {
-    "source_id": "A-00131",
-    "target_id": "A-00136",
+    "source_id": "A-00132",
+    "target_id": "A-00134",
     "type": "TRANSACTION",
-    "amount": 1012.21,
-    "timestamp": "2026-03-22T05:22:34.436214",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.00291
+    "amount": 372338.71,
+    "timestamp": "2026-03-09T20:02:40.790679",
+    "channel": "neft_imps",
+    "computed_weight": 0.002425
   },
   {
-    "source_id": "A-00131",
+    "source_id": "A-00133",
+    "target_id": "A-00134",
+    "type": "TRANSACTION",
+    "amount": 420726.44,
+    "timestamp": "2026-03-09T22:13:51.649962",
+    "channel": "upi",
+    "computed_weight": 0.002843
+  },
+  {
+    "source_id": "A-00134",
+    "target_id": "EXIT-00006",
+    "type": "TRANSACTION",
+    "amount": 2664836.18,
+    "timestamp": "2026-03-11T03:13:00.723519",
+    "channel": "crypto_convert",
+    "computed_weight": 0.00245
+  },
+  {
+    "source_id": "A-00136",
     "target_id": "A-00137",
     "type": "TRANSACTION",
-    "amount": 1007.04,
-    "timestamp": "2026-03-22T04:31:37.754234",
-    "channel": "neft_imps",
-    "computed_weight": 0.002504
-  },
-  {
-    "source_id": "A-00131",
-    "target_id": "A-00138",
-    "type": "TRANSACTION",
-    "amount": 863.13,
-    "timestamp": "2026-03-22T01:52:45.639144",
+    "amount": 1259547.94,
+    "timestamp": "2026-05-14T09:44:50.170044",
     "channel": "upi",
-    "computed_weight": 0.001224
+    "computed_weight": 0.083596
   },
   {
-    "source_id": "A-00131",
+    "source_id": "A-00137",
+    "target_id": "A-00133",
+    "type": "TRANSACTION",
+    "amount": 418270.02,
+    "timestamp": "2026-05-14T18:02:44.267417",
+    "channel": "upi",
+    "computed_weight": 0.033177
+  },
+  {
+    "source_id": "A-00137",
     "target_id": "A-00139",
     "type": "TRANSACTION",
-    "amount": 877.26,
-    "timestamp": "2026-03-22T03:20:22.441191",
-    "channel": "neft_imps",
-    "computed_weight": 0.001227
+    "amount": 359092.87,
+    "timestamp": "2026-05-14T12:05:38.091224",
+    "channel": "upi",
+    "computed_weight": 0.032786
   },
   {
-    "source_id": "A-00131",
+    "source_id": "A-00137",
     "target_id": "A-00140",
     "type": "TRANSACTION",
-    "amount": 1029.77,
-    "timestamp": "2026-03-22T11:18:11.283352",
-    "channel": "upi",
-    "computed_weight": 0.001256
+    "amount": 369520.91,
+    "timestamp": "2026-05-14T15:26:58.415557",
+    "channel": "neft_imps",
+    "computed_weight": 0.03286
   },
   {
-    "source_id": "A-00131",
-    "target_id": "A-00141",
+    "source_id": "A-00133",
+    "target_id": "A-00135",
     "type": "TRANSACTION",
-    "amount": 949.25,
-    "timestamp": "2026-03-22T09:28:25.049224",
+    "amount": 362693.91,
+    "timestamp": "2026-05-15T15:17:02.349639",
+    "channel": "neft_imps",
+    "computed_weight": 0.034494
+  },
+  {
+    "source_id": "A-00139",
+    "target_id": "A-00135",
+    "type": "TRANSACTION",
+    "amount": 345713.11,
+    "timestamp": "2026-05-16T08:13:21.424470",
     "channel": "upi",
-    "computed_weight": 0.001968
+    "computed_weight": 0.05726
+  },
+  {
+    "source_id": "A-00140",
+    "target_id": "A-00135",
+    "type": "TRANSACTION",
+    "amount": 333403.42,
+    "timestamp": "2026-05-15T13:18:37.462443",
+    "channel": "neft_imps",
+    "computed_weight": 0.079566
+  },
+  {
+    "source_id": "A-00141",
+    "target_id": "A-00142",
+    "type": "TRANSACTION",
+    "amount": 1707219.62,
+    "timestamp": "2026-05-14T12:51:55.955560",
+    "channel": "neft_imps",
+    "computed_weight": 0.058299
   },
   {
     "source_id": "A-00142",
-    "target_id": "A-00151",
+    "target_id": "A-00143",
     "type": "TRANSACTION",
-    "amount": 4029092.25,
-    "timestamp": "2025-12-17T00:00:00",
+    "amount": 525342.28,
+    "timestamp": "2026-05-15T03:54:17.831970",
     "channel": "neft_imps",
-    "computed_weight": 5.3e-05
+    "computed_weight": 0.056254
   },
   {
-    "source_id": "A-00151",
-    "target_id": "A-00144",
+    "source_id": "A-00142",
+    "target_id": "A-00115",
     "type": "TRANSACTION",
-    "amount": 3529405.87,
-    "timestamp": "2025-12-17T01:06:20.453985",
-    "channel": "upi",
-    "computed_weight": 3.7e-05
+    "amount": 507182.86,
+    "timestamp": "2026-05-15T02:41:40.527136",
+    "channel": "neft_imps",
+    "computed_weight": 0.035398
   },
   {
-    "source_id": "A-00144",
+    "source_id": "A-00142",
     "target_id": "A-00145",
     "type": "TRANSACTION",
-    "amount": 3645035.97,
-    "timestamp": "2025-12-17T01:34:34.360913",
-    "channel": "atm_withdrawal",
-    "computed_weight": 4.7e-05
+    "amount": 548026.92,
+    "timestamp": "2026-05-15T02:46:31.235073",
+    "channel": "neft_imps",
+    "computed_weight": 0.082675
   },
   {
-    "source_id": "A-00146",
-    "target_id": "A-00147",
+    "source_id": "A-00143",
+    "target_id": "A-00135",
     "type": "TRANSACTION",
-    "amount": 15116.46,
-    "timestamp": "2026-05-21T00:00:00",
+    "amount": 478790.88,
+    "timestamp": "2026-05-16T01:01:18.062652",
     "channel": "neft_imps",
-    "computed_weight": 0.033297
+    "computed_weight": 0.058722
+  },
+  {
+    "source_id": "A-00115",
+    "target_id": "A-00135",
+    "type": "TRANSACTION",
+    "amount": 445595.71,
+    "timestamp": "2026-05-16T10:31:14.753972",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.058399
+  },
+  {
+    "source_id": "A-00145",
+    "target_id": "A-00135",
+    "type": "TRANSACTION",
+    "amount": 463313.87,
+    "timestamp": "2026-05-16T11:17:34.497207",
+    "channel": "upi",
+    "computed_weight": 0.08581
+  },
+  {
+    "source_id": "ORG-00007",
+    "target_id": "P-00146",
+    "type": "RECRUITED_VIA",
+    "timestamp": "2026-02-01T00:00:00"
   },
   {
     "source_id": "A-00147",
+    "target_id": "A-00134",
+    "type": "TRANSACTION",
+    "amount": 5963.5,
+    "timestamp": "2026-02-19T00:00:00",
+    "channel": "neft_imps",
+    "computed_weight": 0.000636
+  },
+  {
+    "source_id": "A-00134",
     "target_id": "A-00148",
     "type": "TRANSACTION",
-    "amount": 1154.52,
-    "timestamp": "2026-05-21T08:32:00.367063",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.059553
+    "amount": 1084.35,
+    "timestamp": "2026-02-20T04:43:26.167734",
+    "channel": "neft_imps",
+    "computed_weight": 0.000656
   },
   {
-    "source_id": "A-00147",
+    "source_id": "A-00134",
     "target_id": "A-00149",
     "type": "TRANSACTION",
-    "amount": 1076.48,
-    "timestamp": "2026-05-21T08:16:54.702201",
+    "amount": 1113.11,
+    "timestamp": "2026-02-19T12:00:11.532424",
     "channel": "neft_imps",
-    "computed_weight": 0.058962
+    "computed_weight": 0.00027
   },
   {
-    "source_id": "A-00147",
+    "source_id": "A-00134",
     "target_id": "A-00150",
     "type": "TRANSACTION",
-    "amount": 1022.65,
-    "timestamp": "2026-05-21T11:53:43.779320",
-    "channel": "upi",
-    "computed_weight": 0.039952
+    "amount": 1158.08,
+    "timestamp": "2026-02-20T05:49:20.861603",
+    "channel": "neft_imps",
+    "computed_weight": 0.000285
   },
   {
-    "source_id": "A-00147",
-    "target_id": "A-00151",
+    "source_id": "A-00134",
+    "target_id": "A-00121",
     "type": "TRANSACTION",
-    "amount": 1183.38,
-    "timestamp": "2026-05-21T09:49:59.163264",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.059762
+    "amount": 1147.5,
+    "timestamp": "2026-02-19T10:26:36.308754",
+    "channel": "upi",
+    "computed_weight": 0.000271
   },
   {
-    "source_id": "A-00147",
+    "source_id": "A-00134",
     "target_id": "A-00152",
     "type": "TRANSACTION",
-    "amount": 1073.53,
-    "timestamp": "2026-05-21T04:00:43.402421",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.050767
+    "amount": 1188.47,
+    "timestamp": "2026-02-19T07:47:10.253614",
+    "channel": "upi",
+    "computed_weight": 0.000632
   },
   {
-    "source_id": "A-00147",
-    "target_id": "A-00153",
+    "source_id": "A-00148",
+    "target_id": "A-00143",
     "type": "TRANSACTION",
-    "amount": 1230.87,
-    "timestamp": "2026-05-21T10:20:15.565199",
-    "channel": "neft_imps",
-    "computed_weight": 0.060094
+    "amount": 992.42,
+    "timestamp": "2026-02-20T12:53:33.432257",
+    "channel": "upi",
+    "computed_weight": 0.000279
   },
   {
-    "source_id": "A-00147",
-    "target_id": "A-00154",
+    "source_id": "A-00149",
+    "target_id": "A-00143",
     "type": "TRANSACTION",
-    "amount": 1087.9,
-    "timestamp": "2026-05-21T11:13:29.108110",
+    "amount": 1036.73,
+    "timestamp": "2026-02-20T21:13:58.644652",
     "channel": "neft_imps",
-    "computed_weight": 0.025432
+    "computed_weight": 0.000445
   },
   {
-    "source_id": "A-00147",
+    "source_id": "A-00150",
+    "target_id": "A-00143",
+    "type": "TRANSACTION",
+    "amount": 956.52,
+    "timestamp": "2026-02-21T01:52:48.069688",
+    "channel": "neft_imps",
+    "computed_weight": 0.000462
+  },
+  {
+    "source_id": "A-00121",
+    "target_id": "A-00143",
+    "type": "TRANSACTION",
+    "amount": 976.3,
+    "timestamp": "2026-02-21T11:07:48.601845",
+    "channel": "neft_imps",
+    "computed_weight": 0.000679
+  },
+  {
+    "source_id": "A-00152",
+    "target_id": "A-00143",
+    "type": "TRANSACTION",
+    "amount": 1002.59,
+    "timestamp": "2026-02-20T15:53:23.176265",
+    "channel": "neft_imps",
+    "computed_weight": 0.000443
+  },
+  {
+    "source_id": "A-00143",
+    "target_id": "EXIT-00007",
+    "type": "TRANSACTION",
+    "amount": 5511.18,
+    "timestamp": "2026-02-22T01:27:21.410600",
+    "channel": "crypto_convert",
+    "computed_weight": 0.00061
+  },
+  {
+    "source_id": "A-00154",
     "target_id": "A-00155",
     "type": "TRANSACTION",
-    "amount": 1152.21,
-    "timestamp": "2026-05-21T10:08:59.287279",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.059536
+    "amount": 3009452.88,
+    "timestamp": "2026-03-29T00:00:00",
+    "channel": "upi",
+    "computed_weight": 0.003646
   },
   {
-    "source_id": "A-00147",
+    "source_id": "A-00155",
     "target_id": "A-00156",
     "type": "TRANSACTION",
-    "amount": 1136.89,
-    "timestamp": "2026-05-21T04:13:59.078427",
-    "channel": "neft_imps",
-    "computed_weight": 0.025592
+    "amount": 2581824.77,
+    "timestamp": "2026-03-29T00:19:56.130144",
+    "channel": "upi",
+    "computed_weight": 0.003794
   },
   {
-    "source_id": "A-00147",
+    "source_id": "A-00156",
     "target_id": "A-00157",
     "type": "TRANSACTION",
-    "amount": 1106.55,
-    "timestamp": "2026-05-21T09:31:44.972708",
+    "amount": 2523939.72,
+    "timestamp": "2026-03-29T01:43:21.224560",
+    "channel": "upi",
+    "computed_weight": 0.007576
+  },
+  {
+    "source_id": "A-00159",
+    "target_id": "A-00160",
+    "type": "TRANSACTION",
+    "amount": 26647.34,
+    "timestamp": "2026-03-15T14:26:44.246148",
     "channel": "neft_imps",
-    "computed_weight": 0.040407
+    "computed_weight": 0.002601
   },
   {
-    "source_id": "A-00147",
-    "target_id": "A-00158",
+    "source_id": "A-00160",
+    "target_id": "A-00161",
     "type": "TRANSACTION",
-    "amount": 1258.59,
-    "timestamp": "2026-05-21T09:43:22.994408",
+    "amount": 12571.49,
+    "timestamp": "2026-03-15T20:02:54.167824",
     "channel": "upi",
-    "computed_weight": 0.041149
+    "computed_weight": 0.001205
   },
   {
-    "source_id": "A-00147",
-    "target_id": "A-00159",
+    "source_id": "A-00160",
+    "target_id": "A-00162",
     "type": "TRANSACTION",
-    "amount": 1154.68,
-    "timestamp": "2026-05-21T02:51:31.440968",
+    "amount": 10954.62,
+    "timestamp": "2026-03-16T05:59:54.616636",
     "channel": "upi",
-    "computed_weight": 0.059555
+    "computed_weight": 0.002496
   },
   {
     "source_id": "A-00161",
-    "target_id": "A-00162",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 648773.11,
-    "timestamp": "2026-06-12T04:57:33.014033",
-    "channel": "upi",
-    "computed_weight": 0.146235
+    "amount": 10885.55,
+    "timestamp": "2026-03-17T03:25:53.611325",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.001311
   },
   {
     "source_id": "A-00162",
-    "target_id": "A-00163",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 138556.31,
-    "timestamp": "2026-06-12T14:24:06.766929",
-    "channel": "neft_imps",
-    "computed_weight": 0.129366
-  },
-  {
-    "source_id": "A-00162",
-    "target_id": "A-00164",
-    "type": "TRANSACTION",
-    "amount": 145246.3,
-    "timestamp": "2026-06-12T17:49:52.445354",
-    "channel": "upi",
-    "computed_weight": 0.205857
-  },
-  {
-    "source_id": "A-00162",
-    "target_id": "A-00165",
-    "type": "TRANSACTION",
-    "amount": 134320.82,
-    "timestamp": "2026-06-12T14:54:37.746413",
-    "channel": "neft_imps",
-    "computed_weight": 0.204502
-  },
-  {
-    "source_id": "A-00162",
-    "target_id": "A-00166",
-    "type": "TRANSACTION",
-    "amount": 144853.21,
-    "timestamp": "2026-06-12T16:32:12.042854",
-    "channel": "neft_imps",
-    "computed_weight": 0.20581
+    "amount": 11571.07,
+    "timestamp": "2026-03-17T11:25:54.420913",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.003064
   },
   {
     "source_id": "A-00163",
-    "target_id": "A-00160",
+    "target_id": "A-00164",
     "type": "TRANSACTION",
-    "amount": 122989.49,
-    "timestamp": "2026-06-13T20:43:26.060098",
-    "channel": "neft_imps",
-    "computed_weight": 0.13463
+    "amount": 15562.76,
+    "timestamp": "2026-03-15T04:25:23.017703",
+    "channel": "upi",
+    "computed_weight": 0.001232
   },
   {
     "source_id": "A-00164",
-    "target_id": "A-00160",
+    "target_id": "A-00165",
     "type": "TRANSACTION",
-    "amount": 145041.32,
-    "timestamp": "2026-06-13T10:08:40.267598",
+    "amount": 7684.22,
+    "timestamp": "2026-03-15T18:50:54.689156",
+    "channel": "upi",
+    "computed_weight": 0.002651
+  },
+  {
+    "source_id": "A-00164",
+    "target_id": "A-00166",
+    "type": "TRANSACTION",
+    "amount": 6969.32,
+    "timestamp": "2026-03-15T11:42:18.264222",
     "channel": "neft_imps",
-    "computed_weight": 0.316999
+    "computed_weight": 0.001129
   },
   {
     "source_id": "A-00165",
-    "target_id": "A-00160",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 150566.18,
-    "timestamp": "2026-06-13T11:21:05.455722",
+    "amount": 6848.65,
+    "timestamp": "2026-03-16T20:25:30.620258",
     "channel": "neft_imps",
-    "computed_weight": 0.273907
+    "computed_weight": 0.001878
   },
   {
     "source_id": "A-00166",
-    "target_id": "A-00160",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 124378.39,
-    "timestamp": "2026-06-14T04:37:57.637782",
-    "channel": "neft_imps",
-    "computed_weight": 0.283335
+    "amount": 6920.32,
+    "timestamp": "2026-03-16T06:10:33.978847",
+    "channel": "upi",
+    "computed_weight": 0.00188
   },
   {
     "source_id": "A-00167",
     "target_id": "A-00168",
     "type": "TRANSACTION",
-    "amount": 1294221.63,
-    "timestamp": "2026-06-12T11:27:08.146453",
-    "channel": "neft_imps",
-    "computed_weight": 0.153781
+    "amount": 1048.31,
+    "timestamp": "2026-03-15T16:10:14.803638",
+    "channel": "upi",
+    "computed_weight": 0.000888
   },
   {
     "source_id": "A-00168",
     "target_id": "A-00169",
     "type": "TRANSACTION",
-    "amount": 357203.43,
-    "timestamp": "2026-06-12T22:51:11.853954",
-    "channel": "neft_imps",
-    "computed_weight": 0.221442
+    "amount": 484.14,
+    "timestamp": "2026-03-15T18:57:40.287705",
+    "channel": "upi",
+    "computed_weight": 0.001578
   },
   {
     "source_id": "A-00168",
     "target_id": "A-00170",
     "type": "TRANSACTION",
-    "amount": 357389.08,
-    "timestamp": "2026-06-13T00:05:18.714921",
-    "channel": "neft_imps",
-    "computed_weight": 0.146883
-  },
-  {
-    "source_id": "A-00168",
-    "target_id": "A-00171",
-    "type": "TRANSACTION",
-    "amount": 399220.37,
-    "timestamp": "2026-06-13T02:23:49.296105",
-    "channel": "neft_imps",
-    "computed_weight": 0.344005
+    "amount": 445.66,
+    "timestamp": "2026-03-16T00:04:17.361297",
+    "channel": "upi",
+    "computed_weight": 0.001637
   },
   {
     "source_id": "A-00169",
-    "target_id": "A-00160",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 334729.77,
-    "timestamp": "2026-06-13T16:20:12.615389",
-    "channel": "upi",
-    "computed_weight": 0.339305
+    "amount": 495.63,
+    "timestamp": "2026-03-16T21:40:03.285303",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.001933
   },
   {
     "source_id": "A-00170",
-    "target_id": "A-00160",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 381979.26,
-    "timestamp": "2026-06-14T06:25:10.412057",
+    "amount": 497.11,
+    "timestamp": "2026-03-16T18:07:17.253185",
     "channel": "atm_withdrawal",
-    "computed_weight": 0.360404
+    "computed_weight": 0.000833
   },
   {
     "source_id": "A-00171",
-    "target_id": "A-00160",
+    "target_id": "A-00172",
     "type": "TRANSACTION",
-    "amount": 387898.22,
-    "timestamp": "2026-06-14T06:46:38.661431",
+    "amount": 14359.82,
+    "timestamp": "2026-03-15T23:35:14.527909",
     "channel": "upi",
-    "computed_weight": 0.360836
+    "computed_weight": 0.002443
   },
   {
     "source_id": "A-00172",
     "target_id": "A-00173",
     "type": "TRANSACTION",
-    "amount": 2003760.34,
-    "timestamp": "2026-06-12T23:15:43.086295",
+    "amount": 4509.43,
+    "timestamp": "2026-03-16T11:28:22.551258",
     "channel": "neft_imps",
-    "computed_weight": 0.368159
+    "computed_weight": 0.002621
   },
   {
-    "source_id": "A-00173",
+    "source_id": "A-00172",
     "target_id": "A-00174",
     "type": "TRANSACTION",
-    "amount": 809352.02,
-    "timestamp": "2026-06-13T10:40:43.213011",
+    "amount": 4087.11,
+    "timestamp": "2026-03-16T09:38:06.724502",
+    "channel": "upi",
+    "computed_weight": 0.001116
+  },
+  {
+    "source_id": "A-00172",
+    "target_id": "A-00175",
+    "type": "TRANSACTION",
+    "amount": 4383.05,
+    "timestamp": "2026-03-16T12:06:15.702346",
     "channel": "neft_imps",
-    "computed_weight": 0.362855
+    "computed_weight": 0.001783
   },
   {
     "source_id": "A-00173",
-    "target_id": "A-00175",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 907892.8,
-    "timestamp": "2026-06-13T03:10:20.726783",
-    "channel": "neft_imps",
-    "computed_weight": 0.315186
+    "amount": 4271.63,
+    "timestamp": "2026-03-17T15:12:46.941315",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.001869
   },
   {
     "source_id": "A-00174",
-    "target_id": "A-00160",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 878489.19,
-    "timestamp": "2026-06-14T10:17:37.424844",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.261955
+    "amount": 4325.4,
+    "timestamp": "2026-03-17T17:31:15.394640",
+    "channel": "neft_imps",
+    "computed_weight": 0.001871
   },
   {
     "source_id": "A-00175",
-    "target_id": "A-00160",
+    "target_id": "A-00158",
     "type": "TRANSACTION",
-    "amount": 812357.55,
-    "timestamp": "2026-06-14T07:08:41.945200",
+    "amount": 3912.47,
+    "timestamp": "2026-03-17T15:26:31.641624",
     "channel": "upi",
-    "computed_weight": 0.381563
+    "computed_weight": 0.001167
   },
   {
-    "source_id": "A-00176",
-    "target_id": "A-00177",
-    "type": "TRANSACTION",
-    "amount": 2196311.31,
-    "timestamp": "2026-06-12T14:58:58.035894",
-    "channel": "upi",
-    "computed_weight": 0.370487
+    "source_id": "ORG-00008",
+    "target_id": "P-00176",
+    "type": "RECRUITED_VIA",
+    "timestamp": "2026-06-22T00:00:00"
   },
   {
     "source_id": "A-00177",
+    "target_id": "A-00156",
+    "type": "TRANSACTION",
+    "amount": 8592.49,
+    "timestamp": "2026-07-05T00:00:00",
+    "channel": "neft_imps",
+    "computed_weight": 0.594731
+  },
+  {
+    "source_id": "A-00156",
     "target_id": "A-00178",
     "type": "TRANSACTION",
-    "amount": 1040465.52,
-    "timestamp": "2026-06-12T22:59:57.582444",
+    "amount": 1229.82,
+    "timestamp": "2026-07-06T10:15:23.979148",
     "channel": "upi",
-    "computed_weight": 0.302793
+    "computed_weight": 0.258112
   },
   {
-    "source_id": "A-00177",
+    "source_id": "A-00156",
     "target_id": "A-00179",
     "type": "TRANSACTION",
-    "amount": 944711.06,
-    "timestamp": "2026-06-13T00:55:10.330740",
+    "amount": 1213.61,
+    "timestamp": "2026-07-05T16:53:32.942608",
+    "channel": "upi",
+    "computed_weight": 0.490132
+  },
+  {
+    "source_id": "A-00156",
+    "target_id": "A-00164",
+    "type": "TRANSACTION",
+    "amount": 1224.07,
+    "timestamp": "2026-07-06T09:01:15.722067",
+    "channel": "upi",
+    "computed_weight": 0.408829
+  },
+  {
+    "source_id": "A-00156",
+    "target_id": "A-00181",
+    "type": "TRANSACTION",
+    "amount": 1328.24,
+    "timestamp": "2026-07-06T02:36:33.309124",
     "channel": "neft_imps",
-    "computed_weight": 0.36698
+    "computed_weight": 0.260905
+  },
+  {
+    "source_id": "A-00156",
+    "target_id": "A-00182",
+    "type": "TRANSACTION",
+    "amount": 1234.39,
+    "timestamp": "2026-07-05T18:56:30.784541",
+    "channel": "neft_imps",
+    "computed_weight": 0.570386
+  },
+  {
+    "source_id": "A-00156",
+    "target_id": "A-00183",
+    "type": "TRANSACTION",
+    "amount": 1427.64,
+    "timestamp": "2026-07-05T08:08:01.912850",
+    "channel": "upi",
+    "computed_weight": 0.250671
   },
   {
     "source_id": "A-00178",
-    "target_id": "A-00160",
+    "target_id": "A-00184",
     "type": "TRANSACTION",
-    "amount": 858767.4,
-    "timestamp": "2026-06-14T03:25:32.652977",
+    "amount": 1348.4,
+    "timestamp": "2026-07-07T00:53:49.395099",
     "channel": "upi",
-    "computed_weight": 0.330002
+    "computed_weight": 0.638198
   },
   {
     "source_id": "A-00179",
-    "target_id": "A-00160",
+    "target_id": "A-00184",
     "type": "TRANSACTION",
-    "amount": 866839.0,
-    "timestamp": "2026-06-14T11:16:55.439781",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.2617
+    "amount": 1305.59,
+    "timestamp": "2026-07-07T23:39:42.281781",
+    "channel": "upi",
+    "computed_weight": 0.63534
   },
   {
-    "source_id": "ORG-00004",
-    "target_id": "P-00180",
-    "type": "RECRUITED_VIA",
-    "timestamp": "2026-06-25T00:00:00"
+    "source_id": "A-00164",
+    "target_id": "A-00184",
+    "type": "TRANSACTION",
+    "amount": 1144.55,
+    "timestamp": "2026-07-07T01:20:40.099701",
+    "channel": "upi",
+    "computed_weight": 0.537211
   },
   {
     "source_id": "A-00181",
-    "target_id": "A-00180",
-    "type": "TRANSACTION",
-    "amount": 88863.81,
-    "timestamp": "2026-06-29T00:00:00",
-    "channel": "upi",
-    "computed_weight": 0.439205
-  },
-  {
-    "source_id": "A-00180",
-    "target_id": "A-00182",
-    "type": "TRANSACTION",
-    "amount": 15973.07,
-    "timestamp": "2026-06-29T09:08:48.860340",
-    "channel": "upi",
-    "computed_weight": 0.247439
-  },
-  {
-    "source_id": "A-00180",
-    "target_id": "A-00183",
-    "type": "TRANSACTION",
-    "amount": 16292.65,
-    "timestamp": "2026-06-30T11:40:25.455741",
-    "channel": "neft_imps",
-    "computed_weight": 0.60523
-  },
-  {
-    "source_id": "A-00180",
     "target_id": "A-00184",
     "type": "TRANSACTION",
-    "amount": 15817.34,
-    "timestamp": "2026-06-30T01:55:23.249573",
+    "amount": 1147.3,
+    "timestamp": "2026-07-06T14:10:26.061536",
     "channel": "upi",
-    "computed_weight": 0.259863
-  },
-  {
-    "source_id": "A-00180",
-    "target_id": "A-00185",
-    "type": "TRANSACTION",
-    "amount": 14306.22,
-    "timestamp": "2026-06-30T11:42:03.954516",
-    "channel": "neft_imps",
-    "computed_weight": 0.257164
-  },
-  {
-    "source_id": "A-00180",
-    "target_id": "A-00186",
-    "type": "TRANSACTION",
-    "amount": 15605.15,
-    "timestamp": "2026-06-30T07:06:08.509770",
-    "channel": "upi",
-    "computed_weight": 0.411297
+    "computed_weight": 0.405105
   },
   {
     "source_id": "A-00182",
-    "target_id": "A-00187",
+    "target_id": "A-00184",
     "type": "TRANSACTION",
-    "amount": 13634.0,
-    "timestamp": "2026-06-30T17:52:30.427498",
+    "amount": 1320.58,
+    "timestamp": "2026-07-07T09:29:28.519666",
     "channel": "upi",
-    "computed_weight": 0.511741
+    "computed_weight": 0.636351
   },
   {
     "source_id": "A-00183",
-    "target_id": "A-00187",
+    "target_id": "A-00184",
     "type": "TRANSACTION",
-    "amount": 16462.69,
-    "timestamp": "2026-07-01T16:48:32.244359",
-    "channel": "upi",
-    "computed_weight": 0.548632
+    "amount": 1337.54,
+    "timestamp": "2026-07-07T18:36:38.607327",
+    "channel": "neft_imps",
+    "computed_weight": 0.435149
   },
   {
     "source_id": "A-00184",
-    "target_id": "A-00187",
+    "target_id": "EXIT-00008",
     "type": "TRANSACTION",
-    "amount": 15797.23,
-    "timestamp": "2026-07-01T16:14:13.503977",
-    "channel": "upi",
-    "computed_weight": 0.27315
-  },
-  {
-    "source_id": "A-00185",
-    "target_id": "A-00187",
-    "type": "TRANSACTION",
-    "amount": 14888.86,
-    "timestamp": "2026-06-30T19:56:18.465788",
-    "channel": "neft_imps",
-    "computed_weight": 0.516473
+    "amount": 6605.32,
+    "timestamp": "2026-07-08T03:11:37.976644",
+    "channel": "crypto_convert",
+    "computed_weight": 0.352658
   },
   {
     "source_id": "A-00186",
-    "target_id": "A-00187",
+    "target_id": "A-00155",
     "type": "TRANSACTION",
-    "amount": 14443.93,
-    "timestamp": "2026-07-01T17:49:26.596137",
+    "amount": 1071585.91,
+    "timestamp": "2026-05-25T21:49:17.771634",
     "channel": "neft_imps",
-    "computed_weight": 0.541239
+    "computed_weight": 0.097767
   },
   {
-    "source_id": "A-00187",
-    "target_id": "EXIT-00004",
+    "source_id": "A-00155",
+    "target_id": "A-00188",
     "type": "TRANSACTION",
-    "amount": 81294.08,
-    "timestamp": "2026-07-02T03:40:49.157408",
-    "channel": "crypto_convert",
-    "computed_weight": 0.532254
+    "amount": 353869.79,
+    "timestamp": "2026-05-26T07:29:30.640693",
+    "channel": "neft_imps",
+    "computed_weight": 0.138554
   },
   {
-    "source_id": "ORG-00005",
-    "target_id": "P-00188",
-    "type": "RECRUITED_VIA",
-    "timestamp": "2026-03-09T00:00:00"
+    "source_id": "A-00155",
+    "target_id": "A-00189",
+    "type": "TRANSACTION",
+    "amount": 305766.04,
+    "timestamp": "2026-05-26T12:49:44.632064",
+    "channel": "upi",
+    "computed_weight": 0.13697
+  },
+  {
+    "source_id": "A-00155",
+    "target_id": "A-00190",
+    "type": "TRANSACTION",
+    "amount": 287716.45,
+    "timestamp": "2026-05-26T00:25:51.370523",
+    "channel": "neft_imps",
+    "computed_weight": 0.13631
+  },
+  {
+    "source_id": "A-00188",
+    "target_id": "A-00185",
+    "type": "TRANSACTION",
+    "amount": 283396.87,
+    "timestamp": "2026-05-27T14:47:20.137322",
+    "channel": "upi",
+    "computed_weight": 0.123282
   },
   {
     "source_id": "A-00189",
-    "target_id": "A-00224",
+    "target_id": "A-00185",
     "type": "TRANSACTION",
-    "amount": 492884.08,
-    "timestamp": "2026-03-24T00:00:00",
+    "amount": 338930.29,
+    "timestamp": "2026-05-27T19:45:55.778959",
     "channel": "upi",
-    "computed_weight": 0.002495
-  },
-  {
-    "source_id": "A-00224",
-    "target_id": "A-00190",
-    "type": "TRANSACTION",
-    "amount": 76969.98,
-    "timestamp": "2026-03-24T15:13:39.942640",
-    "channel": "neft_imps",
-    "computed_weight": 0.005228
-  },
-  {
-    "source_id": "A-00224",
-    "target_id": "A-00191",
-    "type": "TRANSACTION",
-    "amount": 78582.65,
-    "timestamp": "2026-03-24T12:45:11.650794",
-    "channel": "upi",
-    "computed_weight": 0.004512
-  },
-  {
-    "source_id": "A-00224",
-    "target_id": "A-00192",
-    "type": "TRANSACTION",
-    "amount": 72008.82,
-    "timestamp": "2026-03-24T20:37:15.730046",
-    "channel": "neft_imps",
-    "computed_weight": 0.005197
-  },
-  {
-    "source_id": "A-00224",
-    "target_id": "A-00193",
-    "type": "TRANSACTION",
-    "amount": 67531.26,
-    "timestamp": "2026-03-25T00:58:06.374486",
-    "channel": "neft_imps",
-    "computed_weight": 0.004679
-  },
-  {
-    "source_id": "A-00224",
-    "target_id": "A-00194",
-    "type": "TRANSACTION",
-    "amount": 75991.48,
-    "timestamp": "2026-03-25T03:10:06.185238",
-    "channel": "neft_imps",
-    "computed_weight": 0.004729
-  },
-  {
-    "source_id": "A-00224",
-    "target_id": "A-00195",
-    "type": "TRANSACTION",
-    "amount": 67892.19,
-    "timestamp": "2026-03-24T08:09:02.736282",
-    "channel": "upi",
-    "computed_weight": 0.004453
+    "computed_weight": 0.12504
   },
   {
     "source_id": "A-00190",
-    "target_id": "A-00196",
+    "target_id": "A-00185",
     "type": "TRANSACTION",
-    "amount": 70690.83,
-    "timestamp": "2026-03-25T12:56:02.935566",
+    "amount": 277705.83,
+    "timestamp": "2026-05-27T03:20:22.782124",
     "channel": "neft_imps",
-    "computed_weight": 0.002349
+    "computed_weight": 0.061542
   },
   {
     "source_id": "A-00191",
-    "target_id": "A-00196",
+    "target_id": "A-00192",
     "type": "TRANSACTION",
-    "amount": 71284.99,
-    "timestamp": "2026-03-26T10:05:56.943635",
+    "amount": 919182.23,
+    "timestamp": "2026-05-25T08:57:53.729871",
+    "channel": "neft_imps",
+    "computed_weight": 0.141644
+  },
+  {
+    "source_id": "A-00192",
+    "target_id": "A-00193",
+    "type": "TRANSACTION",
+    "amount": 203786.4,
+    "timestamp": "2026-05-25T17:20:36.005164",
     "channel": "upi",
-    "computed_weight": 0.003917
+    "computed_weight": 0.10862
+  },
+  {
+    "source_id": "A-00192",
+    "target_id": "A-00194",
+    "type": "TRANSACTION",
+    "amount": 229761.15,
+    "timestamp": "2026-05-25T13:39:56.907464",
+    "channel": "neft_imps",
+    "computed_weight": 0.086924
+  },
+  {
+    "source_id": "A-00192",
+    "target_id": "A-00195",
+    "type": "TRANSACTION",
+    "amount": 227225.15,
+    "timestamp": "2026-05-25T20:50:10.892402",
+    "channel": "upi",
+    "computed_weight": 0.054794
   },
   {
     "source_id": "A-00192",
     "target_id": "A-00196",
     "type": "TRANSACTION",
-    "amount": 77840.33,
-    "timestamp": "2026-03-26T07:07:54.062451",
-    "channel": "upi",
-    "computed_weight": 0.003948
+    "amount": 223464.73,
+    "timestamp": "2026-05-25T12:04:47.388447",
+    "channel": "neft_imps",
+    "computed_weight": 0.109439
   },
   {
     "source_id": "A-00193",
-    "target_id": "A-00196",
+    "target_id": "A-00185",
     "type": "TRANSACTION",
-    "amount": 63804.88,
-    "timestamp": "2026-03-26T19:26:20.041813",
-    "channel": "neft_imps",
-    "computed_weight": 0.002447
+    "amount": 213489.2,
+    "timestamp": "2026-05-27T05:26:15.273347",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.06025
   },
   {
     "source_id": "A-00194",
-    "target_id": "A-00196",
+    "target_id": "A-00185",
     "type": "TRANSACTION",
-    "amount": 62619.56,
-    "timestamp": "2026-03-25T12:49:38.663368",
-    "channel": "upi",
-    "computed_weight": 0.005396
+    "amount": 172788.8,
+    "timestamp": "2026-05-27T01:47:07.761926",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.118424
   },
   {
     "source_id": "A-00195",
-    "target_id": "A-00196",
+    "target_id": "A-00185",
     "type": "TRANSACTION",
-    "amount": 77265.65,
-    "timestamp": "2026-03-26T11:21:28.578684",
+    "amount": 196761.26,
+    "timestamp": "2026-05-26T13:46:02.586071",
     "channel": "upi",
-    "computed_weight": 0.003946
+    "computed_weight": 0.090233
   },
   {
     "source_id": "A-00196",
-    "target_id": "EXIT-00005",
+    "target_id": "A-00185",
     "type": "TRANSACTION",
-    "amount": 447482.88,
-    "timestamp": "2026-03-27T01:38:17.262806",
-    "channel": "crypto_convert",
-    "computed_weight": 0.006051
+    "amount": 203794.89,
+    "timestamp": "2026-05-27T07:42:13.284414",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.060022
   },
   {
     "source_id": "A-00197",
-    "target_id": "A-00198",
+    "target_id": "A-00160",
     "type": "TRANSACTION",
-    "amount": 243234.67,
-    "timestamp": "2026-04-25T00:00:00",
+    "amount": 899564.28,
+    "timestamp": "2026-05-25T17:17:53.412329",
     "channel": "neft_imps",
-    "computed_weight": 0.027153
+    "computed_weight": 0.060907
   },
   {
-    "source_id": "A-00198",
+    "source_id": "A-00160",
     "target_id": "A-00199",
     "type": "TRANSACTION",
-    "amount": 215051.8,
-    "timestamp": "2026-04-25T00:53:38.717516",
-    "channel": "upi",
-    "computed_weight": 0.012172
+    "amount": 272713.07,
+    "timestamp": "2026-05-25T22:25:35.202935",
+    "channel": "neft_imps",
+    "computed_weight": 0.088131
+  },
+  {
+    "source_id": "A-00160",
+    "target_id": "A-00200",
+    "type": "TRANSACTION",
+    "amount": 256232.08,
+    "timestamp": "2026-05-26T00:21:07.719271",
+    "channel": "neft_imps",
+    "computed_weight": 0.135053
+  },
+  {
+    "source_id": "A-00160",
+    "target_id": "A-00201",
+    "type": "TRANSACTION",
+    "amount": 241723.34,
+    "timestamp": "2026-05-26T02:05:47.529950",
+    "channel": "neft_imps",
+    "computed_weight": 0.115784
   },
   {
     "source_id": "A-00199",
-    "target_id": "A-00200",
+    "target_id": "A-00185",
     "type": "TRANSACTION",
-    "amount": 211116.57,
-    "timestamp": "2026-04-25T02:14:19.248166",
+    "amount": 228522.76,
+    "timestamp": "2026-05-27T13:56:28.656199",
     "channel": "neft_imps",
-    "computed_weight": 0.019262
+    "computed_weight": 0.121169
+  },
+  {
+    "source_id": "A-00200",
+    "target_id": "A-00185",
+    "type": "TRANSACTION",
+    "amount": 250855.42,
+    "timestamp": "2026-05-27T04:25:46.696530",
+    "channel": "atm_withdrawal",
+    "computed_weight": 0.141736
   },
   {
     "source_id": "A-00201",
-    "target_id": "A-00202",
+    "target_id": "A-00185",
     "type": "TRANSACTION",
-    "amount": 8292.88,
-    "timestamp": "2025-12-08T00:00:00",
+    "amount": 238499.23,
+    "timestamp": "2026-05-27T05:04:00.328806",
     "channel": "upi",
-    "computed_weight": 1.4e-05
+    "computed_weight": 0.096357
   },
   {
-    "source_id": "A-00202",
-    "target_id": "A-00203",
+    "source_id": "A-00038",
+    "target_id": "A-00157",
     "type": "TRANSACTION",
-    "amount": 7740.86,
-    "timestamp": "2025-12-08T01:59:57.585612",
-    "channel": "neft_imps",
-    "computed_weight": 9e-06
-  },
-  {
-    "source_id": "A-00203",
-    "target_id": "A-00204",
-    "type": "TRANSACTION",
-    "amount": 7141.97,
-    "timestamp": "2025-12-08T03:49:11.185201",
-    "channel": "neft_imps",
-    "computed_weight": 2.1e-05
-  },
-  {
-    "source_id": "A-00205",
-    "target_id": "A-00206",
-    "type": "TRANSACTION",
-    "amount": 388019.2,
-    "timestamp": "2025-12-01T00:00:00",
-    "channel": "neft_imps",
-    "computed_weight": 1.7e-05
-  },
-  {
-    "source_id": "A-00206",
-    "target_id": "A-00207",
-    "type": "TRANSACTION",
-    "amount": 374999.32,
-    "timestamp": "2025-12-01T01:03:53.821353",
-    "channel": "upi",
-    "computed_weight": 2.1e-05
-  },
-  {
-    "source_id": "A-00207",
-    "target_id": "A-00208",
-    "type": "TRANSACTION",
-    "amount": 336597.44,
-    "timestamp": "2025-12-01T02:54:58.380350",
-    "channel": "neft_imps",
-    "computed_weight": 9e-06
-  },
-  {
-    "source_id": "A-00210",
-    "target_id": "A-00211",
-    "type": "TRANSACTION",
-    "amount": 6887.5,
-    "timestamp": "2026-07-26T16:54:47.390535",
-    "channel": "neft_imps",
-    "computed_weight": 1.381331
-  },
-  {
-    "source_id": "A-00211",
-    "target_id": "A-00212",
-    "type": "TRANSACTION",
-    "amount": 1972.48,
-    "timestamp": "2026-07-26T23:26:17.177787",
-    "channel": "neft_imps",
-    "computed_weight": 1.737292
-  },
-  {
-    "source_id": "A-00211",
-    "target_id": "A-00213",
-    "type": "TRANSACTION",
-    "amount": 2113.04,
-    "timestamp": "2026-07-27T02:45:03.289029",
-    "channel": "neft_imps",
-    "computed_weight": 1.587418
-  },
-  {
-    "source_id": "A-00211",
-    "target_id": "A-00214",
-    "type": "TRANSACTION",
-    "amount": 2032.91,
-    "timestamp": "2026-07-27T02:58:31.807819",
-    "channel": "neft_imps",
-    "computed_weight": 1.579402
-  },
-  {
-    "source_id": "A-00212",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 2030.19,
-    "timestamp": "2026-07-28T07:38:08.764628",
-    "channel": "upi",
-    "computed_weight": 1.927302
-  },
-  {
-    "source_id": "A-00213",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 1743.32,
-    "timestamp": "2026-07-27T17:02:09.804858",
+    "amount": 32596.8,
+    "timestamp": "2026-08-06T14:05:02.659491",
     "channel": "atm_withdrawal",
-    "computed_weight": 0.773769
-  },
-  {
-    "source_id": "A-00214",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 2099.68,
-    "timestamp": "2026-07-28T12:17:16.559944",
-    "channel": "atm_withdrawal",
-    "computed_weight": 1.667424
-  },
-  {
-    "source_id": "A-00215",
-    "target_id": "A-00216",
-    "type": "TRANSACTION",
-    "amount": 4348.9,
-    "timestamp": "2026-07-26T14:12:54.475586",
-    "channel": "neft_imps",
-    "computed_weight": 1.652361
-  },
-  {
-    "source_id": "A-00216",
-    "target_id": "A-00217",
-    "type": "TRANSACTION",
-    "amount": 1084.1,
-    "timestamp": "2026-07-26T18:47:42.902579",
-    "channel": "upi",
-    "computed_weight": 0.689185
-  },
-  {
-    "source_id": "A-00216",
-    "target_id": "A-00218",
-    "type": "TRANSACTION",
-    "amount": 1062.77,
-    "timestamp": "2026-07-27T01:13:33.452848",
-    "channel": "upi",
-    "computed_weight": 1.677499
-  },
-  {
-    "source_id": "A-00216",
-    "target_id": "A-00219",
-    "type": "TRANSACTION",
-    "amount": 951.82,
-    "timestamp": "2026-07-27T04:32:34.131484",
-    "channel": "neft_imps",
-    "computed_weight": 0.711029
-  },
-  {
-    "source_id": "A-00216",
-    "target_id": "A-00220",
-    "type": "TRANSACTION",
-    "amount": 976.75,
-    "timestamp": "2026-07-26T16:35:34.784799",
-    "channel": "upi",
-    "computed_weight": 1.576359
-  },
-  {
-    "source_id": "A-00217",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 848.32,
-    "timestamp": "2026-07-28T07:21:27.007800",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.734938
-  },
-  {
-    "source_id": "A-00218",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 847.79,
-    "timestamp": "2026-07-28T10:30:12.315709",
-    "channel": "upi",
-    "computed_weight": 1.46974
-  },
-  {
-    "source_id": "A-00219",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 852.03,
-    "timestamp": "2026-07-28T10:22:50.058350",
-    "channel": "upi",
-    "computed_weight": 1.707576
-  },
-  {
-    "source_id": "A-00220",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 932.84,
-    "timestamp": "2026-07-28T09:16:27.837593",
-    "channel": "atm_withdrawal",
-    "computed_weight": 0.745289
-  },
-  {
-    "source_id": "A-00221",
-    "target_id": "A-00222",
-    "type": "TRANSACTION",
-    "amount": 13217.6,
-    "timestamp": "2026-07-26T05:49:02.804351",
-    "channel": "upi",
-    "computed_weight": 0.935806
-  },
-  {
-    "source_id": "A-00222",
-    "target_id": "A-00223",
-    "type": "TRANSACTION",
-    "amount": 3896.09,
-    "timestamp": "2026-07-26T18:39:32.121562",
-    "channel": "neft_imps",
-    "computed_weight": 0.815338
-  },
-  {
-    "source_id": "A-00222",
-    "target_id": "A-00224",
-    "type": "TRANSACTION",
-    "amount": 4078.31,
-    "timestamp": "2026-07-26T18:34:25.202132",
-    "channel": "neft_imps",
-    "computed_weight": 1.299424
-  },
-  {
-    "source_id": "A-00222",
-    "target_id": "A-00225",
-    "type": "TRANSACTION",
-    "amount": 4398.81,
-    "timestamp": "2026-07-26T08:57:19.233253",
-    "channel": "upi",
-    "computed_weight": 1.654611
-  },
-  {
-    "source_id": "A-00223",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 3641.42,
-    "timestamp": "2026-07-27T18:08:04.575003",
-    "channel": "upi",
-    "computed_weight": 1.973947
-  },
-  {
-    "source_id": "A-00224",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 3875.22,
-    "timestamp": "2026-07-28T00:42:05.033105",
-    "channel": "neft_imps",
-    "computed_weight": 1.427262
-  },
-  {
-    "source_id": "A-00225",
-    "target_id": "A-00209",
-    "type": "TRANSACTION",
-    "amount": 3527.75,
-    "timestamp": "2026-07-28T01:55:53.817904",
-    "channel": "upi",
-    "computed_weight": 1.780527
-  },
-  {
-    "source_id": "A-00014",
-    "target_id": "A-00129",
-    "type": "TRANSACTION",
-    "amount": 31231.76,
-    "timestamp": "2026-08-26T17:48:47.655640",
-    "channel": "atm_withdrawal",
-    "computed_weight": 9.617098
-  },
-  {
-    "source_id": "A-00088",
-    "target_id": "A-00129",
-    "type": "TRANSACTION",
-    "amount": 40934.86,
-    "timestamp": "2026-04-09T06:15:48.264250",
-    "channel": "upi",
-    "computed_weight": 0.010983
-  },
-  {
-    "source_id": "A-00046",
-    "target_id": "A-00129",
-    "type": "TRANSACTION",
-    "amount": 39573.62,
-    "timestamp": "2026-02-21T13:00:38.046472",
-    "channel": "upi",
-    "computed_weight": 0.001044
-  },
-  {
-    "source_id": "A-00187",
-    "target_id": "A-00129",
-    "type": "TRANSACTION",
-    "amount": 29133.17,
-    "timestamp": "2026-07-03T15:59:14.528732",
-    "channel": "neft_imps",
-    "computed_weight": 0.508756
+    "computed_weight": 2.815335
   }
 ]

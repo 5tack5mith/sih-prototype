@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-import httpx
-=======
 from datetime import datetime, timezone
->>>>>>> origin/main
+
+import httpx
 
 from fastapi.testclient import TestClient
 
