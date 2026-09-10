@@ -28,6 +28,24 @@ def test_path_query_is_case_scoped_and_parameterized(fake_driver):
     assert result["path_found"] is False
 
 
+<<<<<<< HEAD
+def test_summary_reads_are_parameterized_and_use_schema_constants(fake_driver):
+    repository = Neo4jRepository(fake_driver)
+
+    repository.get_case_summary("CASE-'unsafe")
+    repository.get_community_summary("CASE-'unsafe", "COMM-'unsafe")
+    repository.get_community_summaries("CASE-'unsafe")
+
+    query_text = "\n".join(query for query, _ in fake_driver.calls)
+    assert "CASE-'unsafe" not in query_text
+    assert "COMM-'unsafe" not in query_text
+    assert schema.cypher_identifier(schema.PROP_CASE_SUMMARY_TEXT) in query_text
+    assert schema.cypher_identifier(schema.PROP_CASE_SUMMARY_SOURCE) in query_text
+    assert schema.cypher_identifier(schema.PROP_CASE_SUMMARY_GENERATED_AT) in query_text
+    assert schema.cypher_identifier(schema.NODE_LABEL_COMMUNITY_SUMMARY) in query_text
+    assert fake_driver.calls[0][1] == {"case_id": "CASE-'unsafe"}
+    assert fake_driver.calls[1][1] == {"case_id": "CASE-'unsafe", "community_id": "COMM-'unsafe"}
+=======
 def test_create_case_is_parameterized_and_does_not_touch_other_cases(fake_driver):
     def handler(query, parameters):
         if "STARTS WITH" in query:
@@ -61,3 +79,4 @@ def test_create_case_is_parameterized_and_does_not_touch_other_cases(fake_driver
     assert "DETACH DELETE" not in query_text
     assert "CASE-A" not in query_text
     assert any(parameters.get("name") == "Operation Silverline" for _, parameters in fake_driver.calls)
+>>>>>>> origin/main

@@ -51,7 +51,7 @@ function CaseHeader({ onBack, caseLabel, cases = [], onSelectCase, personNodes =
       <div className="case-header__left">
         <div className="case-header__brand">
           <img className="case-header__logo" src={netraLogo} alt="" />
-          <span className="case-header__brand-name">NETRA</span>
+          <span className="case-header__brand-name">NEXUS</span>
         </div>
         <div className="case-header__divider" />
         <button type="button" className="case-header__back" onClick={onBack}>

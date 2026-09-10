@@ -25,7 +25,7 @@ function buildDossierText({ caseId, clusterLabel, communityId, detail, members }
   })
 
   return [
-    'NETRA CLUSTER DOSSIER',
+    'NEXUS CLUSTER DOSSIER',
     `Case: ${caseId || '—'}`,
     `Cluster: ${clusterLabel}`,
     `Community ID: ${communityId}`,

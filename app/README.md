@@ -50,6 +50,7 @@ docker compose --profile analysis run --rm core-algorithms
 docker compose --profile analysis run --rm structural-roles
 docker compose --profile analysis run --rm criticality
 docker compose --profile analysis run --rm financial-patterns
+docker compose --profile analysis run --rm summary-generation
 docker compose up -d api
 # OpenAPI: http://localhost:8000/docs
 ```
@@ -87,3 +88,8 @@ docker compose --profile smoke run --rm smoke-test
 ```
 
 It starts Neo4j and the API as dependencies, logs in as the bootstrap admin, verifies `/me`, and makes an authenticated `/cases` request.
+
+
+## Zone 2 summary generation
+
+Run `summary-generation` last, after all Zone 1 jobs. It builds a fixed aggregate fact payload from persisted results, sends only that payload to the OpenRouter Chat Completions API using `nex-agi/nex-n2.5-mini:free`, and stores case and community prose in Neo4j. Set `OPENROUTER_API_KEY` in `.env`; when the key is absent or any request fails, deterministic templates are stored instead. API requests only read these stored values.

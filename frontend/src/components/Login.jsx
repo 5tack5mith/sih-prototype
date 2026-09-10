@@ -1,19 +1,92 @@
 import { useState } from 'react'
 import { useAuth } from '../auth/AuthContext'
 import logoMark from '../assets/login/logo-mark.svg'
-import statusShield from '../assets/login/status-shield.svg'
 import eyeToggle from '../assets/login/eye-toggle.svg'
-import arrowRight from '../assets/login/arrow-right.svg'
+import loginBackground from '../assets/login/login-background.png'
 import './Login.css'
 
+function ShieldIcon() {
+  return (
+    <svg width="19" height="24" viewBox="0 0 14 17.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M7 17.5C4.97292 16.99 3.29948 15.8265 1.98 14.0095C0.66 12.1953 0 10.1792 0 7.9625V2.625L7 0L14 2.625V7.9625C14 10.1792 13.34 12.1953 12.02 14.0095C10.7005 15.8265 9.02708 16.99 7 17.5Z"
+        fill="currentColor"
+        fillOpacity="0.12"
+        stroke="currentColor"
+        strokeWidth="1.1"
+      />
+      <path d="M4.7 8.6L6.4 10.3L9.6 6.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function InvestigatorIcon() {
+  return (
+    <svg width="21" height="19" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M5 6C6.38071 6 7.5 4.88071 7.5 3.5C7.5 2.11929 6.38071 1 5 1C3.61929 1 2.5 2.11929 2.5 3.5C2.5 4.88071 3.61929 6 5 6V6M0.5 11.5V10.5C0.5 8.567 2.067 7 4 7H6C7.933 7 9.5 8.567 9.5 10.5V11.5"
+        stroke="currentColor"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 1.1084C10.361 1.42945 10.9673 2.25623 10.9673 3.22321C10.9673 4.19018 10.361 5.01696 9.5 5.33801M11.9673 11.5V10.5C11.9642 8.83485 10.8404 7.38187 9.23193 6.96387"
+        stroke="currentColor"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function ArrowIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+const ROLE_COPY = {
+  admin: {
+    label: 'Administrator',
+    description: 'Full system access and configuration',
+  },
+  investigator: {
+    label: 'Investigator',
+    description: 'Analyst access and investigation tools',
+  },
+}
+
 function Login() {
+  // Role selection is a purely visual first step (frames which sign-in
+  // experience the analyst is entering) - it never talks to the backend.
+  // The credential step underneath is unchanged: it still submits through
+  // AuthContext's signIn() (the real /login endpoint), and the account's
+  // own role (not whichever card was clicked) is what the server returns -
+  // AuthContext updates isAuthenticated on success, and App.jsx reacts to
+  // that itself, so there's no onLogin callback to invoke here.
   const { signIn } = useAuth()
+  const [step, setStep] = useState('role')
+  const [role, setRole] = useState(null)
   const [analystId, setAnalystId] = useState('')
   const [passkey, setPasskey] = useState('')
   const [showPasskey, setShowPasskey] = useState(false)
-  const [acknowledged, setAcknowledged] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
   const [submitting, setSubmitting] = useState(false)
+
+  const handleSelectRole = (selectedRole) => {
+    setRole(selectedRole)
+    setStep('credentials')
+    setErrorMessage(null)
+  }
+
+  const handleBack = () => {
+    setStep('role')
+    setErrorMessage(null)
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -33,138 +106,127 @@ function Login() {
     }
   }
 
+  const roleCopy = role ? ROLE_COPY[role] : null
+
   return (
-    <div className="login-screen">
-      <div className="login-screen__gradient" />
-
-      <header className="login-header">
-        <div className="login-header__group">
-          <span className="login-header__dot" />
-          <span className="login-header__label">NETRA // SYS_AUTH_T1</span>
-        </div>
-        <div className="login-header__group">
-          <span className="login-header__meta">ENC: AES-256-GCM</span>
-          <span className="login-header__meta login-header__meta--accent">SECURE_NODE</span>
-        </div>
-      </header>
-
+    <div
+      className="login-screen"
+      style={{
+        // The source artwork is a wide banner with its network clusters
+        // weighted to the two edges and a plain dark middle - full-bleed
+        // `cover` on a tall/narrow viewport would crop straight through
+        // those clusters and show only the empty middle. Anchoring the SAME
+        // image twice, once pinned to each edge at full viewport height,
+        // keeps both clusters visible at any viewport size; the dark gap
+        // between them matches the panel's own dark background regardless.
+        backgroundImage: `url(${loginBackground}), url(${loginBackground})`,
+        backgroundPosition: 'left center, right center',
+        backgroundSize: 'auto 100%, auto 100%',
+        backgroundRepeat: 'no-repeat, no-repeat',
+      }}
+    >
       <main className="login-main">
-        <div className="login-banner">
-          <span className="login-banner__dot" />
-          RESTRICTED ACCESS · AUTHORIZED PERSONNEL ONLY
-        </div>
-
         <div className="login-brand">
           <img className="login-brand__mark" src={logoMark} alt="" />
-          <div className="login-brand__text">
-            <h1 className="login-brand__name">NETRA</h1>
-            <p className="login-brand__tagline">V3.4.1 SECURE GATEWAY // ANALYTICAL MATRIX</p>
-          </div>
+          <span className="login-brand__name">NEXUS</span>
         </div>
 
-        <form className="login-card" onSubmit={handleSubmit}>
-          <div className="login-card__header">
-            <div className="login-card__header-group">
-              <img className="login-card__shield" src={statusShield} alt="" />
-              <span className="login-card__title">TERMINAL AUTHENTICATION</span>
-            </div>
-            <div className="login-card__header-group">
-              <span className="login-card__status-dot" />
-              <span className="login-card__status">ENCLAVE_READY</span>
-            </div>
-          </div>
+        <div className="login-panel">
+          {step === 'role' ? (
+            <div className="login-role">
+              <h1 className="login-role__title">Select your access level</h1>
+              <p className="login-role__subtitle">Sign in to continue</p>
 
-          <div className="login-card__body">
-            <div className="login-field">
-              <div className="login-field__row">
-                <span className="login-field__label">
-                  ANALYST ID <span className="login-field__required">*</span>
-                </span>
-                <span className="login-field__hint">ISO-C2</span>
-              </div>
-              <input
-                className="login-field__input"
-                type="text"
-                placeholder="e.g. AN-84920"
-                value={analystId}
-                onChange={(event) => setAnalystId(event.target.value)}
-                autoComplete="username"
-              />
-            </div>
-
-            <div className="login-field">
-              <div className="login-field__row">
-                <span className="login-field__label">
-                  CRYPTOGRAPHIC PASSKEY <span className="login-field__required">*</span>
-                </span>
-                <span className="login-field__hint">GCM_TOKEN</span>
-              </div>
-              <div className="login-field__input-wrap">
-                <input
-                  className="login-field__input"
-                  type={showPasskey ? 'text' : 'password'}
-                  placeholder="••••••••••••••••"
-                  value={passkey}
-                  onChange={(event) => setPasskey(event.target.value)}
-                  autoComplete="current-password"
-                />
+              <div className="login-role__cards">
                 <button
                   type="button"
-                  className="login-field__toggle"
-                  onClick={() => setShowPasskey((value) => !value)}
-                  aria-label={showPasskey ? 'Hide passkey' : 'Show passkey'}
+                  className="login-role-card login-role-card--admin"
+                  onClick={() => handleSelectRole('admin')}
                 >
-                  <img src={eyeToggle} alt="" />
+                  <span className="login-role-card__icon">
+                    <ShieldIcon />
+                  </span>
+                  <span className="login-role-card__name">{ROLE_COPY.admin.label}</span>
+                  <span className="login-role-card__desc">{ROLE_COPY.admin.description}</span>
+                  <span className="login-role-card__arrow">
+                    <ArrowIcon />
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  className="login-role-card login-role-card--investigator"
+                  onClick={() => handleSelectRole('investigator')}
+                >
+                  <span className="login-role-card__icon">
+                    <InvestigatorIcon />
+                  </span>
+                  <span className="login-role-card__name">{ROLE_COPY.investigator.label}</span>
+                  <span className="login-role-card__desc">{ROLE_COPY.investigator.description}</span>
+                  <span className="login-role-card__arrow">
+                    <ArrowIcon />
+                  </span>
                 </button>
               </div>
             </div>
-
-            <label className="login-ack">
-              <input
-                type="checkbox"
-                className="login-ack__checkbox"
-                checked={acknowledged}
-                onChange={(event) => setAcknowledged(event.target.checked)}
-              />
-              <span className="login-ack__label">
-                Acknowledge all network activity is logged under Title 18 USC § 1030 jurisdiction.
-              </span>
-            </label>
-
-            <div className="login-actions">
-              {errorMessage && <p className="login-error">{errorMessage}</p>}
-              <button type="submit" className="login-submit" disabled={submitting}>
-                {submitting ? 'AUTHENTICATING…' : 'SIGN IN TO ENCLAVE'}
-                <img className="login-submit__icon" src={arrowRight} alt="" />
+          ) : (
+            <form className={`login-form login-form--${role}`} onSubmit={handleSubmit}>
+              <button type="button" className="login-form__back" onClick={handleBack}>
+                ← Change access level
               </button>
-              <div className="login-actions__links">
-                <span>FORGOT ACCESS / KEY REISSUE?</span>
-                <span>P-KEY // 4096</span>
+
+              <h1 className="login-form__title">{roleCopy.label} Sign-In</h1>
+
+              <div className="login-field">
+                <label className="login-field__label" htmlFor="login-analyst-id">
+                  Analyst ID
+                </label>
+                <input
+                  id="login-analyst-id"
+                  className="login-field__input"
+                  type="text"
+                  placeholder="e.g. AN-84920"
+                  value={analystId}
+                  onChange={(event) => setAnalystId(event.target.value)}
+                  autoComplete="username"
+                  autoFocus
+                />
               </div>
-            </div>
-          </div>
 
-          <div className="login-card__footer">
-            <span>SECURITY PROTOCOL</span>
-            <span className="login-card__footer-accent">MIL-STD-810G</span>
-          </div>
-        </form>
+              <div className="login-field">
+                <label className="login-field__label" htmlFor="login-passkey">
+                  Passkey
+                </label>
+                <div className="login-field__input-wrap">
+                  <input
+                    id="login-passkey"
+                    className="login-field__input"
+                    type={showPasskey ? 'text' : 'password'}
+                    placeholder="••••••••••••••••"
+                    value={passkey}
+                    onChange={(event) => setPasskey(event.target.value)}
+                    autoComplete="current-password"
+                  />
+                  <button
+                    type="button"
+                    className="login-field__toggle"
+                    onClick={() => setShowPasskey((value) => !value)}
+                    aria-label={showPasskey ? 'Hide passkey' : 'Show passkey'}
+                  >
+                    <img src={eyeToggle} alt="" />
+                  </button>
+                </div>
+              </div>
 
-        <div className="login-sysline">
-          <span className="login-sysline__dim">SYS_BUILD: 2025.04-R2 </span>
-          <span className="login-sysline__bright">·</span>
-          <span className="login-sysline__dim">NODE: SEC-CLUSTER-US-EAST</span>
-          <span className="login-sysline__bright">·</span>
-          <span className="login-sysline__dim">ENCRYPTION: AES-256-GCM</span>
-          <span className="login-sysline__bright">·</span>
-          <span className="login-sysline__bright">SECURE SESSION #NX-8821</span>
+              {errorMessage && <p className="login-error">{errorMessage}</p>}
+
+              <button type="submit" className="login-submit" disabled={submitting}>
+                {submitting ? 'Authenticating…' : 'Sign In'}
+              </button>
+            </form>
+          )}
         </div>
       </main>
-
-      <footer className="login-footer">
-        <span>SYS_LOC: 40.7128° N, 74.0060° W // TERMINAL: 0x88F2</span>
-        <span>RESTRICTED INVESTIGATIVE DOCKET CLASSIFICATION LEVEL 4</span>
-      </footer>
     </div>
   )
 }

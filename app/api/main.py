@@ -8,7 +8,16 @@ from .. import schema_config as schema
 from ..auth import router as auth_router, get_current_user, init_db, require_admin
 from ..auth.database import (assigned_case_ids, assign_investigator, get_user, list_assignments, remove_assignment, remove_case_assignments)
 from .dependencies import get_repository, require_case_access
+<<<<<<< HEAD
+from .models import (
+    CaseAssignment, CaseFilter, CaseGraph, CaseOverview, CaseSort, CaseStatusResponse,
+    CaseSummary, CommunityDetail, CommunitySummary, CriticalityResponse,
+    GeneratedCaseSummary, GeneratedCommunitySummary, GraphFilter, MetricName,
+    NodeDetail, PathResponse, SuggestedLink, TopNodesResponse,
+)
+=======
 from .models import CaseAssignment, CaseCreate, CaseMetadataResponse, CaseMetadataUpdate, CaseStatusResponse, CaseFilter, CaseGraph, CaseOverview, CriticalityResponse, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, SuggestedLink, TopNodesResponse
+>>>>>>> origin/main
 from .narratives import community_narrative, criticality_narrative, path_narrative
 from .repository import Neo4jRepository
 
@@ -115,6 +124,15 @@ def case_overview(case_id: str, repository: Repository, user: CurrentUser, _: Ca
     return result
 
 
+@app.get("/cases/{case_id}/summary", response_model=GeneratedCaseSummary)
+def case_summary(case_id: str, repository: Repository, user: CurrentUser, _: CaseAccess) -> dict:
+    """Return a stored Zone 2 summary; no LLM call occurs in this request."""
+    result = repository.get_case_summary(case_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Case summary not found")
+    return result
+
+
 METRIC_PROPERTIES = {
     "betweenness": schema.PROP_BETWEENNESS,
     "eigenvector": schema.PROP_EIGENVECTOR,
@@ -157,6 +175,31 @@ def case_graph(
 def communities(case_id: str, repository: Repository, user: CurrentUser, _: CaseAccess) -> list[dict]:
     """Read Louvain membership and persisted community densities; labels are generic."""
     return repository.get_communities(case_id)
+
+
+@app.get(
+    "/cases/{case_id}/communities/summaries",
+    response_model=list[GeneratedCommunitySummary],
+)
+def community_summaries(
+    case_id: str, repository: Repository, user: CurrentUser, _: CaseAccess
+) -> list[dict]:
+    """Return every stored community summary in one query."""
+    return repository.get_community_summaries(case_id)
+
+
+@app.get(
+    "/cases/{case_id}/communities/{community_id}/summary",
+    response_model=GeneratedCommunitySummary,
+)
+def community_summary(
+    case_id: str, community_id: str, repository: Repository, user: CurrentUser, _: CaseAccess
+) -> dict:
+    """Return one stored community summary; no LLM call occurs in this request."""
+    result = repository.get_community_summary(case_id, community_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Community summary not found")
+    return result
 
 
 @app.get("/cases/{case_id}/communities/{community_id}", response_model=CommunityDetail)

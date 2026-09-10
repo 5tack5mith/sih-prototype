@@ -158,7 +158,19 @@ export function createForceSimulation(nodes, edges = []) {
   })
 
   const n = ids.length
-  const k = Math.sqrt((90 * 90) / Math.max(n, 1)) * 0.9
+  // Standard Fruchterman-Reingold ideal-distance formula (k = sqrt(area/n)):
+  // correct for graphs sized anywhere near this 90x90 canvas, but for a
+  // small filtered subset (e.g. Communities viewing a single 4-5 node
+  // cluster) it blows up - sqrt(8100/4)*0.9 = ~40, a repulsion radius
+  // nearly half the canvas, which flings the few nodes straight out to the
+  // position clamp's edges instead of letting them settle near their zone
+  // center. Capping it keeps larger graphs (where it's already below the
+  // cap) untouched while keeping small clusters visually tight - this is
+  // what "click a cluster" zooming into a random node or empty space
+  // traced back to: the fit itself was correct, framing an actually
+  // scattered layout.
+  const rawK = Math.sqrt((90 * 90) / Math.max(n, 1)) * 0.9
+  const k = Math.min(rawK, 24)
   const communityOf = new Map(nodes.map((node) => [String(node.node_id), node.community_id ?? '_ungrouped']))
 
   function step(temperature = 3) {

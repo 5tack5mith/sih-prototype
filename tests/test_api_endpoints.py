@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import httpx
+=======
 from datetime import datetime, timezone
+>>>>>>> origin/main
 
 from fastapi.testclient import TestClient
 
@@ -78,6 +82,12 @@ class StubRepository:
         return [{"community_id": "1", "label": "Cluster 1", "size": 2, "internal_density": 1, "external_density": 0, "member_node_ids": ["N1", "N2"]}]
     def get_community_detail(self, case_id, community_id):
         return {"community_id": community_id, "size": 2, "internal_density": 1, "external_density": 0, "members": [{"node_id": "N1", "name": "One", "entity_type": None, "centrality": .9}]}
+    def get_case_summary(self, case_id):
+        return {"case_id": case_id, "summary_text": "Stored case summary.", "source": "template", "generated_at": "2026-09-10T00:00:00+00:00"}
+    def get_community_summary(self, case_id, community_id):
+        return {"community_id": community_id, "summary_text": "Stored community summary.", "source": "llm", "generated_at": "2026-09-10T00:00:00+00:00"}
+    def get_community_summaries(self, case_id):
+        return [self.get_community_summary(case_id, "1")]
     def find_path(self, case_id, from_node_id, to_node_id):
         return {"path_found": True, "hops": 1, "connection_strength": .5, "total_relationship_count": 1, "nodes": [from_node_id, to_node_id], "steps": [{"step": 1, "from": "One", "to": "Two", "relationship_type": "CALLED", "detail": "CALLED (weight 1)"}]}
     def get_criticality(self, case_id, top_k):
@@ -200,3 +210,28 @@ def test_case_status_filters_and_lifecycle():
         assert api.post("/cases/CASE-A/important").json()["status"] == "IMPORTANT"
         assert api.post("/cases/CASE-A/complete").json()["status"] == "COMPLETED"
         assert api.delete("/cases/CASE-A").status_code == 204
+
+
+def test_summary_endpoints_return_stored_values_without_llm_call(monkeypatch):
+    llm_calls = []
+
+    def fail_if_called(*args, **kwargs):
+        llm_calls.append((args, kwargs))
+        raise AssertionError("request path called LLM")
+
+    monkeypatch.setattr(httpx, "post", fail_if_called)
+    with client() as api:
+        case_result = api.get("/cases/CASE-A/summary")
+        community_result = api.get("/cases/CASE-A/communities/1/summary")
+        all_result = api.get("/cases/CASE-A/communities/summaries")
+
+    assert case_result.status_code == 200
+    assert case_result.json() == {
+        "case_id": "CASE-A", "summary_text": "Stored case summary.", "source": "template",
+        "generated_at": "2026-09-10T00:00:00+00:00",
+    }
+    assert community_result.status_code == 200
+    assert community_result.json()["source"] == "llm"
+    assert all_result.status_code == 200
+    assert all_result.json() == [community_result.json()]
+    assert llm_calls == []
