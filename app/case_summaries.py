@@ -420,7 +420,7 @@ def _request_summary(context: dict[str, Any], system_prompt: str, max_output_tok
 
 def generate_case_summary(context: dict[str, Any]) -> GeneratedSummary:
     try:
-        return GeneratedSummary(_request_summary(context, CASE_SUMMARY_SYSTEM_PROMPT, 400), "llm")
+        return GeneratedSummary(_request_summary(context, CASE_SUMMARY_SYSTEM_PROMPT, 1200), "llm")
     except Exception:
         return GeneratedSummary(case_summary_template(context), "template")
 
