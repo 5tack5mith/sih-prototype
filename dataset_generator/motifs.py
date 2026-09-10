@@ -85,11 +85,28 @@ def make_transaction_edge(source_id, target_id, amount, timestamp, channel, case
     }
 
 
+# Fraction of persons (any role - victim, mule of any layer, mastermind)
+# who get a Phone entity attached. Earlier this was 100% for victim/
+# recruited-entry roles and 0% for everyone else (~20% of persons overall,
+# on the reasoning that only those two roles have a real-world reason to
+# have a phone number on file). Changed so most persons carry one instead
+# of most not - drawn from case_rng (a structural decision about this
+# case), not entity_rng, per this file's rng-stream split (see module
+# docstring).
+PHONE_COVERAGE_PROB = 0.85
+
+
+def _maybe_make_phone(case_rng, entity_rng, person_id):
+    if case_rng.random() < PHONE_COVERAGE_PROB:
+        return make_phone(entity_rng, person_id)
+    return None
+
+
 def _make_mule_person_and_account(case_rng, entity_rng, mule_layer, force_mule_type=None,
                                    recruitment_channel=None):
-    """Person+Account pair for a mule, with mule_type-specific behavioral
+    """Person+Account(+Phone) for a mule, with mule_type-specific behavioral
     signature per schema Sec. 5 (kyc_status, opened_via_bc, account_age_days,
-    recruitment_channel)."""
+    recruitment_channel). Returns (person, account, phone_or_None)."""
     mule_type = force_mule_type or sample_mule_type(case_rng)
     channel = recruitment_channel
     if mule_type == "deceived" and channel is None:
@@ -112,7 +129,8 @@ def _make_mule_person_and_account(case_rng, entity_rng, mule_layer, force_mule_t
         account = make_account(
             entity_rng, person["id"], mule_layer=mule_layer, kyc_status=case_rng.choice(["verified", "minimal"]),
         )
-    return person, account
+    phone = _maybe_make_phone(case_rng, entity_rng, person["id"])
+    return person, account, phone
 
 
 def _case_metadata(case_id, scam_subtype, motif, size_tier, nodes, edges, created_at):
@@ -146,17 +164,23 @@ def generate_fast_pass_through(case_id: str, scam_subtype: str, size_tier: str,
 
     victim_person = make_person(entity_rng, role="victim")
     victim_account = make_account(entity_rng, victim_person["id"])
-    victim_phone = make_phone(entity_rng, victim_person["id"])
-    nodes += [victim_person, victim_account, victim_phone]
+    victim_phone = _maybe_make_phone(case_rng, entity_rng, victim_person["id"])
+    nodes += [victim_person, victim_account]
+    if victim_phone:
+        nodes.append(victim_phone)
 
-    mule1_person, mule1_account = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_1")
-    mule2_person, mule2_account = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_2")
+    mule1_person, mule1_account, mule1_phone = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_1")
+    mule2_person, mule2_account, mule2_phone = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_2")
     nodes += [mule1_person, mule1_account, mule2_person, mule2_account]
+    nodes += [p for p in (mule1_phone, mule2_phone) if p]
 
     exit_person = make_person(entity_rng, role="mastermind")
     exit_account = make_account(entity_rng, exit_person["id"], is_exit_node=True,
                                  account_age_days=case_rng.randint(1, 15))
+    exit_phone = _maybe_make_phone(case_rng, entity_rng, exit_person["id"])
     nodes += [exit_person, exit_account]
+    if exit_phone:
+        nodes.append(exit_phone)
 
     lo, hi = MOTIF_TIMING_HOURS["fast_pass_through"]
     third = hi / 3
@@ -201,17 +225,24 @@ def generate_fan_out_fan_in(case_id: str, scam_subtype: str, size_tier: str,
     hub_person = make_person(entity_rng, role="mastermind")
     hub_account = make_account(entity_rng, hub_person["id"], is_exit_node=True,
                                 account_age_days=case_rng.randint(1, 20))
+    hub_phone = _maybe_make_phone(case_rng, entity_rng, hub_person["id"])
     nodes += [hub_person, hub_account]
+    if hub_phone:
+        nodes.append(hub_phone)
 
     for _ in range(num_branches):
         amount = case_rng.uniform(*SCAM_SUBTYPES[scam_subtype]["amount_range"])
         victim_person = make_person(entity_rng, role="victim")
         victim_account = make_account(entity_rng, victim_person["id"])
-        victim_phone = make_phone(entity_rng, victim_person["id"])
-        nodes += [victim_person, victim_account, victim_phone]
+        victim_phone = _maybe_make_phone(case_rng, entity_rng, victim_person["id"])
+        nodes += [victim_person, victim_account]
+        if victim_phone:
+            nodes.append(victim_phone)
 
-        l1_person, l1_account = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_1")
+        l1_person, l1_account, l1_phone = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_1")
         nodes += [l1_person, l1_account]
+        if l1_phone:
+            nodes.append(l1_phone)
 
         t_in = created_at + timedelta(hours=case_rng.uniform(0, 24))
         edges.append(make_transaction_edge(victim_account["id"], l1_account["id"], amount, t_in,
@@ -220,8 +251,10 @@ def generate_fan_out_fan_in(case_id: str, scam_subtype: str, size_tier: str,
         n_layer2 = case_rng.randint(2, 4)
         layer2_accounts = []
         for _ in range(n_layer2):
-            p, a = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_2")
+            p, a, ph = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_2")
             nodes += [p, a]
+            if ph:
+                nodes.append(ph)
             layer2_accounts.append(a)
             t_mid = t_in + timedelta(hours=case_rng.uniform(lo, max(lo + 0.1, hi / 3)))
             share = amount / n_layer2 * case_rng.uniform(0.8, 1.0)
@@ -256,13 +289,17 @@ def generate_dormant_then_burst(case_id: str, scam_subtype: str, size_tier: str,
 
     victim_person = make_person(entity_rng, role="victim")
     victim_account = make_account(entity_rng, victim_person["id"])
-    victim_phone = make_phone(entity_rng, victim_person["id"])
-    nodes += [victim_person, victim_account, victim_phone]
+    victim_phone = _maybe_make_phone(case_rng, entity_rng, victim_person["id"])
+    nodes += [victim_person, victim_account]
+    if victim_phone:
+        nodes.append(victim_phone)
 
-    dormant_person, dormant_account = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_1")
+    dormant_person, dormant_account, dormant_phone = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_1")
     # account existed through the dormancy window before the burst
     dormant_account["visible"]["account_age_days"] = dormancy_days + case_rng.randint(10, 60)
     nodes += [dormant_person, dormant_account]
+    if dormant_phone:
+        nodes.append(dormant_phone)
 
     edges.append(make_transaction_edge(victim_account["id"], dormant_account["id"], amount, burst_start,
                                         case_rng.choice(["upi", "neft_imps"]), case_rng))
@@ -272,8 +309,10 @@ def generate_dormant_then_burst(case_id: str, scam_subtype: str, size_tier: str,
     n_recipients = max(3, min(target_size // 3, 20))
 
     for _ in range(n_recipients):
-        p, a = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_2")
+        p, a, ph = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_2")
         nodes += [p, a]
+        if ph:
+            nodes.append(ph)
         t = burst_start + timedelta(hours=case_rng.uniform(lo, hi))
         share = amount / n_recipients * case_rng.uniform(0.8, 1.0)
         edges.append(make_transaction_edge(dormant_account["id"], a["id"], share, t,
@@ -303,10 +342,13 @@ def generate_recruited_crypto_exit(case_id: str, scam_subtype: str, size_tier: s
     nodes.append(platform)
 
     # deceived mules recruited via a job-offer pretext almost always carry a
-    # RECRUITED_VIA edge (schema Sec. 5) - force that mule_type for the entry mule
-    entry_person, entry_account = _make_mule_person_and_account(
+    # RECRUITED_VIA edge (schema Sec. 5) - force that mule_type for the entry mule.
+    # Always gets a phone regardless of PHONE_COVERAGE_PROB: recruitment
+    # itself happened over a phone-based channel (bot DM), so the number is
+    # on record by construction, not by the same chance as other roles.
+    entry_person, entry_account, _entry_phone = _make_mule_person_and_account(
         case_rng, entity_rng, mule_layer="layer_1", force_mule_type="deceived")
-    entry_phone = make_phone(entity_rng, entry_person["id"])
+    entry_phone = _entry_phone or make_phone(entity_rng, entry_person["id"])
     nodes += [entry_person, entry_account, entry_phone]
 
     recruited_at = created_at - timedelta(days=case_rng.randint(3, 21))
@@ -319,8 +361,10 @@ def generate_recruited_crypto_exit(case_id: str, scam_subtype: str, size_tier: s
 
     victim_person = make_person(entity_rng, role="victim")
     victim_account = make_account(entity_rng, victim_person["id"])
-    victim_phone = make_phone(entity_rng, victim_person["id"])
-    nodes += [victim_person, victim_account, victim_phone]
+    victim_phone = _maybe_make_phone(case_rng, entity_rng, victim_person["id"])
+    nodes += [victim_person, victim_account]
+    if victim_phone:
+        nodes.append(victim_phone)
 
     amount = case_rng.uniform(*SCAM_SUBTYPES[scam_subtype]["amount_range"])
     t_in = created_at
@@ -331,17 +375,21 @@ def generate_recruited_crypto_exit(case_id: str, scam_subtype: str, size_tier: s
     n_layer2 = max(2, min(target_size // 3, 6))
     layer2_accounts = []
     for _ in range(n_layer2):
-        p, a = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_2")
+        p, a, ph = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_2")
         nodes += [p, a]
+        if ph:
+            nodes.append(ph)
         layer2_accounts.append(a)
         t_mid = t_in + timedelta(hours=case_rng.uniform(lo, max(lo + 0.1, hi / 2)))
         share = amount / n_layer2 * case_rng.uniform(0.8, 1.0)
         edges.append(make_transaction_edge(entry_account["id"], a["id"], share, t_mid,
                                             case_rng.choice(["upi", "neft_imps"]), case_rng))
 
-    exit_person, exit_account = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_3plus")
+    exit_person, exit_account, exit_phone = _make_mule_person_and_account(case_rng, entity_rng, mule_layer="layer_3plus")
     exit_account["ground_truth"]["is_exit_node"] = True
     nodes += [exit_person, exit_account]
+    if exit_phone:
+        nodes.append(exit_phone)
 
     crypto_node = make_crypto_exit(entity_rng)
     nodes.append(crypto_node)

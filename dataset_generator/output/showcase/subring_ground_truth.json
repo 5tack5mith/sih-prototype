@@ -1,182 +1,128 @@
 [
   {
     "case_id": "C-SHOWCASE-01",
+    "subring_a_id": "C-SHOWCASE-01-SR2",
+    "subring_b_id": "C-SHOWCASE-01-SR3",
+    "shared_account_id": "A-00014"
+  },
+  {
+    "case_id": "C-SHOWCASE-01",
     "subring_a_id": "C-SHOWCASE-01-SR1",
-    "subring_b_id": "C-SHOWCASE-01-SR4",
+    "subring_b_id": "C-SHOWCASE-01-SR3",
     "shared_account_id": "A-00005"
   },
   {
     "case_id": "C-SHOWCASE-01",
     "subring_a_id": "C-SHOWCASE-01-SR1",
-    "subring_b_id": "C-SHOWCASE-01-SR6",
-    "shared_account_id": "A-00008"
+    "subring_b_id": "C-SHOWCASE-01-SR2",
+    "shared_account_id": "A-00002"
   },
   {
-    "case_id": "C-SHOWCASE-01",
-    "subring_a_id": "C-SHOWCASE-01-SR2",
-    "subring_b_id": "C-SHOWCASE-01-SR4",
-    "shared_account_id": "A-00013"
+    "case_id": "C-SHOWCASE-02",
+    "subring_a_id": "C-SHOWCASE-02-SR1",
+    "subring_b_id": "C-SHOWCASE-02-SR3",
+    "shared_account_id": "A-00046"
   },
   {
-    "case_id": "C-SHOWCASE-01",
-    "subring_a_id": "C-SHOWCASE-01-SR5",
-    "subring_b_id": "C-SHOWCASE-01-SR6",
+    "case_id": "C-SHOWCASE-02",
+    "subring_a_id": "C-SHOWCASE-02-SR1",
+    "subring_b_id": "C-SHOWCASE-02-SR4",
     "shared_account_id": "A-00044"
   },
   {
-    "case_id": "C-SHOWCASE-01",
-    "subring_a_id": "C-SHOWCASE-01-SR2",
-    "subring_b_id": "C-SHOWCASE-01-SR3",
-    "shared_account_id": "A-00012"
-  },
-  {
-    "case_id": "C-SHOWCASE-01",
-    "subring_a_id": "C-SHOWCASE-01-SR1",
-    "subring_b_id": "C-SHOWCASE-01-SR5",
-    "shared_account_id": "A-00010"
-  },
-  {
-    "case_id": "C-SHOWCASE-01",
-    "subring_a_id": "C-SHOWCASE-01-SR3",
-    "subring_b_id": "C-SHOWCASE-01-SR4",
-    "shared_account_id": "A-00017"
-  },
-  {
     "case_id": "C-SHOWCASE-02",
-    "subring_a_id": "C-SHOWCASE-02-SR2",
-    "subring_b_id": "C-SHOWCASE-02-SR3",
-    "shared_account_id": "A-00066"
+    "subring_a_id": "C-SHOWCASE-02-SR3",
+    "subring_b_id": "C-SHOWCASE-02-SR5",
+    "shared_account_id": "A-00058"
   },
   {
     "case_id": "C-SHOWCASE-02",
     "subring_a_id": "C-SHOWCASE-02-SR1",
-    "subring_b_id": "C-SHOWCASE-02-SR2",
-    "shared_account_id": "A-00057"
-  },
-  {
-    "case_id": "C-SHOWCASE-02",
-    "subring_a_id": "C-SHOWCASE-02-SR1",
-    "subring_b_id": "C-SHOWCASE-02-SR6",
-    "shared_account_id": "A-00062"
-  },
-  {
-    "case_id": "C-SHOWCASE-02",
-    "subring_a_id": "C-SHOWCASE-02-SR4",
-    "subring_b_id": "C-SHOWCASE-02-SR6",
-    "shared_account_id": "A-00075"
-  },
-  {
-    "case_id": "C-SHOWCASE-02",
-    "subring_a_id": "C-SHOWCASE-02-SR5",
-    "subring_b_id": "C-SHOWCASE-02-SR6",
-    "shared_account_id": "A-00078"
+    "subring_b_id": "C-SHOWCASE-02-SR5",
+    "shared_account_id": "A-00047"
   },
   {
     "case_id": "C-SHOWCASE-02",
     "subring_a_id": "C-SHOWCASE-02-SR4",
     "subring_b_id": "C-SHOWCASE-02-SR5",
-    "shared_account_id": "A-00074"
+    "shared_account_id": "A-00067"
+  },
+  {
+    "case_id": "C-SHOWCASE-03",
+    "subring_a_id": "C-SHOWCASE-03-SR1",
+    "subring_b_id": "C-SHOWCASE-03-SR2",
+    "shared_account_id": "A-00084"
+  },
+  {
+    "case_id": "C-SHOWCASE-03",
+    "subring_a_id": "C-SHOWCASE-03-SR2",
+    "subring_b_id": "C-SHOWCASE-03-SR4",
+    "shared_account_id": "A-00089"
   },
   {
     "case_id": "C-SHOWCASE-03",
     "subring_a_id": "C-SHOWCASE-03-SR1",
     "subring_b_id": "C-SHOWCASE-03-SR3",
-    "shared_account_id": "A-00105"
-  },
-  {
-    "case_id": "C-SHOWCASE-03",
-    "subring_a_id": "C-SHOWCASE-03-SR3",
-    "subring_b_id": "C-SHOWCASE-03-SR4",
-    "shared_account_id": "A-00114"
-  },
-  {
-    "case_id": "C-SHOWCASE-03",
-    "subring_a_id": "C-SHOWCASE-03-SR2",
-    "subring_b_id": "C-SHOWCASE-03-SR4",
-    "shared_account_id": "A-00109"
-  },
-  {
-    "case_id": "C-SHOWCASE-03",
-    "subring_a_id": "C-SHOWCASE-03-SR2",
-    "subring_b_id": "C-SHOWCASE-03-SR5",
-    "shared_account_id": "A-00108"
-  },
-  {
-    "case_id": "C-SHOWCASE-03",
-    "subring_a_id": "C-SHOWCASE-03-SR3",
-    "subring_b_id": "C-SHOWCASE-03-SR6",
-    "shared_account_id": "A-00117"
+    "shared_account_id": "A-00086"
   },
   {
     "case_id": "C-SHOWCASE-03",
     "subring_a_id": "C-SHOWCASE-03-SR4",
-    "subring_b_id": "C-SHOWCASE-03-SR6",
-    "shared_account_id": "A-00126"
-  },
-  {
-    "case_id": "C-SHOWCASE-03",
-    "subring_a_id": "C-SHOWCASE-03-SR1",
     "subring_b_id": "C-SHOWCASE-03-SR5",
-    "shared_account_id": "A-00104"
+    "shared_account_id": "A-00101"
   },
   {
     "case_id": "C-SHOWCASE-04",
-    "subring_a_id": "C-SHOWCASE-04-SR3",
-    "subring_b_id": "C-SHOWCASE-04-SR4",
-    "shared_account_id": "A-00189"
-  },
-  {
-    "case_id": "C-SHOWCASE-04",
-    "subring_a_id": "C-SHOWCASE-04-SR2",
+    "subring_a_id": "C-SHOWCASE-04-SR1",
     "subring_b_id": "C-SHOWCASE-04-SR3",
-    "shared_account_id": "A-00187"
+    "shared_account_id": "A-00115"
   },
   {
     "case_id": "C-SHOWCASE-04",
     "subring_a_id": "C-SHOWCASE-04-SR1",
     "subring_b_id": "C-SHOWCASE-04-SR4",
-    "shared_account_id": "A-00178"
-  },
-  {
-    "case_id": "C-SHOWCASE-04",
-    "subring_a_id": "C-SHOWCASE-04-SR2",
-    "subring_b_id": "C-SHOWCASE-04-SR5",
-    "shared_account_id": "A-00184"
+    "shared_account_id": "A-00121"
   },
   {
     "case_id": "C-SHOWCASE-04",
     "subring_a_id": "C-SHOWCASE-04-SR2",
     "subring_b_id": "C-SHOWCASE-04-SR4",
-    "shared_account_id": "A-00185"
+    "shared_account_id": "A-00134"
+  },
+  {
+    "case_id": "C-SHOWCASE-04",
+    "subring_a_id": "C-SHOWCASE-04-SR2",
+    "subring_b_id": "C-SHOWCASE-04-SR3",
+    "shared_account_id": "A-00133"
+  },
+  {
+    "case_id": "C-SHOWCASE-04",
+    "subring_a_id": "C-SHOWCASE-04-SR3",
+    "subring_b_id": "C-SHOWCASE-04-SR4",
+    "shared_account_id": "A-00143"
   },
   {
     "case_id": "C-SHOWCASE-05",
     "subring_a_id": "C-SHOWCASE-05-SR1",
-    "subring_b_id": "C-SHOWCASE-05-SR2",
-    "shared_account_id": "A-00234"
+    "subring_b_id": "C-SHOWCASE-05-SR3",
+    "shared_account_id": "A-00156"
   },
   {
     "case_id": "C-SHOWCASE-05",
     "subring_a_id": "C-SHOWCASE-05-SR1",
     "subring_b_id": "C-SHOWCASE-05-SR4",
-    "shared_account_id": "A-00233"
+    "shared_account_id": "A-00155"
   },
   {
     "case_id": "C-SHOWCASE-05",
-    "subring_a_id": "C-SHOWCASE-05-SR3",
-    "subring_b_id": "C-SHOWCASE-05-SR4",
-    "shared_account_id": "A-00248"
+    "subring_a_id": "C-SHOWCASE-05-SR2",
+    "subring_b_id": "C-SHOWCASE-05-SR3",
+    "shared_account_id": "A-00164"
   },
   {
     "case_id": "C-SHOWCASE-05",
     "subring_a_id": "C-SHOWCASE-05-SR2",
     "subring_b_id": "C-SHOWCASE-05-SR4",
-    "shared_account_id": "A-00241"
-  },
-  {
-    "case_id": "C-SHOWCASE-05",
-    "subring_a_id": "C-SHOWCASE-05-SR3",
-    "subring_b_id": "C-SHOWCASE-05-SR5",
-    "shared_account_id": "A-00253"
+    "shared_account_id": "A-00160"
   }
 ]
