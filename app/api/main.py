@@ -8,16 +8,13 @@ from .. import schema_config as schema
 from ..auth import router as auth_router, get_current_user, init_db, require_admin
 from ..auth.database import (assigned_case_ids, assign_investigator, get_user, list_assignments, remove_assignment, remove_case_assignments)
 from .dependencies import get_repository, require_case_access
-<<<<<<< HEAD
 from .models import (
-    CaseAssignment, CaseFilter, CaseGraph, CaseOverview, CaseSort, CaseStatusResponse,
-    CaseSummary, CommunityDetail, CommunitySummary, CriticalityResponse,
-    GeneratedCaseSummary, GeneratedCommunitySummary, GraphFilter, MetricName,
-    NodeDetail, PathResponse, SuggestedLink, TopNodesResponse,
+    CaseAssignment, CaseCreate, CaseFilter, CaseGraph, CaseMetadataResponse,
+    CaseMetadataUpdate, CaseOverview, CaseSort, CaseStatusResponse, CaseSummary,
+    CommunityDetail, CommunitySummary, CriticalityResponse, GeneratedCaseSummary,
+    GeneratedCommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse,
+    SuggestedLink, TopNodesResponse,
 )
-=======
-from .models import CaseAssignment, CaseCreate, CaseMetadataResponse, CaseMetadataUpdate, CaseStatusResponse, CaseFilter, CaseGraph, CaseOverview, CriticalityResponse, CaseSort, CaseSummary, CommunityDetail, CommunitySummary, GraphFilter, MetricName, NodeDetail, PathResponse, SuggestedLink, TopNodesResponse
->>>>>>> origin/main
 from .narratives import community_narrative, criticality_narrative, path_narrative
 from .repository import Neo4jRepository
 
